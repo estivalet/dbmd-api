@@ -63,6 +63,13 @@
 			<version>1.7.21</version>
 		</dependency>
 
+		<!-- Put in the MagusV2 project -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.28</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
