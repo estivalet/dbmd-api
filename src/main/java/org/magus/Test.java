@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 
 import com.google.gson.GsonBuilder;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -30,8 +31,10 @@ public class Test {
 
 		Model model = new JSModel();
 		model.setName("Negociacao");
+		model.setPluralName("negociacoes");
 		model.setImutable(true);
 		model.setController(true);
+		model.setHasList(true);
 		Attribute attr = new Attribute();
 		attr.setName("data");
 		attr.setType("date");
@@ -53,6 +56,7 @@ public class Test {
 
 		model = new JSModel();
 		model.setName("Mensagem");
+		model.setPluralName("mensagens");
 		attr = new Attribute();
 		attr.setName("texto");
 		attr.setType("text");
@@ -75,20 +79,42 @@ public class Test {
 			root.put("model", m);
 
 			// Get the model template (uses cache internally).
-			Template template = cfg.getTemplate("model.ftlh");
+			Template template = cfg.getTemplate("model.js.ftlh");
 			Writer fileWriter = new FileWriter(new File(app.getFullPath() + "/js/app/models/" + m.getName() + ".js"));
+			template.process(root, fileWriter);
+			fileWriter.close();
+
+			//
+			template = cfg.getTemplate("view.js.ftlh");
+			fileWriter = new FileWriter(new File(
+					app.getFullPath() + "/js/app/views/" + StringUtils.capitalize(m.getPluralName()) + "View.js"));
 			template.process(root, fileWriter);
 			fileWriter.close();
 
 			if (m.getController()) {
 				// Get the controller template (uses cache internally).
-				template = cfg.getTemplate("controller.ftlh");
+				template = cfg.getTemplate("controller.js.ftlh");
 				fileWriter = new FileWriter(
 						new File(app.getFullPath() + "/js/app/controllers/" + m.getName() + "Controller.js"));
 				template.process(root, fileWriter);
 				fileWriter.close();
 			}
+
+			if (m.getHasList()) {
+				template = cfg.getTemplate("listmodel.js.ftlh");
+				fileWriter = new FileWriter(new File(app.getFullPath() + "/js/app/models/Lista"
+						+ StringUtils.capitalize(m.getPluralName()) + ".js"));
+				template.process(root, fileWriter);
+				fileWriter.close();
+
+			}
 		}
+
+		// Generate main index.html file.
+		Template template = cfg.getTemplate("index.html.ftlh");
+		Writer fileWriter = new FileWriter(new File(app.getFullPath() + "/index.html"));
+		template.process(null, fileWriter);
+		fileWriter.close();
 
 		System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(app));
 	}

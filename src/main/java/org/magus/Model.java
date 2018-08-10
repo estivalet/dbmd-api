@@ -4,11 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a model/entity of an application.
+ * 
+ * @author lestivalet
+ */
 public class Model {
+	/** Model name. */
 	private String name;
-	private Boolean imutable = false;
-	private Boolean controller = false;
+
+	/** Model plural name. */
+	private String pluralName;
+
+	/** List of attributes of this model. */
 	protected List<Attribute> attributes = new ArrayList<Attribute>();
+
+	/** Indicates if the model is imutable or not. */
+	private Boolean imutable = false;
+
+	/** Indicates if the model is a controller or not. */
+	private Boolean controller = false;
+
+	/** Indicates if the model will have a list of models. */
+	private Boolean hasList = false;
 
 	public String getName() {
 		return name;
@@ -62,6 +80,22 @@ public class Model {
 
 	public void setController(Boolean controller) {
 		this.controller = controller;
+	}
+
+	public String getPluralName() {
+		return pluralName;
+	}
+
+	public void setPluralName(String pluralName) {
+		this.pluralName = pluralName;
+	}
+
+	public Boolean getHasList() {
+		return hasList;
+	}
+
+	public void setHasList(Boolean hasList) {
+		this.hasList = hasList;
 	}
 
 }

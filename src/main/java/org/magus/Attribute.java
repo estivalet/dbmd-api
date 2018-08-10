@@ -2,6 +2,7 @@ package org.magus;
 
 public class Attribute {
 	private String name;
+	private String label;
 	private String type;
 	private String value;
 	private String defaultValue;
@@ -50,6 +51,14 @@ public class Attribute {
 
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 }
