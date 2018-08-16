@@ -1,3 +1,5 @@
+<#include "/common/license.ftlh">
+
 class ${model.pluralName?capitalize}View extends View {
 
    constructor(elemento) {

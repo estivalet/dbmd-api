@@ -1,4 +1,4 @@
-package org.magus;
+package org.magus.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,9 @@ public class Model {
 
 	/** List of attributes of this model. */
 	protected List<Attribute> attributes = new ArrayList<Attribute>();
+
+	/** List of models of this model. */
+	protected List<Model> models = new ArrayList<Model>();
 
 	/** Indicates if the model is imutable or not. */
 	private Boolean imutable = false;
@@ -44,6 +47,27 @@ public class Model {
 		return attributes;
 	}
 
+	public void addModel(Model model) {
+		this.models.add(model);
+	}
+
+	public List<Model> getModels() {
+		return models;
+	}
+
+	public String getAttributesCommaSeparatedWithDefaultValue() {
+		String str = "";
+		for (Attribute attr : attributes) {
+			if (attr.getDefaultValue() != null) {
+				str += attr.getName() + "='" + attr.getDefaultValue() + "',";
+			} else {
+				str += attr.getName() + ",";
+			}
+		}
+		System.out.println(str);
+		return str.substring(0, str.length() - 1);
+	}
+
 	public List<Attribute> getBaseAttributes() {
 		List<Attribute> attrs = new ArrayList<Attribute>();
 		for (Attribute a : this.attributes) {
@@ -56,10 +80,6 @@ public class Model {
 
 	public String getAttributesCommaSeparated() {
 		return attributes.stream().map(c -> String.valueOf(c)).collect(Collectors.joining(","));
-	}
-
-	public String getAttributesCommaSeparatedWithDefaultValue() {
-		return "NEED TO BE IMPLEMENTED";
 	}
 
 	public void setAttributes(List<Attribute> attributes) {

@@ -1,4 +1,4 @@
-package org.magus;
+package org.magus.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ public class App {
 	private String name;
 	private String shortName;
 	private String path;
+	private String copyright;
 	private List<Model> models = new ArrayList<Model>();
 	private List<Service> services = new ArrayList<Service>();
 
@@ -60,6 +61,14 @@ public class App {
 
 	public void addService(Service service) {
 		this.services.add(service);
+	}
+
+	public String getCopyright() {
+		return copyright;
+	}
+
+	public void setCopyright(String copyright) {
+		this.copyright = copyright;
 	}
 
 }

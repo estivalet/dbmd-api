@@ -1,4 +1,4 @@
-package org.magus;
+package org.magus.domain;
 
 public class Attribute {
 	private String name;
