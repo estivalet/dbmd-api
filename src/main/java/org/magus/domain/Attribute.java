@@ -2,7 +2,7 @@ package org.magus.domain;
 
 public class Attribute {
 	private String name;
-	private String label = "";
+	private String label;
 	private String type;
 	private String value;
 	private String defaultValue;
@@ -57,6 +57,9 @@ public class Attribute {
 	}
 
 	public String getLabel() {
+		if (this.label == null) {
+			return this.name;
+		}
 		return label;
 	}
 

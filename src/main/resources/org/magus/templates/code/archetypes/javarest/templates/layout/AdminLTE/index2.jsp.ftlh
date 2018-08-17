@@ -41,10 +41,12 @@
 						<div class="form-group">
 							<label for="${attribute.name}">${attribute.label}</label>
 							<input type="text" class="form-control" id="${attribute.name}" placeholder="Enter ${attribute.name}">
+							<#if (attribute.description?has_content)>
 							<p class="help-block">${attribute.description}.</p>
+							</#if>
 						</div>
-					</div>
 					</#list>
+					</div>
 					<!-- /.box-body -->
 				</form>
 			</div>
@@ -87,7 +89,7 @@ $(function() {
         	"${attribute.name}" : document.getElementById("${attribute.name}").value,
 		</#list>        	
         };
-        callServer('http://localhost:8080/${app.shortName}/rest/${model.name}/add', "post", obj);
+        callServer('http://localhost:8080/${app.shortName}/rest/${string.toCamelCase(model.name)}/add', "post", obj);
     }
     
     $("#submit").click(function() {
