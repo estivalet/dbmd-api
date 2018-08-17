@@ -96,7 +96,10 @@ public class Test {
 		model.setPluralName("mensagens");
 		attr = new Attribute();
 		attr.setName("texto");
+		attr.setLabel("Texto");
 		attr.setType("text");
+		attr.setTooltip("texto da mensagem");
+		attr.setDescription("texto da mensagem a ser exibido");
 		attr.setDefaultValue("xx");
 		model.addAttribute(attr);
 		app.addModel(model);
@@ -184,6 +187,8 @@ public class Test {
 					"/src/main/java/" + app.getShortName() + "/domain/" + m.getName() + ".java");
 			processTemplate(root, archetype + "java/DomainServlet.java.ftlh",
 					"/src/main/java/" + app.getShortName() + "/server/" + m.getName() + "Servlet.java");
+			processTemplate(root, archetype + "java/DomainResource.java.ftlh",
+					"/src/main/java/" + app.getShortName() + "/resource/" + m.getName() + "Resource.java");
 			processTemplate(root, archetype + "layout/AdminLTE/index2.jsp.ftlh",
 					"/WebContent/WEB-INF/jsp/" + StringUtils.toCamelCase(m.getName()) + "/index.jsp");
 		}

@@ -2,11 +2,14 @@ package org.magus.domain;
 
 public class Attribute {
 	private String name;
-	private String label;
+	private String label = "";
 	private String type;
 	private String value;
 	private String defaultValue;
 	private String formula;
+	private String tooltip;
+	private String description = "";
+	private Boolean required;
 
 	public String getName() {
 		return name;
@@ -59,6 +62,30 @@ public class Attribute {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	public void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
