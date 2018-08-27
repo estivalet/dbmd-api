@@ -25,7 +25,7 @@
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>${app.shortName}.resource</param-value>
+            <param-value>${app.shortName}.service</param-value>
         </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.classnames</param-name>
@@ -38,4 +38,8 @@
         <servlet-name>Rest Servlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>  	
+    
+	<listener>
+ 		<listener-class>${app.shortName}.server.${string.toCamelCase(app.shortName, true)}Servlet</listener-class>
+	</listener>    
  </web-app>

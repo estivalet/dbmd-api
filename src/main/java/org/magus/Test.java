@@ -187,8 +187,16 @@ public class Test {
 					"/src/main/java/" + app.getShortName() + "/domain/" + m.getName() + ".java");
 			processTemplate(root, archetype + "java/DomainServlet.java.ftlh",
 					"/src/main/java/" + app.getShortName() + "/server/" + m.getName() + "Servlet.java");
-			processTemplate(root, archetype + "java/DomainResource.java.ftlh",
-					"/src/main/java/" + app.getShortName() + "/resource/" + m.getName() + "Resource.java");
+			processTemplate(root, archetype + "java/DomainService.java.ftlh",
+					"/src/main/java/" + app.getShortName() + "/service/" + m.getName() + "Service.java");
+
+			// use one or other Model does not use morphia and dao uses morphia mongodb
+			// processTemplate(root, archetype + "java/DomainModel.java.ftlh",
+			// "/src/main/java/" + app.getShortName() + "/model/" + m.getName() +
+			// "Model.java");
+			processTemplate(root, archetype + "java/DomainDao.java.ftlh",
+					"/src/main/java/" + app.getShortName() + "/dao/" + m.getName() + "Dao.java");
+
 			processTemplate(root, archetype + "layout/AdminLTE/index2.jsp.ftlh",
 					"/WebContent/WEB-INF/jsp/" + StringUtils.toCamelCase(m.getName()) + "/index.jsp");
 		}
@@ -207,6 +215,9 @@ public class Test {
 		processTemplate(root, archetype + "layout/AdminLTE/index.jsp.ftlh", "/WebContent/WEB-INF/jsp/index.jsp");
 		processTemplate(root, archetype + "layout/AdminLTE/header.jsp.ftlh", "/WebContent/WEB-INF/jsp/header.jsp");
 		processTemplate(root, archetype + "layout/AdminLTE/footer.jsp.ftlh", "/WebContent/WEB-INF/jsp/footer.jsp");
+
+		processTemplate(root, archetype + "java/MongoConnection.java.ftlh",
+				"/src/main/java/" + app.getShortName() + "/server/MongoConnection.java");
 
 	}
 

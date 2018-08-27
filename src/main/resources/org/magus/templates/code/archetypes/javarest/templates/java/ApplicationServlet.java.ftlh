@@ -9,6 +9,8 @@ package ${app.shortName}.server;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +29,7 @@ import org.luisoft.commons.core.IContext;
 @SuppressWarnings("serial")
 @MultipartConfig
 @WebServlet(name = "${app.shortName}", urlPatterns = "")
-public class ${string.toCamelCase(app.shortName, true)}Servlet extends HttpServlet {
+public class ${string.toCamelCase(app.shortName, true)}Servlet extends HttpServlet implements ServletContextListener {
 
 	/** Servlet context. */
 	private IContext context;
@@ -105,4 +107,27 @@ public class ${string.toCamelCase(app.shortName, true)}Servlet extends HttpServl
 				.getRequestDispatcher("/WEB-INF/jsp/" + page);
 		dispatcher.forward(request, response);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.
+	 * ServletContextEvent)
+	 */
+	public void contextInitialized(ServletContextEvent sce) {
+		MongoConnection conn = MongoConnection.getInstance();
+		conn.init();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.
+	 * ServletContextEvent)
+	 */
+	public void contextDestroyed(ServletContextEvent sce) {
+		MongoConnection conn = MongoConnection.getInstance();
+		conn.close();
+	}
+	
 }

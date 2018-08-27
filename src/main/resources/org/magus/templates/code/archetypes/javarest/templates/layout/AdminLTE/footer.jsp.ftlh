@@ -17,9 +17,13 @@
 <script src="js/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="js/fastclick.js"></script>
+<!-- data tables -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="js/demo.js"></script>
+<script src="js/helper.js"></script>
 </body>
 </html>
