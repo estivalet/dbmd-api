@@ -53,6 +53,7 @@
 			<!-- /.box-body -->
 			<div class="box-footer">
 				<button id="submit" type="button" class="btn btn-primary">Submit</button>
+				<div id="box-body"/>
 			</div>
 			<!-- /.box-footer-->
 		</div>
@@ -68,6 +69,8 @@
 
 <script>
 $(function() {
+
+    list();
 	
     function callServer(url, type, obj) {
         $.ajax({
@@ -91,6 +94,53 @@ $(function() {
         };
         callServer('http://localhost:8080/${app.shortName}/rest/${string.toCamelCase(model.name)}/add', "post", obj);
     }
+    
+    function list() {
+		$.ajax({
+           url: 'http://localhost:8080/${app.shortName}/rest/${string.toCamelCase(model.name)}/list',
+           type: 'GET',
+           error: function() {
+              console.log('<p>An error has occurred</p>');
+           },
+           dataType: 'json',
+           success: function(data) {
+
+               // Creates the table to hold data.                   	   
+			   var table = createTable("box-body","${string.toCamelCase(model.name)}s","table table-striped table-bordered");
+			   
+			   // Build table header by adding columns to the table.
+			   var columns = [];
+			   <#list model.attributes as attribute>
+               columns.push("${attribute.label}");
+			   </#list>
+			   // Add extra columns for editing links.
+               columns.push("");
+               addTableHeader(table, columns);
+
+               // Retrieve data to populate the table.
+               var tableBody = addTableBody(table);
+               data.forEach(function(obj) { 
+                   var tr = addTableRow(tableBody);
+   			       <#list model.attributes as attribute>
+   			       addTableCell(tr, obj.${attribute.name});
+   			       addTableCellHTML(tr, "<a href='#' onclick='edit(" + JSON.stringify(obj.id) + ")'>Edit</a>");
+			       </#list>
+               });
+			   
+               $("#${string.toCamelCase(model.name)}s").DataTable({
+                   "ordering" : false,
+                   "searching" : true,
+                   "paging" : true,
+                   "dom" : "ftp",
+                   "pageLength" : 5,
+                   "language": {
+                       //"url": "plugins/DataTables-1.10.12/i18n/ptBR.json"
+                   }
+               });
+			   
+           }
+        });
+	}    
     
     $("#submit").click(function() {
     	submitData();	
