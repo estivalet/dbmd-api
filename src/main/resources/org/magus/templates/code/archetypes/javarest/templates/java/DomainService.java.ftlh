@@ -7,6 +7,7 @@
 package ${app.shortName}.service;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -43,17 +44,38 @@ public class ${model.name}Service {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert(String contents) {
 		System.out.println("contents--->" + contents);
-   	    //${model.name} domain = new Gson().fromJson(contents, ${model.name}.class);
    	    
 		MongoConnection conn = MongoConnection.getInstance();
 		${model.name}Dao dao = new ${model.name}Dao(conn.getDatastore());
 		${model.name} domain = new Gson().fromJson(contents, ${model.name}.class);
 		DBObject tmp = conn.getMorphia().toDBObject(domain);
-		WriteResult wResult = dao.getCollection().insert(tmp);
+		if (domain.getId() == null) {
+			WriteResult wResult = dao.getCollection().insert(tmp);
+		} else {
+		    DBObject obj = dao.getCollection().findOne(domain.getId());
+		    dao.getCollection().update(obj, tmp);
+		}
    	    
    	    
 		return Response.status(200).build();
 	}
+	
+	@Path("delete")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response delete(String contents) {
+		System.out.println("contents--->" + contents);
+
+		MongoConnection conn = MongoConnection.getInstance();
+		${model.name}Dao dao = new ${model.name}Dao(conn.getDatastore());
+		${model.name} domain = new Gson().fromJson(contents, ${model.name}.class);
+		System.out.println(domain.getId());
+		DBObject tmp = conn.getMorphia().toDBObject(domain);
+		WriteResult wResult = dao.getCollection().remove(tmp);
+
+		return Response.status(200).build();
+	}
+
 	
 	@Path("list")
 	@GET

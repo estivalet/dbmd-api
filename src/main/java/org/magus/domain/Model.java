@@ -31,6 +31,15 @@ public class Model {
 	/** Indicates if the model will have a list of models. */
 	private Boolean hasList = false;
 
+	/** Single attribute to order by the list. */
+	private Attribute orderBy;
+
+	/**
+	 * Display attribute in case of "foreign keys" to be displayed in a combo for
+	 * e.g.
+	 */
+	private Attribute display;
+
 	public String getName() {
 		return name;
 	}
@@ -116,6 +125,22 @@ public class Model {
 
 	public void setHasList(Boolean hasList) {
 		this.hasList = hasList;
+	}
+
+	public Attribute getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(Attribute orderBy) {
+		this.orderBy = orderBy;
+	}
+
+	public Attribute getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(Attribute display) {
+		this.display = display;
 	}
 
 }

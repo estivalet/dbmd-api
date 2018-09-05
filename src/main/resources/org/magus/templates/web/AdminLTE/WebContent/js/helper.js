@@ -23,6 +23,7 @@ callServerJSON = function(method, url, f, data) {
  * @param url Server URL to call.
  * @param f Function to execute after server return.
  */
+/*
 function callServer(url, f) {
 	// Check if browser supports Ajax calls.
     if (document.getElementById) { 
@@ -41,7 +42,7 @@ function callServer(url, f) {
         }
     }  
 }
-
+*/
 function createForm(id, method, action) {
 	var form = document.createElement("form");
 	form.setAttribute("id", id);

@@ -102,6 +102,7 @@ public class Test {
 		attr.setDescription("texto da mensagem a ser exibido");
 		attr.setDefaultValue("xx");
 		model.addAttribute(attr);
+		model.setOrderBy(attr);
 		app.addModel(model);
 	}
 
