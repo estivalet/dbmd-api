@@ -2,7 +2,6 @@ package org.magus;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -10,30 +9,26 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.magus.domain.App;
 import org.magus.domain.Attribute;
 import org.magus.domain.Model;
 import org.zeeltech.util.IOUtil;
 import org.zeeltech.util.StringUtils;
 
-import com.google.gson.GsonBuilder;
-
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.TemplateHashModel;
 
-public class Test {
+public class MasterDetailExample {
 	private App app = new App();
 	private Configuration cfg;
 
 	public void setupTemplate() {
 		cfg = new Configuration(Configuration.VERSION_2_3_28);
-		cfg.setClassForTemplateLoading(Test.class, "/org/magus/templates/code");
+		cfg.setClassForTemplateLoading(MasterDetailExample.class, "/org/magus/templates/code");
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		cfg.setLogTemplateExceptions(false);
@@ -47,6 +42,8 @@ public class Test {
 	 * @throws Exception
 	 */
 	public void processTemplate(Object dataModel, String templateFile, String destFile) throws Exception {
+		System.out.println(app.getFullPath() + destFile);
+
 		// Create destination folder.
 		new File(app.getFullPath());
 		if (destFile.lastIndexOf("/") > 0) {
@@ -61,108 +58,42 @@ public class Test {
 	}
 
 	public void createApp() {
-		app.setName("Alura Javascript Course");
+		app.setName("Book Archive");
 		app.setCopyright("(c) Luiz Fernando Estivalet 2018");
 		app.setPath("C:/temp/apps");
-		app.setShortName("alura1");
+		app.setShortName("barch");
 
-		Model model = new Model();
-		model.setName("Negociacao");
-		model.setPluralName("negociacoes");
-		model.setImutable(true);
-		model.setController(true);
-		model.setHasList(true);
+		Model author = new Model();
+		author.setName("Author");
+		author.setPluralName("authors");
+		author.setImutable(true);
+		author.setController(true);
+		author.setHasList(true);
 		Attribute attr = new Attribute();
-		attr.setName("data");
-		attr.setType("date");
-		model.addAttribute(attr);
-		attr = new Attribute();
-		attr.setName("quantidade");
-		attr.setType("number");
-		model.addAttribute(attr);
-		attr = new Attribute();
-		attr.setName("valor");
-		attr.setType("double");
-		model.addAttribute(attr);
-		attr = new Attribute();
-		attr.setName("volume");
-		attr.setType("formula");
-		attr.setValue("this._valor * this._quantidade");
-		model.addAttribute(attr);
-		app.addModel(model);
-
-		model = new Model();
-		model.setName("Mensagem");
-		model.setPluralName("mensagens");
-		attr = new Attribute();
-		attr.setName("texto");
-		attr.setLabel("Texto");
+		attr.setName("name");
 		attr.setType("text");
-		attr.setTooltip("texto da mensagem");
-		attr.setDescription("texto da mensagem a ser exibido");
-		attr.setDefaultValue("xx");
-		model.addAttribute(attr);
-		model.setOrderBy(attr);
-		app.addModel(model);
-	}
+		attr.setModel(author);
+		attr.setReferenced(true);
+		author.addAttribute(attr);
+		app.addModel(author);
 
-	private void generateJS(String archetype) throws IOException, TemplateException {
-		// Create app folder and copy static files
-		new File(app.getFullPath()).mkdirs();
-		new File(app.getFullPath() + "/js/app/models/").mkdirs();
-		new File(app.getFullPath() + "/js/app/controllers/").mkdirs();
-		File sourceLocation = new File(Test.class.getResource(".").getPath() + "archetypes/javascript/static");
-		File targetLocation = new File(app.getFullPath());
-		FileUtils.copyDirectory(sourceLocation, targetLocation);
-
-		// Create a data-model.
-		Map root = new HashMap();
-		root.put("app", app);
-
-		// Generate models.
-		for (Model m : app.getModels()) {
-			root.put("model", m);
-
-			// Get the model template (uses cache internally).
-			Template template = cfg.getTemplate(archetype + "model.js.ftlh");
-			Writer fileWriter = new FileWriter(new File(app.getFullPath() + "/js/app/models/" + m.getName() + ".js"));
-			template.process(root, fileWriter);
-			fileWriter.close();
-
-			//
-			template = cfg.getTemplate(archetype + "view.js.ftlh");
-			fileWriter = new FileWriter(new File(
-					app.getFullPath() + "/js/app/views/" + StringUtils.capitalize(m.getPluralName()) + "View.js"));
-			template.process(root, fileWriter);
-			fileWriter.close();
-
-			if (m.getController()) {
-				// Get the controller template (uses cache internally).
-				template = cfg.getTemplate(archetype + "controller.js.ftlh");
-				fileWriter = new FileWriter(
-						new File(app.getFullPath() + "/js/app/controllers/" + m.getName() + "Controller.js"));
-				template.process(root, fileWriter);
-				fileWriter.close();
-			}
-
-			if (m.getHasList()) {
-				template = cfg.getTemplate(archetype + "listmodel.js.ftlh");
-				fileWriter = new FileWriter(new File(app.getFullPath() + "/js/app/models/Lista"
-						+ StringUtils.capitalize(m.getPluralName()) + ".js"));
-				template.process(root, fileWriter);
-				fileWriter.close();
-
-			}
-		}
-
-		// Generate main index.html file.
-		Template template = cfg.getTemplate(archetype + "index.html.ftlh");
-		Writer fileWriter = new FileWriter(new File(app.getFullPath() + "/index.html"));
-		template.process(null, fileWriter);
-		fileWriter.close();
-
-		System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(app));
-
+		Model book = new Model();
+		book.setName("Book");
+		book.setPluralName("books");
+		attr = new Attribute();
+		attr.setName("title");
+		attr.setLabel("Title");
+		attr.setType("text");
+		book.addAttribute(attr);
+		// attr = new Attribute();
+		// attr.setName("authorId");
+		// attr.setLabel("Author");
+		// attr.setType("text");
+		// attr.setReferenced(true);
+		// book.addAttribute(attr);
+		book.setOrderBy(attr);
+		book.addModel(author);
+		app.addModel(book);
 	}
 
 	private void generateJava(String archetype) throws Exception {
@@ -223,25 +154,25 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Test t = new Test();
+		MasterDetailExample t = new MasterDetailExample();
 		t.setupTemplate();
 		t.createApp();
 		// t.generateJS("/archetypes/javascript/templates/");
 		t.generateJava("/archetypes/javarest/templates/");
 
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		URL url = Test.class.getClassLoader().getResource(".");
+		URL url = MasterDetailExample.class.getClassLoader().getResource(".");
 		File file = new File(url.toURI());
 		System.out.println(file.getAbsolutePath());
 
 		// Copy web template
 		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE/";
-		String dest = "C:/temp/apps/alura1/";
+		String dest = "C:/temp/apps/barch/";
 		IOUtil.copyFiles(new File(src), new File(dest), false);
 
 		// Copy java framework common code
 		src = System.getProperty("user.dir") + "/src/main/resources/org/magus/framework/";
-		dest = "C:/temp/apps/alura1/src/main/java/";
+		dest = "C:/temp/apps/barch/src/main/java/";
 		IOUtil.copyFiles(new File(src), new File(dest), false);
 
 	}

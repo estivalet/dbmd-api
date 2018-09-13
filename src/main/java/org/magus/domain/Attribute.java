@@ -9,7 +9,13 @@ public class Attribute {
 	private String formula;
 	private String tooltip;
 	private String description = "";
+	private Integer maxLength;
 	private Boolean required;
+	/** Bidirectional reference. */
+	private Model model;
+
+	/** If the attribute is referenced by other model. */
+	private Boolean referenced;
 
 	public String getName() {
 		return name;
@@ -89,6 +95,30 @@ public class Attribute {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Boolean getReferenced() {
+		return referenced;
+	}
+
+	public void setReferenced(Boolean referenced) {
+		this.referenced = referenced;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public Integer getMaxLength() {
+		return maxLength;
+	}
+
+	public void setMaxLength(Integer maxLength) {
+		this.maxLength = maxLength;
 	}
 
 }

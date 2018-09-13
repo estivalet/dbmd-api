@@ -87,6 +87,18 @@ public class Model {
 		return attrs;
 	}
 
+	public List<Attribute> getReferencedAttributes() {
+		List<Attribute> attrs = new ArrayList<Attribute>();
+		for (Model m : this.models) {
+			for (Attribute a : m.attributes) {
+				if (a.getReferenced()) {
+					attrs.add(a);
+				}
+			}
+		}
+		return attrs;
+	}
+
 	public String getAttributesCommaSeparated() {
 		return attributes.stream().map(c -> String.valueOf(c)).collect(Collectors.joining(","));
 	}

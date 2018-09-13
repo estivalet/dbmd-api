@@ -22,7 +22,11 @@ public class ${model.name} extends BaseMongoDO implements Serializable, Cloneabl
     <#list model.attributes as attribute>
     private ${type.getJavaType(attribute.type)} ${attribute.name};
 	</#list>
-	
+
+    <#list model.models as submodel>
+    private String ${string.toCamelCase(submodel.name)}Id;
+	</#list>
+		
 	<#list model.attributes as attribute>
     /**
      * @param ${attribute.name}
@@ -40,4 +44,15 @@ public class ${model.name} extends BaseMongoDO implements Serializable, Cloneabl
 	}
 	
 	</#list>
+    <#list model.models as submodel>
+    public void set${string.toCamelCase(submodel.name,true)}Id(String id) {
+        this.${string.toCamelCase(submodel.name)}Id = id;
+    }
+    
+    public String get${string.toCamelCase(submodel.name,true)}Id() {
+        return this.${string.toCamelCase(submodel.name)}Id;
+    }
+    
+	</#list>
+	
 }

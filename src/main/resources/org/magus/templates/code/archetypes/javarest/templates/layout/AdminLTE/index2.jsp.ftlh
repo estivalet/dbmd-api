@@ -37,7 +37,7 @@
 				<!-- form start -->
 				<form role="form">
 					<div class="box-body">
-				    <#list model.attributes as attribute>
+				        <#list model.attributes as attribute>
 						<div class="form-group">
 							<label for="${attribute.name}">${attribute.label}</label>
 							<input type="text" class="form-control" id="${attribute.name}" placeholder="Enter ${attribute.name}">
@@ -45,7 +45,16 @@
 							<p class="help-block">${attribute.description}.</p>
 							</#if>
 						</div>
-					</#list>
+					    </#list>
+					    
+   				        <#list model.getReferencedAttributes() as refattr>
+						<div class="form-group">
+						    <label for="${string.toCamelCase(refattr.model.name)}Id">${refattr.model.name}'s ${refattr.label}</label>
+						    <select class="form-control" id="${string.toCamelCase(refattr.model.name)}Id">
+						    </select>
+						</div>
+					    </#list>
+					
 					</div>
 					<!-- /.box-body -->
 				</form>
@@ -53,7 +62,7 @@
 			<!-- /.box-body -->
 			<div class="box-footer">
 				<button id="submit" type="button" class="btn btn-primary">Submit</button>
-				<div id="box-body"/>
+				<div id="box-body"></div>
 			</div>
 			<!-- /.box-footer-->
 		</div>
@@ -92,6 +101,7 @@ function callServer(url, type, obj) {
         data: JSON.stringify(obj),                      
         type: type,
         error: function(xhr, status, error) {
+        	console.log(error);
         },
         success: function(data) {
             console.log("OK" + data);
@@ -108,10 +118,13 @@ function clearForm() {
 
 function submitData() {
     var obj = { 
-    <#list model.attributes as attribute>
+        <#list model.attributes as attribute>
     	"${attribute.name}" : document.getElementById("${attribute.name}").value,
-	</#list>        	
+	    </#list>        	
     	"id":currentObjId,
+        <#list model.getReferencedAttributes() as refattr>
+        "${string.toCamelCase(refattr.model.name)}Id": $("${string.toCamelCase(refattr.model.name)}Id").val(),
+	    </#list>        	
     };
     clearForm();
     callServer('http://localhost:8080/${app.shortName}/rest/${string.toCamelCase(model.name)}/add', "post", obj);
@@ -170,8 +183,31 @@ $("#submit").click(function() {
 	submitData();	
 });    
 
-list();
+function loadReferencedData() {
+    <#list model.getReferencedAttributes() as refattr>
+	$.ajax({
+	       url: 'http://localhost:8080/barch/rest/${string.toCamelCase(refattr.model.name)}/list',
+	       type: 'GET',
+	       error: function() {
+	          console.log('<p>An error has occurred</p>');
+	       },
+	       dataType: 'json',
+	       success: function(data) {
+	    	   $("#${string.toCamelCase(refattr.model.name)}Id").empty();
+	    	   $.each(data, function (i, item) {
+	    		   console.log(item);
+	    		    $('#${string.toCamelCase(refattr.model.name)}Id').append($('<option>', { 
+	    		        value: item.id,
+	    		        text : item.name 
+	    		    }));
+	    		});	    	   
+	       }
+	});
+	</#list>
+}
 
+list();
+loadReferencedData();
 </script>
 
 

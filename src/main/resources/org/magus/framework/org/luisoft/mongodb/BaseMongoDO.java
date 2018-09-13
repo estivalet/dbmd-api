@@ -8,8 +8,9 @@ import org.mongodb.morphia.annotations.Version;
 public class BaseMongoDO {
 
 	@Id
-	@Property("id")
-	private ObjectId id;
+	//@Property("id")
+	//private ObjectId id;
+	private String id;
 
 	@Version
 	@Property("version")
@@ -19,11 +20,11 @@ public class BaseMongoDO {
 		super();
 	}
 
-	public ObjectId getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

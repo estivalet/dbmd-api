@@ -15,6 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
+
 import com.google.gson.Gson;
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
@@ -52,8 +54,11 @@ public class ${model.name}Service {
 		if (domain.getId() == null) {
 			WriteResult wResult = dao.getCollection().insert(tmp);
 		} else {
-		    DBObject obj = dao.getCollection().findOne(domain.getId());
-		    dao.getCollection().update(obj, tmp);
+			ObjectId id = new ObjectId(domain.getId());
+			DBObject obj = dao.getCollection().findOne(id);
+			tmp.removeField("_id");
+			tmp.put("_id", id);
+			dao.getCollection().update(obj, tmp);
 		}
    	    
    	    
@@ -71,6 +76,9 @@ public class ${model.name}Service {
 		${model.name} domain = new Gson().fromJson(contents, ${model.name}.class);
 		System.out.println(domain.getId());
 		DBObject tmp = conn.getMorphia().toDBObject(domain);
+		ObjectId id = new ObjectId(domain.getId());
+		tmp.removeField("_id");
+		tmp.put("_id", id);
 		WriteResult wResult = dao.getCollection().remove(tmp);
 
 		return Response.status(200).build();

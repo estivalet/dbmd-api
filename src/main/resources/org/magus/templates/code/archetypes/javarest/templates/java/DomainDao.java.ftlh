@@ -19,6 +19,7 @@ public class ${model.name}Dao extends BasicDAO<${model.name}, ObjectId> {
 		super(ds);
 	}
 
+/*
 	public static void main(String[] args) {
 		MongoConnection conn = MongoConnection.getInstance();
 		${model.name}Dao dao = new ${model.name}Dao(conn.getDatastore());
@@ -70,4 +71,5 @@ public class ${model.name}Dao extends BasicDAO<${model.name}, ObjectId> {
 		
 
 	}
+	*/
 }
