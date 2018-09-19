@@ -123,7 +123,7 @@ function submitData() {
 	    </#list>        	
     	"id":currentObjId,
         <#list model.getReferencedAttributes() as refattr>
-        "${string.toCamelCase(refattr.model.name)}Id": $("${string.toCamelCase(refattr.model.name)}Id").val(),
+        "${string.toCamelCase(refattr.model.name)}Id": $("#${string.toCamelCase(refattr.model.name)}Id").val(),
 	    </#list>        	
     };
     clearForm();
@@ -150,6 +150,10 @@ function list() {
 		   <#list model.attributes as attribute>
            columns.push("${attribute.label}");
 		   </#list>
+           <#list model.getReferencedAttributes() as refattr>
+		   columns.push("${refattr.model.name}'s ${refattr.label}");
+  	       </#list>
+		   
 		   // Add extra columns for editing links.
            columns.push("");
            addTableHeader(table, columns);
@@ -160,6 +164,9 @@ function list() {
                var tr = addTableRow(tableBody);
 		       <#list model.attributes as attribute>
 		       addTableCell(tr, obj.${attribute.name});
+	           <#list model.getReferencedAttributes() as refattr>
+			   addTableCell(tr, "${refattr.model.name}'s ${refattr.label}");
+	  	       </#list>
 		       addTableCellHTML(tr, "<a href='#' onclick='edit(" + JSON.stringify(obj) + ")'>Edit</a>&nbsp;<a href='#' onclick='remove(" + JSON.stringify(obj) + ")'>Delete</a>");
 		       </#list>
            });

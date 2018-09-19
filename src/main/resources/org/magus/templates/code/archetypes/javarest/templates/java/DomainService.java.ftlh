@@ -6,6 +6,9 @@
 
 package ${app.shortName}.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,6 +30,11 @@ import ${app.shortName}.server.MongoConnection;
 
 
 import ${app.shortName}.domain.${model.name};
+
+<#list model.models as submodel>
+import ${app.shortName}.dao.${submodel.name}Dao;
+import ${app.shortName}.domain.${submodel.name};
+</#list>
 
 /**
  * ${model.name} services.
@@ -89,9 +97,22 @@ public class ${model.name}Service {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String list() {
+		List<${model.name}> ${string.toCamelCase(model.name)}s = new ArrayList<${model.name}>();
 		MongoConnection conn = MongoConnection.getInstance();
 		${model.name}Dao dao = new ${model.name}Dao(conn.getDatastore());
-		return new Gson().toJson(dao.find().asList());
+		
+		for (${model.name} b : dao.find()) {
+			<#list model.models as submodel>
+			if (b.get${string.toCamelCase(submodel.name, true)}Id() != null) {
+				${submodel.name}Dao ${string.toCamelCase(submodel.name)}Dao = new ${submodel.name}Dao(conn.getDatastore());
+				DBObject obj = ${string.toCamelCase(submodel.name)}Dao.getCollection().findOne(new ObjectId(b.get${string.toCamelCase(submodel.name, true)}Id()));
+				${submodel.name} ${string.toCamelCase(submodel.name)} = conn.getMorphia().fromDBObject(conn.getDatastore(), ${submodel.name}.class, obj);
+				b.set${submodel.name}(${string.toCamelCase(submodel.name)});
+			}
+			</#list>
+			${string.toCamelCase(model.name)}s.add(b);
+		}
+		return new Gson().toJson(${string.toCamelCase(model.name)}s);
 	}
 
 }
