@@ -205,7 +205,7 @@ function loadReferencedData() {
 	    		   console.log(item);
 	    		    $('#${string.toCamelCase(refattr.model.name)}Id').append($('<option>', { 
 	    		        value: item.id,
-	    		        text : item.name 
+	    		        text : item.${string.toCamelCase(refattr.name)}
 	    		    }));
 	    		});	    	   
 	       }
