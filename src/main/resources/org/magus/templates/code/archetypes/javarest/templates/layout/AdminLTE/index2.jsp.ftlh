@@ -165,7 +165,7 @@ function list() {
 		       <#list model.attributes as attribute>
 		       addTableCell(tr, obj.${attribute.name});
 	           <#list model.getReferencedAttributes() as refattr>
-			   addTableCell(tr, "${refattr.model.name}'s ${refattr.label}");
+			   addTableCell(tr, obj.${string.toCamelCase(refattr.model.name)}.${string.toCamelCase(refattr.name)});
 	  	       </#list>
 		       addTableCellHTML(tr, "<a href='#' onclick='edit(" + JSON.stringify(obj) + ")'>Edit</a>&nbsp;<a href='#' onclick='remove(" + JSON.stringify(obj) + ")'>Delete</a>");
 		       </#list>

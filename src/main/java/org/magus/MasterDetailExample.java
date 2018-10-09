@@ -77,6 +77,20 @@ public class MasterDetailExample {
 		author.addAttribute(attr);
 		app.addModel(author);
 
+		Model country = new Model();
+		country.setName("Country");
+		country.setPluralName("countries");
+		country.setImutable(true);
+		country.setController(true);
+		country.setHasList(true);
+		attr = new Attribute();
+		attr.setName("description"); // name of the country change it after some tests
+		attr.setType("text");
+		attr.setModel(country);
+		attr.setReferenced(true);
+		country.addAttribute(attr);
+		app.addModel(country);
+
 		Model book = new Model();
 		book.setName("Book");
 		book.setPluralName("books");
@@ -93,6 +107,7 @@ public class MasterDetailExample {
 		// book.addAttribute(attr);
 		book.setOrderBy(attr);
 		book.addModel(author);
+		book.addModel(country);
 		app.addModel(book);
 	}
 
