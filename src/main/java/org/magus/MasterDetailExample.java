@@ -75,6 +75,7 @@ public class MasterDetailExample {
 		attr.setModel(author);
 		attr.setReferenced(true);
 		author.addAttribute(attr);
+		author.setOrderBy(attr);
 		app.addModel(author);
 
 		Model country = new Model();
@@ -89,6 +90,7 @@ public class MasterDetailExample {
 		attr.setModel(country);
 		attr.setReferenced(true);
 		country.addAttribute(attr);
+		country.setOrderBy(attr);
 		app.addModel(country);
 
 		Model book = new Model();

@@ -24,7 +24,6 @@ public class ${model.name} extends BaseMongoDO implements Serializable, Cloneabl
 	</#list>
 
     <#list model.models as submodel>
-    private String ${string.toCamelCase(submodel.name)}Id;
     
     private ${submodel.name} ${string.toCamelCase(submodel.name)};
 	</#list>
@@ -47,14 +46,6 @@ public class ${model.name} extends BaseMongoDO implements Serializable, Cloneabl
 	
 	</#list>
     <#list model.models as submodel>
-    public void set${string.toCamelCase(submodel.name,true)}Id(String id) {
-        this.${string.toCamelCase(submodel.name)}Id = id;
-    }
-    
-    public String get${string.toCamelCase(submodel.name,true)}Id() {
-        return this.${string.toCamelCase(submodel.name)}Id;
-    }
-
     public void set${submodel.name}(${submodel.name} obj) {
         this.${string.toCamelCase(submodel.name)} = obj;
     }

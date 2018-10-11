@@ -123,7 +123,9 @@ function submitData() {
 	    </#list>        	
     	"id":currentObjId,
         <#list model.getReferencedAttributes() as refattr>
-        "${string.toCamelCase(refattr.model.name)}Id": $("#${string.toCamelCase(refattr.model.name)}Id").val(),
+        "${string.toCamelCase(refattr.model.name)}": {
+        	"id": $("#${string.toCamelCase(refattr.model.name)}Id").val(),
+        },
 	    </#list>        	
     };
     clearForm();

@@ -99,13 +99,12 @@ public class ${model.name}Service {
 	public String list() {
 		List<${model.name}> ${string.toCamelCase(model.name)}s = new ArrayList<${model.name}>();
 		MongoConnection conn = MongoConnection.getInstance();
-		${model.name}Dao dao = new ${model.name}Dao(conn.getDatastore());
 		
-		for (${model.name} b : dao.find()) {
+		for (${model.name} b : conn.getDatastore().find(${model.name}.class).order("${model.orderBy.name}")) {
 			<#list model.models as submodel>
-			if (b.get${string.toCamelCase(submodel.name, true)}Id() != null) {
+			if (b.get${string.toCamelCase(submodel.name, true)}().getId() != null) {
 				${submodel.name}Dao ${string.toCamelCase(submodel.name)}Dao = new ${submodel.name}Dao(conn.getDatastore());
-				DBObject obj = ${string.toCamelCase(submodel.name)}Dao.getCollection().findOne(new ObjectId(b.get${string.toCamelCase(submodel.name, true)}Id()));
+				DBObject obj = ${string.toCamelCase(submodel.name)}Dao.getCollection().findOne(new ObjectId(b.get${string.toCamelCase(submodel.name, true)}().getId()));
 				${submodel.name} ${string.toCamelCase(submodel.name)} = conn.getMorphia().fromDBObject(conn.getDatastore(), ${submodel.name}.class, obj);
 				b.set${submodel.name}(${string.toCamelCase(submodel.name)});
 			}
