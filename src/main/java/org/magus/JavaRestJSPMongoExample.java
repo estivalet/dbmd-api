@@ -22,13 +22,13 @@ import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.TemplateHashModel;
 
-public class MasterDetailExample {
+public class JavaRestJSPMongoExample {
 	private App app = new App();
 	private Configuration cfg;
 
 	public void setupTemplate() {
 		cfg = new Configuration(Configuration.VERSION_2_3_28);
-		cfg.setClassForTemplateLoading(MasterDetailExample.class, "/org/magus/templates/code");
+		cfg.setClassForTemplateLoading(JavaRestJSPMongoExample.class, "/org/magus/templates/code");
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		cfg.setLogTemplateExceptions(false);
@@ -171,19 +171,22 @@ public class MasterDetailExample {
 	}
 
 	public static void main(String[] args) throws Exception {
-		MasterDetailExample t = new MasterDetailExample();
+		String archetype = "/archetypes/java-rest-jsp-mongo/templates/";
+
+		JavaRestJSPMongoExample t = new JavaRestJSPMongoExample();
 		t.setupTemplate();
 		t.createApp();
 		// t.generateJS("/archetypes/javascript/templates/");
-		t.generateJava("/archetypes/javarest/templates/");
+		t.generateJava(archetype);
 
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		URL url = MasterDetailExample.class.getClassLoader().getResource(".");
+		URL url = JavaRestJSPMongoExample.class.getClassLoader().getResource(".");
 		File file = new File(url.toURI());
 		System.out.println(file.getAbsolutePath());
 
-		// Copy web template
-		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE/";
+		// Copy java web dependencies.
+		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/code" + archetype
+				+ "web";
 		String dest = "C:/temp/apps/barch/";
 		IOUtil.copyFiles(new File(src), new File(dest), false);
 

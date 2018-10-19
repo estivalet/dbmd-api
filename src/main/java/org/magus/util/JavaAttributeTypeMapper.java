@@ -15,4 +15,13 @@ public class JavaAttributeTypeMapper {
 
 		return "String";
 	}
+
+	public static String getJSType(String attributeType) {
+		if ("text".equals(attributeType)) {
+			return "String";
+		}
+
+		return "String";
+	}
+
 }

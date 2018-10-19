@@ -1,1 +1,0 @@
-Templates based on Alura Javascript Advanced course
