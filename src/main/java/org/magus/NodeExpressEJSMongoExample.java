@@ -11,6 +11,7 @@ import java.util.Map;
 import org.magus.domain.App;
 import org.magus.domain.Attribute;
 import org.magus.domain.Model;
+import org.zeeltech.util.IOUtil;
 import org.zeeltech.util.StringUtils;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -105,6 +106,18 @@ public class NodeExpressEJSMongoExample {
 		processTemplate(root, archetype + "app.js.ftlh", "/app.js");
 		processTemplate(root, archetype + "package.json.ftlh", "/package.json");
 		processTemplate(root, archetype + "app/models/schema.model.js.ftlh", "/app/models/schema.model.js");
+		processTemplate(root, archetype + "app/controllers/app.controller.js.ftlh",
+				"/app/controllers/" + app.getShortName() + ".controller.js");
+		processTemplate(root, archetype + "app/routes/app.route.js.ftlh",
+				"/app/routes/" + app.getShortName() + ".routes.js");
+
+		processTemplate(root, archetype + "app/views/content.ejs.ftlh", "/app/views/content.ejs");
+		processTemplate(root, archetype + "app/views/controlbar.ejs.ftlh", "/app/views/controlbar.ejs");
+		processTemplate(root, archetype + "app/views/footer.ejs.ftlh", "/app/views/footer.ejs");
+		processTemplate(root, archetype + "app/views/index.ejs.ftlh", "/app/views/index.ejs");
+		processTemplate(root, archetype + "app/views/leftbar.ejs.ftlh", "/app/views/leftbar.ejs");
+		processTemplate(root, archetype + "app/views/topbar.ejs.ftlh", "/app/views/topbar.ejs");
+
 		for (Model m : app.getModels()) {
 			root.put("model", m);
 			processTemplate(root, archetype + "app/routes/model.route.js.ftlh",
@@ -112,6 +125,12 @@ public class NodeExpressEJSMongoExample {
 			processTemplate(root, archetype + "app/controllers/model.controller.js.ftlh",
 					"/app/controllers/" + StringUtils.toCamelCase(m.getName()) + ".controller.js");
 		}
+
+		// Copy java framework common code
+		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE/";
+		String dest = "C:/temp/appsjs/barch/public/";
+		IOUtil.copyFiles(new File(src), new File(dest), false);
+
 	}
 
 	public static void main(String[] args) throws Exception {

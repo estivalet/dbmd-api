@@ -2,20 +2,19 @@ const models = require('../models/schema.model.js');
 
 exports.index = (req, res) => {
     console.log("INDEX");
-    res.render('genre/index', { title: "Genre page" });
+    res.render('${string.toCamelCase(model.name)}/index', { title: "${model.name} page" });
 }
 
-// Create and Save a new genre
 exports.create = (req, res) => {
     try {
 
     // Create a genre.
-    const genre = new models.Genre({
+    const ${string.toCamelCase(model.name)} = new models.${string.toCamelCase(model.name, true)}({
         name: req.body.name
     });
 
     // Save a genre in the database.
-    genre.save()
+    ${string.toCamelCase(model.name)}.save()
         .then(data => {
             res.send(data);
         }).catch(err => {
@@ -36,17 +35,17 @@ exports.findAll = (req, res) => {
 
     // if a number of page is passed as a parameter use it, otherwise list all genres.
     if(page) {
-        models.Genre.find({})
+        models.${string.toCamelCase(model.name, true)}.find({})
         .sort({'name': 1})
         .skip((perPage * page) - perPage)
         .limit(perPage)
-        .exec(function(err, genres) {
-            models.Genre.countDocuments().exec(function(err, count) {
+        .exec(function(err, data) {
+            models.${string.toCamelCase(model.name, true)}.countDocuments().exec(function(err, count) {
                 
                 if(err) return next(err);
                 
                 result = {
-                    genres: genres,
+                    data: data,
                     current: page,
                     pages: Math.ceil(count / perPage)
                 };
@@ -55,9 +54,9 @@ exports.findAll = (req, res) => {
             })
         });
     } else {
-        models.Genre.find()
-        .then(genres => {
-            res.send(genres);
+        models.${string.toCamelCase(model.name, true)}.find()
+        .then(data => {
+            res.send(data);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving genres."
@@ -68,22 +67,22 @@ exports.findAll = (req, res) => {
 
 // Find a single country with a countryId
 exports.findOne = (req, res) => {
-    models.Genre.findById(req.params.genreId)
-    .then(genre => {
-        if(!genre) {
+    models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
+    .then(data => {
+        if(!data) {
             return res.status(404).send({
-                message: "genre not found with id " + req.params.genreId
+                message: "genre not found with id " + req.params.${string.toCamelCase(model.name)}Id
             });            
         }
-        res.send(genre);
+        res.send(data);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "genre not found with id " + req.params.genreId
+                message: "genre not found with id " + req.params.${string.toCamelCase(model.name)}Id
             });                
         }
         return res.status(500).send({
-            message: "Error retrieving genre with id " + req.params.genreId
+            message: "Error retrieving genre with id " + req.params.${string.toCamelCase(model.name)}Id
         });
     });
 };
@@ -91,46 +90,46 @@ exports.findOne = (req, res) => {
 // Update a country identified by the countryId in the request
 exports.update = (req, res) => {
     // Find note and update it with the request body
-    models.Genre.findByIdAndUpdate(req.params.genreId, {
+    models.${string.toCamelCase(model.name, true)}.findByIdAndUpdate(req.params.${string.toCamelCase(model.name)}Id, {
         name: req.body.name
     }, {new: true})
-    .then(genre => {
-        if(!genre) {
+    .then(data => {
+        if(!data) {
             return res.status(404).send({
-                message: "genre not found with id " + req.params.genreId
+                message: "genre not found with id " + req.params.${string.toCamelCase(model.name)}Id
             });
         }
-        res.send(genre);
+        res.send(data);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "genre not found with id " + req.params.genreId
+                message: "genre not found with id " + req.params.${string.toCamelCase(model.name)}Id
             });                
         }
         return res.status(500).send({
-            message: "Error updating genre with id " + req.params.genreId
+            message: "Error updating genre with id " + req.params.${string.toCamelCase(model.name)}Id
         });
     });
 };
 
 // Delete a country with the specified countryId in the request
 exports.delete = (req, res) => {
-    models.Genre.findByIdAndRemove(req.params.genreId)
-        .then(genre => {
-            if(!genre) {
+    models.${string.toCamelCase(model.name, true)}.findByIdAndRemove(req.params.${string.toCamelCase(model.name)}Id)
+        .then(data => {
+            if(!data) {
                 return res.status(404).send({
-                    message: "genre not found with id " + req.params.genreId
+                    message: "genre not found with id " + req.params.${string.toCamelCase(model.name)}Id
                 });
             }
             res.send({message: "genre deleted successfully!"});
         }).catch(err => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "genre not found with id " + req.params.genreId
+                    message: "genre not found with id " + req.params.${string.toCamelCase(model.name)}Id
                 });                
             }
             return res.status(500).send({
-                message: "Could not delete genre with id " + req.params.genreId
+                message: "Could not delete genre with id " + req.params.${string.toCamelCase(model.name)}Id
             });
     });
 };
