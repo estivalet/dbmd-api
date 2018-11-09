@@ -124,6 +124,10 @@ public class NodeExpressEJSMongoExample {
 					"/app/routes/" + StringUtils.toCamelCase(m.getName()) + ".routes.js");
 			processTemplate(root, archetype + "app/controllers/model.controller.js.ftlh",
 					"/app/controllers/" + StringUtils.toCamelCase(m.getName()) + ".controller.js");
+			processTemplate(root, archetype + "app/views/model/content.ejs.ftlh",
+					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/content.ejs");
+			processTemplate(root, archetype + "app/views/model/index.ejs.ftlh",
+					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/index.ejs");
 		}
 
 		// Copy java framework common code
