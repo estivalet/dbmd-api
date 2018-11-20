@@ -26,16 +26,9 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li><a href="/company/index"><i class="fa fa-book"></i> <span>Company</span></a></li>
-        <li><a href="/country/index"><i class="fa fa-book"></i> <span>Country</span></a></li>
-        <li><a href="/genre/index"><i class="fa fa-book"></i> <span>Genre</span></a></li>
-        <li><a href="/license/index"><i class="fa fa-book"></i> <span>License</span></a></li>
-        <li><a href="/media/index"><i class="fa fa-book"></i> <span>Media</span></a></li>
-        <li><a href="/software/index"><i class="fa fa-book"></i> <span>Software</span></a></li>
-        <li class="header">LOCAL DATABASES</li>
-        <li><a href="/generationmsx/index"><i class="fa fa-book"></i> <span>generationmsx.nl</span></a></li>
-        <li><a href="/mobygames/index"><i class="fa fa-book"></i> <span>mobygames.com</span></a></li>
-        <li><a href="/msxgamesworld/index"><i class="fa fa-book"></i> <span>msxgamesworld.com</span></a></li>
+        <#list app.models as model>
+        <li><a href="/${string.toCamelCase(model.name)}/index"><i class="fa fa-book"></i> <span>${model.name}</span></a></li>
+        </#list>
       </ul>
     </section>
     <!-- /.sidebar -->

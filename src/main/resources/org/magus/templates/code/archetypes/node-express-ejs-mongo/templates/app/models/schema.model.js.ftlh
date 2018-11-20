@@ -7,11 +7,15 @@ var ${string.toCamelCase(model.name)}Schema = new Schema(
 <#list model.attributes as attribute>
     ${attribute.name}: { type: ${type.getJSType(attribute.type)} },
 </#list>
+<#list model.getReferencedAttributes() as refattr>
+    ${string.toCamelCase(refattr.model.name)}:{ type: Schema.Types.ObjectId, ref: '${refattr.model.name}' },
+</#list>
   },
   {
     timestamps: true,
     toObject: { virtuals: true },
-    toJSON: { virtuals: true }
+    toJSON: { virtuals: true },
+    collection: '${string.toCamelCase(model.name)}'   // force to use the name, if not moongoose add "s" at the and of the collection.
   }
 );
 </#list>

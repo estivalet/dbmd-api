@@ -78,11 +78,47 @@ public class NodeExpressEJSMongoExample {
 		Attribute attr = new Attribute();
 		attr.setName("name");
 		attr.setType("text");
+		attr.setLabel("Nome do Autor");
+		attr.setDescription("Nome completo do autor do livro");
 		attr.setModel(author);
 		attr.setReferenced(true);
 		author.addAttribute(attr);
 		author.setOrderBy(attr);
 		app.addModel(author);
+
+		Model country = new Model();
+		country.setName("Country");
+		country.setPluralName("countries");
+		country.setImutable(true);
+		country.setController(true);
+		country.setHasList(true);
+		attr = new Attribute();
+		attr.setName("description"); // name of the country change it after some tests
+		attr.setType("text");
+		attr.setModel(country);
+		attr.setReferenced(true);
+		country.addAttribute(attr);
+		country.setOrderBy(attr);
+		app.addModel(country);
+
+		Model book = new Model();
+		book.setName("Book");
+		book.setPluralName("books");
+		attr = new Attribute();
+		attr.setName("title");
+		attr.setLabel("Title");
+		attr.setType("text");
+		book.addAttribute(attr);
+		// attr = new Attribute();
+		// attr.setName("authorId");
+		// attr.setLabel("Author");
+		// attr.setType("text");
+		// attr.setReferenced(true);
+		// book.addAttribute(attr);
+		book.setOrderBy(attr);
+		book.addModel(author);
+		book.addModel(country);
+		app.addModel(book);
 	}
 
 	private void generate(String archetype) throws Exception {
@@ -134,6 +170,8 @@ public class NodeExpressEJSMongoExample {
 		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE/";
 		String dest = "C:/temp/appsjs/barch/public/";
 		IOUtil.copyFiles(new File(src), new File(dest), false);
+
+		System.out.println("Finished copying files");
 
 	}
 
