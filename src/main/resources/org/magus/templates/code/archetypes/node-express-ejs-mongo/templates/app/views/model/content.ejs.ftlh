@@ -19,17 +19,23 @@
                 <div class="box box-primary">
                 
                     <div class="box-header with-border"><h3 class="box-title">New ${model.name}</h3></div>
-                
+                	
                     <form role="form" id="${string.toCamelCase(model.name)}">
                 
                         <div class="box-body">
+		                    <div class="row">
+			                    <div class="col-md-10 col-md-offset-1">
+			                        <div id="message" role="alert"></div>
+			                    </div>
+		                    </div>
+                        
                         	<#list model.attributes as attribute>
-                            <div class="form-group">
-                                <label for="name">${attribute.label}</label>
+                            <div id="div-${attribute.name}" class="form-group">
+                                <label for="name"><i id="i-${attribute.name}"></i> ${attribute.label}</label>
                                 <input type="hidden" id="id">
                                 <input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name} name">
 								<#if (attribute.description?has_content)>
-								<p class="help-block">${attribute.description}.</p>
+								<p id="p-${attribute.name}" class="help-block">${attribute.description}.</p>
 								</#if>
                             </div>
                             </#list>
@@ -42,7 +48,12 @@
 							</div>
 						    </#list>
                             
+                            <button type="button" id="submit" class="btn btn-primary">Submit</button>
 
+    
+                        </div>
+      
+                        <div class="box-footer">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
                                     <caption></caption>
@@ -61,11 +72,6 @@
                             </div> 
                             <ul class="pagination text-center" id="pagination">
                             </ul>
-    
-                        </div>
-      
-                        <div class="box-footer">
-                            <button type="button" id="submit" class="btn btn-primary">Submit</button>
                         </div>
                 
                     </form>
@@ -80,6 +86,23 @@
 </div>
 
 <script>
+function resetForm() {
+	$("#${string.toCamelCase(model.name)}")[0].reset();
+	<#list model.attributes as attribute>
+	<#if attribute.required>
+    if($('#${attribute.name}').val() == ''){
+        $("#div-${attribute.name}").removeClass("has-error");
+        $("#p-${attribute.name}").text("");
+        <#if (attribute.description?has_content)>
+        $("#p-${attribute.name}").html("${attribute.description}.");
+        </#if>
+        $("#i-${attribute.name}").removeClass("fa fa-times-circle-o");
+    }
+    </#if>
+	</#list>
+}
+
+
 function save_${string.toCamelCase(model.name)}() {    
     $.ajax({
         url: $("#id").val() ? '/${string.toCamelCase(model.name)}/' + $("#id").val() : '/${string.toCamelCase(model.name)}',
@@ -95,8 +118,16 @@ function save_${string.toCamelCase(model.name)}() {
 			"${string.toCamelCase(refattr.model.name)}Id": $("#${string.toCamelCase(refattr.model.name)}Id").val(),
 			</#list>
         },
-        success: function( data, textStatus, jQxhr ) {
-            $("#${string.toCamelCase(model.name)}")[0].reset();
+        success: function( data, textStatus, xhr ) {
+            if(xhr.status==201 || xhr.status==200) {
+                $("#message").addClass("alert alert-success alert-dismissible fade in text-center");
+                if(xhr.status==200) {
+                	$("#message").text("Author updated");
+                } else {
+                	$("#message").text("Author added");
+                }
+            }
+			resetForm();        
             changePage("${string.toCamelCase(model.name)}", 1);
         },
         error: function( jqXhr, textStatus, errorThrown ){
@@ -104,27 +135,53 @@ function save_${string.toCamelCase(model.name)}() {
         }
     });
 }
+
+function validateForm() {
+	<#list model.attributes as attribute>
+	<#if (attribute.required)>
+    if($('#${attribute.name}').val() == ''){
+        $("#div-${attribute.name}").addClass("has-error");
+        $("#p-${attribute.name}").text("This field is required");
+        $("#i-${attribute.name}").addClass("fa fa-times-circle-o");
+        $('#${attribute.name}').focus();
+	    return false;
+    }
+    </#if>
+    </#list>    
+
+	return true;
+}
+
+
 $("#submit").click(function() {
-    save_${string.toCamelCase(model.name)}();
+    if(validateForm()) {
+        save_${string.toCamelCase(model.name)}();
+    }
 });
+
 document.onkeydown=function(){
     if(window.event.keyCode == '13'){
         event.preventDefault();
         save_${string.toCamelCase(model.name)}();
     }
 }
+
 function edit_${string.toCamelCase(model.name)}(id) {
     console.log(id);
     $.ajax({
         url: '/${string.toCamelCase(model.name)}/' + id,
         dataType: 'json',
         type: 'get',
-        success: function( data, textStatus, jQxhr ) {
+        success: function( data, textStatus, xhr ) {
+        
             console.log('-->update ');
             console.log(data);
             $('#id').val(data.id);
             <#list model.attributes as attribute>
-            $('#name').val(data.${attribute.name});
+            $('#${attribute.name}').val(data.${attribute.name});
+            </#list>
+            <#list model.getReferencedAttributes() as refattr>
+            $('#${string.toCamelCase(refattr.model.name)}Id').val(data.${string.toCamelCase(refattr.model.name)});
             </#list>
             //$('#name').focus();
         },
@@ -138,9 +195,15 @@ function delete_${string.toCamelCase(model.name)}(id) {
     $.ajax({
       url : "/${string.toCamelCase(model.name)}/" + id,
       type : "delete",
-      success : function(data) {
+      success : function(data, textStatus, xhr) {
           console.log(data);
+            if(xhr.status==200) {
+                $("#message").addClass("alert alert-success alert-dismissible fade in text-center"); 
+                $("#message").text("Author deleted");
+            }
+          
           changePage("${string.toCamelCase(model.name)}", 1);
+          $("#message").text(data.message);
       }
     });
 }

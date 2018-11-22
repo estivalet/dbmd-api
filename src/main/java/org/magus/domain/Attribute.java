@@ -10,7 +10,7 @@ public class Attribute {
 	private String tooltip;
 	private String description = "";
 	private Integer maxLength;
-	private Boolean required;
+	private Boolean required = false;
 	/** Bidirectional reference. */
 	private Model model;
 

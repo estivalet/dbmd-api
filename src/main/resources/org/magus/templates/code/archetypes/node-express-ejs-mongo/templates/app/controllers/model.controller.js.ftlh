@@ -20,7 +20,7 @@ exports.create = (req, res) => {
 
     ${string.toCamelCase(model.name)}.save()
         .then(data => {
-            res.send(data);
+            res.status(201).send(data);
         }).catch(err => {
             console.log("errrrrrr" +err )
             res.status(500).send(
@@ -95,7 +95,12 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     // Find note and update it with the request body
     models.${string.toCamelCase(model.name, true)}.findByIdAndUpdate(req.params.${string.toCamelCase(model.name)}Id, {
-        name: req.body.name
+        <#list model.attributes as attribute>
+        ${attribute.name}: req.body.${attribute.name},
+        </#list>
+		<#list model.getReferencedAttributes() as refattr>
+		${string.toCamelCase(refattr.model.name)}: req.body.${string.toCamelCase(refattr.model.name)}Id,
+		</#list>
     }, {new: true})
     .then(data => {
         if(!data) {
@@ -103,7 +108,7 @@ exports.update = (req, res) => {
                 message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
             });
         }
-        res.send(data);
+        res.status(200).send(data);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -125,7 +130,7 @@ exports.delete = (req, res) => {
                     message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
                 });
             }
-            res.send({message: "${model.name} deleted successfully!"});
+            res.status(200).send({message: "${model.name} deleted successfully!"});
         }).catch(err => {
             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({

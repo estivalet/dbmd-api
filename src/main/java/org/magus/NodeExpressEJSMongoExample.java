@@ -11,7 +11,6 @@ import java.util.Map;
 import org.magus.domain.App;
 import org.magus.domain.Attribute;
 import org.magus.domain.Model;
-import org.zeeltech.util.IOUtil;
 import org.zeeltech.util.StringUtils;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -79,9 +78,10 @@ public class NodeExpressEJSMongoExample {
 		attr.setName("name");
 		attr.setType("text");
 		attr.setLabel("Nome do Autor");
-		attr.setDescription("Nome completo do autor do livro");
+		attr.setDescription("Full author's name");
 		attr.setModel(author);
 		attr.setReferenced(true);
+		attr.setRequired(true);
 		author.addAttribute(attr);
 		author.setOrderBy(attr);
 		app.addModel(author);
@@ -166,10 +166,12 @@ public class NodeExpressEJSMongoExample {
 					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/index.ejs");
 		}
 
-		// Copy java framework common code
-		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE/";
-		String dest = "C:/temp/appsjs/barch/public/";
-		IOUtil.copyFiles(new File(src), new File(dest), false);
+		// Copy java framework common code (commented because it takes time to copy,
+		// uncomment it again when fisnihed)
+		// String src = System.getProperty("user.dir") +
+		// "/src/main/resources/org/magus/templates/web/AdminLTE/";
+		// String dest = "C:/temp/appsjs/barch/public/";
+		// IOUtil.copyFiles(new File(src), new File(dest), false);
 
 		System.out.println("Finished copying files");
 
