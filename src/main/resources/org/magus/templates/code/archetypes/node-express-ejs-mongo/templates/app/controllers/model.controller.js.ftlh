@@ -13,7 +13,7 @@ exports.create = (req, res) => {
         ${attribute.name}: req.body.${attribute.name},
         </#list>
 		<#list model.getReferencedAttributes() as refattr>
-		${string.toCamelCase(refattr.model.name)}: req.body.${string.toCamelCase(refattr.model.name)}Id,
+		${string.toCamelCase(refattr.model)}: req.body.${string.toCamelCase(refattr.model)}Id,
 		</#list>
         
     });
@@ -99,7 +99,7 @@ exports.update = (req, res) => {
         ${attribute.name}: req.body.${attribute.name},
         </#list>
 		<#list model.getReferencedAttributes() as refattr>
-		${string.toCamelCase(refattr.model.name)}: req.body.${string.toCamelCase(refattr.model.name)}Id,
+		${string.toCamelCase(refattr.model)}: req.body.${string.toCamelCase(refattr.model)}Id,
 		</#list>
     }, {new: true})
     .then(data => {

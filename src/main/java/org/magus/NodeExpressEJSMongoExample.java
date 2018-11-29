@@ -2,6 +2,8 @@ package org.magus;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +13,11 @@ import java.util.Map;
 import org.magus.domain.App;
 import org.magus.domain.Attribute;
 import org.magus.domain.Model;
+import org.zeeltech.util.IOUtil;
 import org.zeeltech.util.StringUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
@@ -28,7 +34,6 @@ import freemarker.template.TemplateHashModel;
  */
 public class NodeExpressEJSMongoExample {
 
-	private App app = new App();
 	private Configuration cfg;
 
 	public void setupTemplate() {
@@ -46,7 +51,7 @@ public class NodeExpressEJSMongoExample {
 	 * @param destFile
 	 * @throws Exception
 	 */
-	public void processTemplate(Object dataModel, String templateFile, String destFile) throws Exception {
+	public void processAppTemplate(App app, Object dataModel, String templateFile, String destFile) throws Exception {
 		System.out.println(app.getFullPath() + destFile);
 
 		// Create destination folder.
@@ -63,6 +68,7 @@ public class NodeExpressEJSMongoExample {
 	}
 
 	public void createApp() {
+		App app = new App();
 		app.setName("Book Archive Node Express EJS Mongo Template");
 		app.setCopyright("(c) Luiz Fernando Estivalet 2018");
 		app.setPath("C:/temp/appsjs");
@@ -79,11 +85,11 @@ public class NodeExpressEJSMongoExample {
 		attr.setType("text");
 		attr.setLabel("Nome do Autor");
 		attr.setDescription("Full author's name");
-		attr.setModel(author);
+		attr.setModel("Author");
 		attr.setReferenced(true);
 		attr.setRequired(true);
 		author.addAttribute(attr);
-		author.setOrderBy(attr);
+		// author.setOrderBy(attr);
 		app.addModel(author);
 
 		Model country = new Model();
@@ -95,10 +101,11 @@ public class NodeExpressEJSMongoExample {
 		attr = new Attribute();
 		attr.setName("description"); // name of the country change it after some tests
 		attr.setType("text");
-		attr.setModel(country);
+		attr.setModel("Country");
 		attr.setReferenced(true);
+		attr.setOrderBy(true);
 		country.addAttribute(attr);
-		country.setOrderBy(attr);
+		// country.setOrderBy(attr);
 		app.addModel(country);
 
 		Model book = new Model();
@@ -115,13 +122,21 @@ public class NodeExpressEJSMongoExample {
 		// attr.setType("text");
 		// attr.setReferenced(true);
 		// book.addAttribute(attr);
-		book.setOrderBy(attr);
+		// book.setOrderBy(attr);
 		book.addModel(author);
 		book.addModel(country);
 		app.addModel(book);
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		try (FileWriter writer = new FileWriter("node-express-ejs-mongo-app.json")) {
+			gson.toJson(app, writer);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	private void generate(String archetype) throws Exception {
+	private void generateApp(String archetype, App app) throws Exception {
 		// Create a data-model.
 		Map root = new HashMap();
 		root.put("app", app);
@@ -137,32 +152,32 @@ public class NodeExpressEJSMongoExample {
 		root.put("date", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 		root.put("user", System.getProperty("user.name"));
 
-		processTemplate(root, "/common/.gitignore.ftlh", "/.gitignore");
-		processTemplate(root, archetype + "config/database.config.js.ftlh", "/config/database.config.js");
-		processTemplate(root, archetype + "app.js.ftlh", "/app.js");
-		processTemplate(root, archetype + "package.json.ftlh", "/package.json");
-		processTemplate(root, archetype + "app/models/schema.model.js.ftlh", "/app/models/schema.model.js");
-		processTemplate(root, archetype + "app/controllers/app.controller.js.ftlh",
+		processAppTemplate(app, root, "/common/.gitignore.ftlh", "/.gitignore");
+		processAppTemplate(app, root, archetype + "config/database.config.js.ftlh", "/config/database.config.js");
+		processAppTemplate(app, root, archetype + "app.js.ftlh", "/app.js");
+		processAppTemplate(app, root, archetype + "package.json.ftlh", "/package.json");
+		processAppTemplate(app, root, archetype + "app/models/schema.model.js.ftlh", "/app/models/schema.model.js");
+		processAppTemplate(app, root, archetype + "app/controllers/app.controller.js.ftlh",
 				"/app/controllers/" + app.getShortName() + ".controller.js");
-		processTemplate(root, archetype + "app/routes/app.route.js.ftlh",
+		processAppTemplate(app, root, archetype + "app/routes/app.route.js.ftlh",
 				"/app/routes/" + app.getShortName() + ".routes.js");
 
-		processTemplate(root, archetype + "app/views/content.ejs.ftlh", "/app/views/content.ejs");
-		processTemplate(root, archetype + "app/views/controlbar.ejs.ftlh", "/app/views/controlbar.ejs");
-		processTemplate(root, archetype + "app/views/footer.ejs.ftlh", "/app/views/footer.ejs");
-		processTemplate(root, archetype + "app/views/index.ejs.ftlh", "/app/views/index.ejs");
-		processTemplate(root, archetype + "app/views/leftbar.ejs.ftlh", "/app/views/leftbar.ejs");
-		processTemplate(root, archetype + "app/views/topbar.ejs.ftlh", "/app/views/topbar.ejs");
+		processAppTemplate(app, root, archetype + "app/views/content.ejs.ftlh", "/app/views/content.ejs");
+		processAppTemplate(app, root, archetype + "app/views/controlbar.ejs.ftlh", "/app/views/controlbar.ejs");
+		processAppTemplate(app, root, archetype + "app/views/footer.ejs.ftlh", "/app/views/footer.ejs");
+		processAppTemplate(app, root, archetype + "app/views/index.ejs.ftlh", "/app/views/index.ejs");
+		processAppTemplate(app, root, archetype + "app/views/leftbar.ejs.ftlh", "/app/views/leftbar.ejs");
+		processAppTemplate(app, root, archetype + "app/views/topbar.ejs.ftlh", "/app/views/topbar.ejs");
 
 		for (Model m : app.getModels()) {
 			root.put("model", m);
-			processTemplate(root, archetype + "app/routes/model.route.js.ftlh",
+			processAppTemplate(app, root, archetype + "app/routes/model.route.js.ftlh",
 					"/app/routes/" + StringUtils.toCamelCase(m.getName()) + ".routes.js");
-			processTemplate(root, archetype + "app/controllers/model.controller.js.ftlh",
+			processAppTemplate(app, root, archetype + "app/controllers/model.controller.js.ftlh",
 					"/app/controllers/" + StringUtils.toCamelCase(m.getName()) + ".controller.js");
-			processTemplate(root, archetype + "app/views/model/content.ejs.ftlh",
+			processAppTemplate(app, root, archetype + "app/views/model/content.ejs.ftlh",
 					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/content.ejs");
-			processTemplate(root, archetype + "app/views/model/index.ejs.ftlh",
+			processAppTemplate(app, root, archetype + "app/views/model/index.ejs.ftlh",
 					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/index.ejs");
 		}
 
@@ -178,10 +193,17 @@ public class NodeExpressEJSMongoExample {
 	}
 
 	public static void main(String[] args) throws Exception {
+		// Read app json description.
+		InputStream in = NodeExpressEJSMongoExample.class.getResourceAsStream("node-express-ejs-mongo-app.json");
+		String json = IOUtil.readFully(in);
+		Gson gson = new Gson();
+		App app = gson.fromJson(json, App.class);
+		in.close();
+
 		NodeExpressEJSMongoExample t = new NodeExpressEJSMongoExample();
 		t.setupTemplate();
-		t.createApp();
-		t.generate("/archetypes/node-express-ejs-mongo/templates/");
+		// t.createApp();
+		t.generateApp("/archetypes/node-express-ejs-mongo/templates/", app);
 
 	}
 }

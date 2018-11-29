@@ -8,7 +8,7 @@ var ${string.toCamelCase(model.name)}Schema = new Schema(
     ${attribute.name}: { type: ${type.getJSType(attribute.type)} },
 </#list>
 <#list model.getReferencedAttributes() as refattr>
-    ${string.toCamelCase(refattr.model.name)}:{ type: Schema.Types.ObjectId, ref: '${refattr.model.name}' },
+    ${string.toCamelCase(refattr.model)}:{ type: Schema.Types.ObjectId, ref: '${refattr.model}' },
 </#list>
   },
   {

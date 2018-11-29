@@ -1,6 +1,9 @@
 package org.magus.domain;
 
-public class Service {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Service implements Serializable {
 	private String name;
 	private String url;
 

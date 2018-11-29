@@ -72,10 +72,10 @@ public class JavaRestJSPMongoExample {
 		Attribute attr = new Attribute();
 		attr.setName("name");
 		attr.setType("text");
-		attr.setModel(author);
+		// attr.setModel(author);
 		attr.setReferenced(true);
 		author.addAttribute(attr);
-		author.setOrderBy(attr);
+		// author.setOrderBy(attr);
 		app.addModel(author);
 
 		Model country = new Model();
@@ -87,10 +87,10 @@ public class JavaRestJSPMongoExample {
 		attr = new Attribute();
 		attr.setName("description"); // name of the country change it after some tests
 		attr.setType("text");
-		attr.setModel(country);
+		// attr.setModel(country);
 		attr.setReferenced(true);
 		country.addAttribute(attr);
-		country.setOrderBy(attr);
+		// country.setOrderBy(attr);
 		app.addModel(country);
 
 		Model book = new Model();
@@ -107,7 +107,7 @@ public class JavaRestJSPMongoExample {
 		// attr.setType("text");
 		// attr.setReferenced(true);
 		// book.addAttribute(attr);
-		book.setOrderBy(attr);
+		// book.setOrderBy(attr);
 		book.addModel(author);
 		book.addModel(country);
 		app.addModel(book);

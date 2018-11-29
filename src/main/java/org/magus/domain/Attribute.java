@@ -1,6 +1,9 @@
 package org.magus.domain;
 
-public class Attribute {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Attribute implements Serializable {
 	private String name;
 	private String label;
 	private String type;
@@ -11,8 +14,11 @@ public class Attribute {
 	private String description = "";
 	private Integer maxLength;
 	private Boolean required = false;
+	private Boolean orderBy = false;
+	private Integer orderByNum = 0;
 	/** Bidirectional reference. */
-	private Model model;
+	// private Model model;
+	private String model;
 
 	/** If the attribute is referenced by other model. */
 	private Boolean referenced;
@@ -105,13 +111,13 @@ public class Attribute {
 		this.referenced = referenced;
 	}
 
-	public Model getModel() {
-		return model;
-	}
-
-	public void setModel(Model model) {
-		this.model = model;
-	}
+	// public Model getModel() {
+	// return model;
+	// }
+	//
+	// public void setModel(Model model) {
+	// this.model = model;
+	// }
 
 	public Integer getMaxLength() {
 		return maxLength;
@@ -119,6 +125,30 @@ public class Attribute {
 
 	public void setMaxLength(Integer maxLength) {
 		this.maxLength = maxLength;
+	}
+
+	public Boolean getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(Boolean orderBy) {
+		this.orderBy = orderBy;
+	}
+
+	public Integer getOrderByNum() {
+		return orderByNum;
+	}
+
+	public void setOrderByNum(Integer orderByNum) {
+		this.orderByNum = orderByNum;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 }

@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
  * Represents a model/entity of an application.
  * 
  * @author lestivalet
  */
 @SuppressWarnings("serial")
-public class Model implements Serializable {
+public class Model2 implements Serializable {
 
 	/** Model name. */
 	private String name;
@@ -23,7 +26,7 @@ public class Model implements Serializable {
 	protected List<Attribute> attributes = new ArrayList<Attribute>();
 
 	/** List of models of this model. */
-	protected List<Model> models = new ArrayList<Model>();
+	protected List<Model2> models = new ArrayList<Model2>();
 
 	/** Indicates if the model is imutable or not. */
 	private Boolean imutable = false;
@@ -59,11 +62,11 @@ public class Model implements Serializable {
 		return attributes;
 	}
 
-	public void addModel(Model model) {
+	public void addModel(Model2 model) {
 		this.models.add(model);
 	}
 
-	public List<Model> getModels() {
+	public List<Model2> getModels() {
 		return models;
 	}
 
@@ -92,7 +95,7 @@ public class Model implements Serializable {
 
 	public List<Attribute> getReferencedAttributes() {
 		List<Attribute> attrs = new ArrayList<Attribute>();
-		for (Model m : this.models) {
+		for (Model2 m : this.models) {
 			for (Attribute a : m.attributes) {
 				if (a.getReferenced()) {
 					attrs.add(a);
@@ -142,13 +145,13 @@ public class Model implements Serializable {
 		this.hasList = hasList;
 	}
 
-	// public Attribute getOrderBy() {
-	// return orderBy;
-	// }
-	//
-	// public void setOrderBy(Attribute orderBy) {
-	// this.orderBy = orderBy;
-	// }
+	public Attribute getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(Attribute orderBy) {
+		this.orderBy = orderBy;
+	}
 
 	public Attribute getDisplay() {
 		return display;
@@ -158,4 +161,68 @@ public class Model implements Serializable {
 		this.display = display;
 	}
 
+	public static void main(String[] args) {
+		App app = new App();
+		app.setName("Book Archive Node Express EJS Mongo Template");
+		app.setCopyright("(c) Luiz Fernando Estivalet 2018");
+		app.setPath("C:/temp/appsjs");
+		app.setShortName("barch");
+
+		Model author = new Model();
+		author.setName("Author");
+		author.setPluralName("authors");
+		author.setImutable(true);
+		author.setController(true);
+		author.setHasList(true);
+		Attribute attr = new Attribute();
+		attr.setName("name");
+		attr.setType("text");
+		attr.setLabel("Nome do Autor");
+		attr.setDescription("Full author's name");
+		// attr.setModel(author);
+		attr.setReferenced(true);
+		attr.setRequired(true);
+		author.addAttribute(attr);
+		// author.setOrderBy(attr);
+		// app.addModel(author);
+
+		Model country = new Model();
+		country.setName("Country");
+		country.setPluralName("countries");
+		country.setImutable(true);
+		country.setController(true);
+		country.setHasList(true);
+		attr = new Attribute();
+		attr.setName("description"); // name of the country change it after some tests
+		attr.setType("text");
+		// attr.setModel(country);
+		attr.setReferenced(true);
+		country.addAttribute(attr);
+		// country.setOrderBy(attr);
+		app.addModel(country);
+
+		Model book = new Model();
+		book.setName("Book");
+		book.setPluralName("books");
+		attr = new Attribute();
+		attr.setName("title");
+		attr.setLabel("Title");
+		attr.setType("text");
+		book.addAttribute(attr);
+		attr = new Attribute();
+		attr.setName("authorId");
+		attr.setLabel("Author");
+		attr.setType("text");
+		attr.setReferenced(true);
+		book.addAttribute(attr);
+		// book.setOrderBy(attr);
+		// book.addModel(author);
+		// book.addModel(country);
+		app.addModel(book);
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json = gson.toJson(app);
+		System.out.println(json);
+
+	}
 }

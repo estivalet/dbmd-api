@@ -33,7 +33,8 @@
                             <div id="div-${attribute.name}" class="form-group">
                                 <label for="name"><i id="i-${attribute.name}"></i> ${attribute.label}</label>
                                 <input type="hidden" id="id">
-                                <input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name} name">
+								<input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}>
+                                
 								<#if (attribute.description?has_content)>
 								<p id="p-${attribute.name}" class="help-block">${attribute.description}.</p>
 								</#if>
@@ -42,8 +43,8 @@
                             
 	   				        <#list model.getReferencedAttributes() as refattr>
 							<div class="form-group">
-							    <label for="${string.toCamelCase(refattr.model.name)}Id">${refattr.model.name}'s ${refattr.label}</label>
-							    <select class="form-control" id="${string.toCamelCase(refattr.model.name)}Id">
+							    <label for="${string.toCamelCase(refattr.model)}Id">${refattr.model}'s ${refattr.label}</label>
+							    <select class="form-control" id="${string.toCamelCase(refattr.model)}Id">
 							    </select>
 							</div>
 						    </#list>
@@ -115,7 +116,7 @@ function save_${string.toCamelCase(model.name)}() {
             "${attribute.name}": $("#${attribute.name}").val(),
             </#list>
 			<#list model.getReferencedAttributes() as refattr>
-			"${string.toCamelCase(refattr.model.name)}Id": $("#${string.toCamelCase(refattr.model.name)}Id").val(),
+			"${string.toCamelCase(refattr.model)}Id": $("#${string.toCamelCase(refattr.model)}Id").val(),
 			</#list>
         },
         success: function( data, textStatus, xhr ) {
@@ -181,7 +182,7 @@ function edit_${string.toCamelCase(model.name)}(id) {
             $('#${attribute.name}').val(data.${attribute.name});
             </#list>
             <#list model.getReferencedAttributes() as refattr>
-            $('#${string.toCamelCase(refattr.model.name)}Id').val(data.${string.toCamelCase(refattr.model.name)});
+            $('#${string.toCamelCase(refattr.model)}Id').val(data.${string.toCamelCase(refattr.model)});
             </#list>
             //$('#name').focus();
         },
@@ -298,17 +299,17 @@ function changePage(target, page) {
 function loadReferencedData() {
     <#list model.getReferencedAttributes() as refattr>
 	$.ajax({
-	       url: '/${string.toCamelCase(refattr.model.name)}',
+	       url: '/${string.toCamelCase(refattr.model)}',
 	       type: 'GET',
 	       error: function() {
 	          console.log('<p>An error has occurred</p>');
 	       },
 	       dataType: 'json',
 	       success: function(data) {
-	    	   $("#${string.toCamelCase(refattr.model.name)}Id").empty();
+	    	   $("#${string.toCamelCase(refattr.model)}Id").empty();
 	    	   $.each(data, function (i, item) {
 	    		   console.log(item);
-	    		    $('#${string.toCamelCase(refattr.model.name)}Id').append($('<option>', { 
+	    		    $('#${string.toCamelCase(refattr.model)}Id').append($('<option>', { 
 	    		        value: item.id,
 	    		        text : item.${string.toCamelCase(refattr.name)}
 	    		    }));

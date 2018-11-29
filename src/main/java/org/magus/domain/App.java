@@ -1,9 +1,11 @@
 package org.magus.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class App {
+@SuppressWarnings("serial")
+public class App implements Serializable {
 	private String name;
 	private String shortName;
 	private String path;

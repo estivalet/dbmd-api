@@ -1,0 +1,111 @@
+{
+  "name": "Book Archive Node Express EJS Mongo Template",
+  "shortName": "barch",
+  "path": "C:/temp/appsjs",
+  "copyright": "(c) Luiz Fernando Estivalet 2018",
+  "models": [
+    {
+      "name": "Author",
+      "pluralName": "authors",
+      "attributes": [
+        {
+          "name": "name",
+          "label": "Nome do Autor",
+          "type": "text",
+          "description": "Full author\u0027s name",
+          "required": true,
+          "orderBy": false,
+          "orderByNum": 0,
+          "model": "Author",
+          "referenced": true
+        }
+      ],
+      "models": [],
+      "imutable": true,
+      "controller": true,
+      "hasList": true
+    },
+    {
+      "name": "Country",
+      "pluralName": "countries",
+      "attributes": [
+        {
+          "name": "description",
+          "type": "text",
+          "description": "",
+          "required": false,
+          "orderBy": true,
+          "orderByNum": 0,
+          "model": "Country",
+          "referenced": true
+        }
+      ],
+      "models": [],
+      "imutable": true,
+      "controller": true,
+      "hasList": true
+    },
+    {
+      "name": "Book",
+      "pluralName": "books",
+      "attributes": [
+        {
+          "name": "title",
+          "label": "Title",
+          "type": "text",
+          "description": "",
+          "required": false,
+          "orderBy": false,
+          "orderByNum": 0
+        }
+      ],
+      "models": [
+        {
+          "name": "Author",
+          "pluralName": "authors",
+          "attributes": [
+            {
+              "name": "name",
+              "label": "Nome do Autor",
+              "type": "text",
+              "description": "Full author\u0027s name",
+              "required": true,
+              "orderBy": false,
+              "orderByNum": 0,
+              "model": "Author",
+              "referenced": true
+            }
+          ],
+          "models": [],
+          "imutable": true,
+          "controller": true,
+          "hasList": true
+        },
+        {
+          "name": "Country",
+          "pluralName": "countries",
+          "attributes": [
+            {
+              "name": "description",
+              "type": "text",
+              "description": "",
+              "required": false,
+              "orderBy": true,
+              "orderByNum": 0,
+              "model": "Country",
+              "referenced": true
+            }
+          ],
+          "models": [],
+          "imutable": true,
+          "controller": true,
+          "hasList": true
+        }
+      ],
+      "imutable": false,
+      "controller": false,
+      "hasList": false
+    }
+  ],
+  "services": []
+}
