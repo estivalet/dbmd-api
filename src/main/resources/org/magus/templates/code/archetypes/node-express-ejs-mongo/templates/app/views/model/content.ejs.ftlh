@@ -59,12 +59,18 @@
                                 <table class="table table-striped table-hover">
                                     <caption></caption>
                                     <thead class="thead-light">
-                                    <#list model.attributes as attribute>
                                         <tr>
+                                    <#list model.attributes as attribute>
                                             <th>${attribute.name}</th>
+									</#list>   
+									<#list model.getReferencedAttributes() as refattr>
+						            <#if (refattr.referencedVisible)>
+											<th>${refattr.model}</th>
+									</#if>
+									</#list>
                                             <th></th>
                                         </tr>
-									</#list>                                        
+									                                     
                                     </thead>
                                     
                                     <tbody id="${string.toCamelCase(model.name)}List">
@@ -219,18 +225,28 @@ function changePage(target, page) {
           var tableBody = document.getElementById(target + "List");
           tableBody.innerHTML = "";
           $.each(result.data, function(index, element) {
-            
-            // Create a row.
-            <#list model.attributes as attribute>
+			            
             var tr = document.createElement('TR');
             tableBody.appendChild(tr);
-            // Name column.
+            // Create columns for model attributes.
+            <#list model.attributes as attribute>
             var td = document.createElement('TD');
             var span = document.createElement('SPAN');
             span.innerHTML = element.${string.toCamelCase(attribute.name)};
             td.appendChild(span);
             tr.appendChild(td);
             </#list>
+            
+			<#list model.getReferencedAttributes() as refattr>
+			<#if (refattr.referencedVisible)>
+            var td = document.createElement('TD');
+            var span = document.createElement('SPAN');
+            span.innerHTML = element.${string.toCamelCase(refattr.model)}.${string.toCamelCase(refattr.name)};
+            td.appendChild(span);
+            tr.appendChild(td);
+            </#if>
+			</#list>
+            
             // Actions column.
             var td = document.createElement('TD');
             var span = document.createElement('SPAN');

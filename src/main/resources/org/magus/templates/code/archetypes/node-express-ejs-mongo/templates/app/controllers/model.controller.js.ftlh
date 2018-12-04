@@ -40,6 +40,9 @@ exports.findAll = (req, res) => {
     // if a number of page is passed as a parameter use it, otherwise list all.
     if(page) {
         models.${string.toCamelCase(model.name, true)}.find({})
+        <#list model.getReferencedAttributes() as refattr>
+	    .populate('${string.toCamelCase(refattr.model)}')
+		</#list>
         .sort({'name': 1})
         .skip((perPage * page) - perPage)
         .limit(perPage)

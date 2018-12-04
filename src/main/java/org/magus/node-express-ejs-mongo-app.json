@@ -17,7 +17,8 @@
           "orderBy": false,
           "orderByNum": 0,
           "model": "Author",
-          "referenced": true
+          "referenced": true,
+          "referencedVisible": true
         }
       ],
       "models": [],
@@ -37,7 +38,8 @@
           "orderBy": true,
           "orderByNum": 0,
           "model": "Country",
-          "referenced": true
+          "referenced": true,
+          "referencedVisible": false
         }
       ],
       "models": [],
@@ -56,7 +58,8 @@
           "description": "",
           "required": false,
           "orderBy": false,
-          "orderByNum": 0
+          "orderByNum": 0,
+          "referencedVisible": true
         }
       ],
       "models": [
@@ -93,7 +96,8 @@
               "orderBy": true,
               "orderByNum": 0,
               "model": "Country",
-              "referenced": true
+              "referenced": true,
+              "referencedVisible": false
             }
           ],
           "models": [],

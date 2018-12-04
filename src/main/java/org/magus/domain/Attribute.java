@@ -4,24 +4,58 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Attribute implements Serializable {
+
+	/** Name of the attribute. */
 	private String name;
+
+	/** Label to be displayed for the attribute. */
 	private String label;
+
+	/** Type of the attribute to render for input (text, select, ...) */
 	private String type;
+
+	/** Value set for the attribute. */
 	private String value;
+
+	/** Default value for the attribute. */
 	private String defaultValue;
+
+	/** Formula used to calculate the value of the attribute. */
 	private String formula;
+
+	/** Tool tip to be displayed for the attribute. */
 	private String tooltip;
+
+	/** Description to be displayed for the attribute. */
 	private String description = "";
+
+	/** Max length of the attribute. */
 	private Integer maxLength;
+
+	/** Indicates if the attribute is required or not. */
 	private Boolean required = false;
+
+	/** If the attribute is visible in a table for example. */
+	private Boolean visible = true;
+
+	/** Indicates if the attribute can be editable or it is read-only. */
+	private Boolean readOnly = true;
+
+	/** Indicates if this attribute is used to order the list of attributes. */
 	private Boolean orderBy = false;
+
+	/** Indicates the order number if attribute is ordered. */
 	private Integer orderByNum = 0;
+
 	/** Bidirectional reference. */
 	// private Model model;
 	private String model;
 
 	/** If the attribute is referenced by other model. */
 	private Boolean referenced;
+
+	/** If a referenced attribute is visible. */
+	private Boolean referencedVisible = true;
 
 	public String getName() {
 		return name;
@@ -149,6 +183,37 @@ public class Attribute implements Serializable {
 
 	public void setModel(String model) {
 		this.model = model;
+	}
+
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	/**
+	 * @return the referencedVisible
+	 */
+	public Boolean getReferencedVisible() {
+		return referencedVisible;
+	}
+
+	/**
+	 * @param referencedVisible
+	 *            the referencedVisible to set
+	 */
+	public void setReferencedVisible(Boolean referencedVisible) {
+		this.referencedVisible = referencedVisible;
 	}
 
 }
