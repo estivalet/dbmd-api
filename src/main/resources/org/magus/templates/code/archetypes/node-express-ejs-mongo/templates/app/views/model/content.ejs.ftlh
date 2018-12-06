@@ -29,11 +29,33 @@
 			                    </div>
 		                    </div>
                         
+                            <input type="hidden" id="id">
                         	<#list model.attributes as attribute>
                             <div id="div-${attribute.name}" class="form-group">
                                 <label for="name"><i id="i-${attribute.name}"></i> ${attribute.label}</label>
-                                <input type="hidden" id="id">
+                                
+                                <#if (attribute.type=="text")>
 								<input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}>
+								
+								<#elseif (attribute.type=="radio")>
+								<#list attribute.options as option>
+								<div class="radio">
+								<label><input type="radio" name="${attribute.name}[]" value="${option.value}"> ${option.label}</label>
+								</div>
+								</#list>	
+
+								<#elseif (attribute.type=="checkbox")>
+								<#list attribute.options as option>
+								<div class="form-check">
+								<input type="checkbox" class="form-check-input" name="${attribute.name}[]" value="${option.value}"> 
+								<label class="form-check-label">${option.label}</label>
+								</div>
+								</#list>	
+																
+								<#elseif (attribute.type=="textarea")>
+								<textarea class="form-control" id="${attribute.name}" name="${attribute.name}" rows="3" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}></textarea>								
+																								
+								</#if>
                                 
 								<#if (attribute.description?has_content)>
 								<p id="p-${attribute.name}" class="help-block">${attribute.description}.</p>
@@ -111,6 +133,17 @@ function resetForm() {
 
 
 function save_${string.toCamelCase(model.name)}() {    
+    <#list model.attributes as attribute>
+	<#if (attribute.type=="checkbox" || attribute.type=="radio")>
+    var ${attribute.name}Selected = "";
+    var ${attribute.name}Chk = $('input[name="${attribute.name}[]"]:checked');
+    ${attribute.name}Chk.each(function(){
+        ${attribute.name}Selected += this.value + ",";
+    });
+    ${attribute.name}Selected = ${attribute.name}Selected.slice(0, -1);
+	</#if>    
+    </#list>
+    
     $.ajax({
         url: $("#id").val() ? '/${string.toCamelCase(model.name)}/' + $("#id").val() : '/${string.toCamelCase(model.name)}',
         dataType: 'json',
@@ -119,7 +152,11 @@ function save_${string.toCamelCase(model.name)}() {
         data: {
             "id": $("#id").val(),
             <#list model.attributes as attribute>
+            <#if (attribute.type=="checkbox" || attribute.type=="radio")>
+            "${attribute.name}": ${attribute.name}Selected,
+            <#else>
             "${attribute.name}": $("#${attribute.name}").val(),
+            </#if>
             </#list>
 			<#list model.getReferencedAttributes() as refattr>
 			"${string.toCamelCase(refattr.model)}Id": $("#${string.toCamelCase(refattr.model)}Id").val(),

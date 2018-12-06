@@ -109,7 +109,120 @@
       "imutable": false,
       "controller": false,
       "hasList": false
+    },
+    {
+      "name": "Employee",
+      "pluralName": "employees",
+      "attributes": [
+        {
+          "name": "first_name",
+          "label": "First Name",
+          "type": "text",
+          "description": "",
+          "required": true,
+          "orderBy": false,
+          "orderByNum": 0,
+          "model": "Employee",
+          "referenced": true,
+          "referencedVisible": true
+        },
+        {
+          "name": "sex",
+          "label": "Sex",
+          "type": "radio",
+          "description": "",
+          "required": true,
+          "orderBy": false,
+          "orderByNum": 0,
+          "model": "Employee",
+          "referenced": false,
+          "referencedVisible": false,
+          "options": [
+            {
+              "label": "Masculino",
+              "value": "M",
+              "isDefault": true
+            },
+            {
+              "label": "Feminino",
+              "value": "F",
+              "isDefault": false
+            }
+          ]          
+        },
+        {
+          "name": "bio",
+          "label": "Biography",
+          "type": "textarea",
+          "description": "",
+          "required": false,
+          "orderBy": false,
+          "orderByNum": 0,
+          "model": "Employee",
+          "referenced": false,
+          "referencedVisible": false
+        },
+        {
+          "name": "abilities",
+          "label": "Abilities",
+          "type": "checkbox",
+          "description": "",
+          "required": true,
+          "orderBy": false,
+          "orderByNum": 0,
+          "model": "Employee",
+          "referenced": false,
+          "referencedVisible": false,
+          "options": [
+            {
+              "label": "Java",
+              "value": "0",
+              "isDefault": true
+            },
+            {
+              "label": "Angular",
+              "value": "1",
+              "isDefault": false
+            },
+            {
+              "label": "CSS",
+              "value": "2",
+              "isDefault": false
+            }
+          ]          
+        }
+        
+        
+      ],
+      "models": [
+        {
+          "name": "Country",
+          "pluralName": "countries",
+          "attributes": [
+            {
+              "name": "description",
+              "type": "text",
+              "description": "",
+              "required": false,
+              "orderBy": true,
+              "orderByNum": 0,
+              "model": "Country",
+              "referenced": true,
+              "referencedVisible": false
+            }
+          ],
+          "models": [],
+          "imutable": true,
+          "controller": true,
+          "hasList": true
+        }
+      ],
+      
+      "imutable": true,
+      "controller": true,
+      "hasList": true
     }
+    
   ],
   "services": []
 }

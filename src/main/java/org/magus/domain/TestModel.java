@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
  * @author lestivalet
  */
 @SuppressWarnings("serial")
-public class Model2 implements Serializable {
+public class TestModel implements Serializable {
 
 	/** Model name. */
 	private String name;
@@ -26,7 +26,7 @@ public class Model2 implements Serializable {
 	protected List<Attribute> attributes = new ArrayList<Attribute>();
 
 	/** List of models of this model. */
-	protected List<Model2> models = new ArrayList<Model2>();
+	protected List<TestModel> models = new ArrayList<TestModel>();
 
 	/** Indicates if the model is imutable or not. */
 	private Boolean imutable = false;
@@ -62,11 +62,11 @@ public class Model2 implements Serializable {
 		return attributes;
 	}
 
-	public void addModel(Model2 model) {
+	public void addModel(TestModel model) {
 		this.models.add(model);
 	}
 
-	public List<Model2> getModels() {
+	public List<TestModel> getModels() {
 		return models;
 	}
 
@@ -95,7 +95,7 @@ public class Model2 implements Serializable {
 
 	public List<Attribute> getReferencedAttributes() {
 		List<Attribute> attrs = new ArrayList<Attribute>();
-		for (Model2 m : this.models) {
+		for (TestModel m : this.models) {
 			for (Attribute a : m.attributes) {
 				if (a.getReferenced()) {
 					attrs.add(a);
@@ -215,6 +215,16 @@ public class Model2 implements Serializable {
 		attr.setType("text");
 		attr.setReferenced(true);
 		book.addAttribute(attr);
+
+		attr = new Attribute();
+		attr.setName("options");
+		attr.setLabel("Title");
+		attr.setType("radio");
+		attr.addOption(new AttributeOption("Masculino", "M", true));
+		attr.addOption(new AttributeOption("Feminino", "F", false));
+		book.addAttribute(attr);
+		attr = new Attribute();
+
 		// book.setOrderBy(attr);
 		// book.addModel(author);
 		// book.addModel(country);

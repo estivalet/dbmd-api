@@ -1,6 +1,8 @@
 package org.magus.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Attribute implements Serializable {
@@ -56,6 +58,9 @@ public class Attribute implements Serializable {
 
 	/** If a referenced attribute is visible. */
 	private Boolean referencedVisible = true;
+
+	/** List of possible values used for checkbox, radio and select. */
+	private List<AttributeOption> options = new ArrayList<AttributeOption>();
 
 	public String getName() {
 		return name;
@@ -216,4 +221,22 @@ public class Attribute implements Serializable {
 		this.referencedVisible = referencedVisible;
 	}
 
+	/**
+	 * @return the options
+	 */
+	public List<AttributeOption> getOptions() {
+		return options;
+	}
+
+	/**
+	 * @param options
+	 *            the options to set
+	 */
+	public void setOptions(List<AttributeOption> options) {
+		this.options = options;
+	}
+
+	public void addOption(AttributeOption option) {
+		this.options.add(option);
+	}
 }
