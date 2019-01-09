@@ -269,7 +269,7 @@ function changePage(target, page) {
             <#list model.attributes as attribute>
             var td = document.createElement('TD');
             var span = document.createElement('SPAN');
-            span.innerHTML = element.${string.toCamelCase(attribute.name)};
+            span.innerHTML = element.${attribute.name};
             td.appendChild(span);
             tr.appendChild(td);
             </#list>
