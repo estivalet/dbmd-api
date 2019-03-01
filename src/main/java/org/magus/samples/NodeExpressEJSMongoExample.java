@@ -1,4 +1,4 @@
-package org.magus;
+package org.magus.samples;
 
 import java.io.File;
 import java.io.FileWriter;

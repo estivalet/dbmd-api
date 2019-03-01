@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.zeeltech.util.StringUtils;
+
 /**
  * Represents a model/entity of an application.
  * 
@@ -47,6 +49,10 @@ public class Model implements Serializable {
 		return name;
 	}
 
+	public String getCamelCaseName() {
+		return StringUtils.toCamelCase(name);
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -65,6 +71,34 @@ public class Model implements Serializable {
 
 	public List<Model> getModels() {
 		return models;
+	}
+
+	public String getAttributesCommaSeparated() {
+		return attributes.stream().map(c -> String.valueOf(c)).collect(Collectors.joining(","));
+	}
+
+	public String getAttributesReplacedBy(String character) {
+		String str = "";
+		for (Attribute attr : attributes) {
+			str += character + ",";
+		}
+		return str.substring(0, str.length() - 1);
+	}
+
+	public String getAttributesEquals(String character) {
+		String str = "";
+		for (Attribute attr : attributes) {
+			str += attr.getName() + " = " + character + ",";
+		}
+		return str.substring(0, str.length() - 1);
+	}
+
+	public String getAttributesPrecededByModelName() {
+		String str = "";
+		for (Attribute attr : attributes) {
+			str += StringUtils.toCamelCase(this.name) + "." + attr.getName() + ",";
+		}
+		return str.substring(0, str.length() - 1);
 	}
 
 	public String getAttributesCommaSeparatedWithDefaultValue() {
@@ -100,10 +134,6 @@ public class Model implements Serializable {
 			}
 		}
 		return attrs;
-	}
-
-	public String getAttributesCommaSeparated() {
-		return attributes.stream().map(c -> String.valueOf(c)).collect(Collectors.joining(","));
 	}
 
 	public void setAttributes(List<Attribute> attributes) {

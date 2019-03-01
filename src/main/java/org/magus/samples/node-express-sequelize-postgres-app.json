@@ -1,0 +1,28 @@
+{
+  "name": "School classes Node Express Sequelize Postgres Template",
+  "shortName": "school",
+  "path": "C:/temp/appsjs",
+  "copyright": "(c) Luiz Fernando Estivalet 2019",
+  "models": [
+    {
+      "name": "Classroom",
+      "pluralName": "classrooms",
+      "attributes": [
+        {
+          "name": "class_name",
+          "label": "Class Name",
+          "type": "text",
+          "description": "",
+          "required": true,
+          "orderBy": false,
+          "orderByNum": 0,
+          "referencedVisible": true
+        }
+      ],
+      "models": [],
+      "imutable": false,
+      "controller": false,
+      "hasList": false
+    }
+  ]
+}
