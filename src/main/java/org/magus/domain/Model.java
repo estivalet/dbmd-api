@@ -40,6 +40,12 @@ public class Model implements Serializable {
 	private Attribute orderBy;
 
 	/**
+	 * Indicates if this is the main module to be shown for example after a login
+	 * page. There must be only one main module in case of multiple modules.
+	 */
+	private Boolean main = false;
+
+	/**
 	 * Display attribute in case of "foreign keys" to be displayed in a combo for
 	 * e.g.
 	 */
@@ -186,6 +192,21 @@ public class Model implements Serializable {
 
 	public void setDisplay(Attribute display) {
 		this.display = display;
+	}
+
+	/**
+	 * @return the main
+	 */
+	public Boolean getMain() {
+		return main;
+	}
+
+	/**
+	 * @param main
+	 *            the main to set
+	 */
+	public void setMain(Boolean main) {
+		this.main = main;
 	}
 
 }

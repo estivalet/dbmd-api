@@ -63,7 +63,9 @@ class ${model.name}Dao {
         return new Promise((resolve, reject) => {
             this._db.run(`
                 UPDATE ${string.toCamelCase(model.name)} SET
-				${model.getAttributesEquals("?")}
+                titulo = ?,
+                preco = ?,
+                descricao = ?
                 WHERE id = ?
             `,
             [

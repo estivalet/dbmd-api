@@ -12,7 +12,7 @@
                 <td>${attribute.label}</td>
                 </#list>
             </tr>
-            <tr id="${model.getCamelCaseName()}_<#noparse>${</#noparse>${model.getCamelCaseName()}.id}" for (${model.getCamelCaseName()} in data.${model.pluralName})>
+            <tr id="${model.getCamelCaseName()}<#noparse>${</#noparse>${model.getCamelCaseName()}.id}" for (${model.getCamelCaseName()} in data.${model.pluralName})>
                 <td><#noparse>${</#noparse>${model.getCamelCaseName()}.id}</td>
                 <#list model.attributes as attribute>
                 <td><#noparse>${</#noparse>${model.getCamelCaseName()}.${attribute.name}}</td>

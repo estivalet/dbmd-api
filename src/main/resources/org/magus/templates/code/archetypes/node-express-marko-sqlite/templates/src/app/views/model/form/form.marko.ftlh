@@ -11,8 +11,8 @@
 
 			<#list model.attributes as attribute>
             <div>
-                <label for="${attribute.name}">${attribute.label}:</label>
-                <input type="text" id="${attribute.name}" name="${attribute.name}" value="<#noparse>${data.</#noparse>${model.getCamelCaseName()}.${attribute.name}}" placeholder="coloque o ${attribute.name}" />
+                <label for="titulo">Titulo:</label>
+                <input type="text" id="titulo" name="titulo" value="<#noparse>${data.</#noparse>${attribute.name}}" placeholder="coloque o titulo" />
             </div>
             </#list>
 

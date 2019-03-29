@@ -22,7 +22,8 @@
       "models": [],
       "imutable": false,
       "controller": false,
-      "hasList": false
+      "hasList": false,
+      "main": true
     }
   ]
 }
