@@ -9,6 +9,7 @@ class ${model.name}Controlador {
 
     static rotas() {
         return {
+        	autenticadas: '/${model.pluralName}*',
             lista: '/${model.pluralName}',
             cadastro: '/${model.pluralName}/form',
             edicao: '/${model.pluralName}/form/:id',

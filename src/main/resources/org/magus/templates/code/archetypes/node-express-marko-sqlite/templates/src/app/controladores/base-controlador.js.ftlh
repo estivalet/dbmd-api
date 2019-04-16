@@ -1,3 +1,4 @@
+<#-- All apps should have only one model set as main -->
 <#list app.models as model>
 <#if model.main>
 const ${model.name}Controlador = require('./${string.toCamelCase(model.name)}-controlador');
@@ -49,8 +50,11 @@ class BaseControlador {
                     if (erro) {
                         return next(erro);
                     }
-
-                    return resp.redirect(LivroControlador.rotas().lista);
+					<#list app.models as model>
+					<#if model.main>
+                    return resp.redirect(${model.name}Controlador.rotas().lista);
+					</#if>
+					</#list>
                 });
             })(req, resp, next);
         };

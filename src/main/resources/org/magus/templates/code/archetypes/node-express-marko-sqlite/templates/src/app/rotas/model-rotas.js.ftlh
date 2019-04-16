@@ -3,9 +3,19 @@ const ${string.toCamelCase(model.name)}Controlador = new ${model.name}Controlado
 
 const ${model.name} = require('../modelos/${string.toCamelCase(model.name)}');
 
+const BaseControlador = require('../controladores/base-controlador');
+
 module.exports = (app) => {
     const rotas${model.name} = ${model.name}Controlador.rotas();
     
+    app.use(rotas${model.name}.autenticadas, function(req, resp, next) {
+        if (req.isAuthenticated()) {
+            next();
+        } else {
+            resp.redirect(BaseControlador.rotas().login);
+        }
+    });
+   
     app.get(rotas${model.name}.lista, ${string.toCamelCase(model.name)}Controlador.lista());
 
     app.route(rotas${model.name}.cadastro)
