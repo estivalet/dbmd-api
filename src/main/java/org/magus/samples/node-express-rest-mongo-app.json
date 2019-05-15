@@ -1,16 +1,43 @@
 {
-	"name": "Notes Node Express REST Mongo Template",
-	"shortName": "notes-api",
+	"name": "OctupusGDB Node Express REST Mongo Template",
+	"shortName": "octupusgdb-api",
 	"path": "C:/temp/appsjs",
 	"copyright": "(c) Luiz Fernando Estivalet 2019",
 	"models": [
 		{
-			"name": "Note",
-			"pluralName": "notes",
+			"name": "Game",
+			"pluralName": "games",
 			"attributes": [
 				{
-					"name": "title",
-					"type": "string"
+  				  "name": "title",
+				  "type": "string"
+				}
+			],
+			"models": [
+			{
+				"name" : "System",
+				"pluralName": "systems",
+				"attributes": [
+					{
+						"name": "name",
+						"type": "string",
+						"model": "System",
+		                "referenced": true
+					}
+				]
+			}
+			]
+			
+		},
+		{
+			"name": "System",
+			"pluralName": "systems",
+			"attributes": [
+				{
+					"name": "name",
+					"type": "string",
+				    "model": "System",
+		            "referenced": true
 				}
 			]
 		}

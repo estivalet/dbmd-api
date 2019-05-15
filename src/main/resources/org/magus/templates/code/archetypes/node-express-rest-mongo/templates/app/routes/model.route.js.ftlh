@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.post('/${string.toCamelCase(model.name)}', ${string.toCamelCase(model.name)}.create);
 
     // Retrieve all ${string.toCamelCase(model.name)}
-    app.get('/${string.toCamelCase(model.name)}', ${string.toCamelCase(model.name)}.findAll);
+    app.get('/${string.toCamelCase(model.pluralName)}', ${string.toCamelCase(model.name)}.findAll);
 
     // Retrieve a single ${string.toCamelCase(model.name)} with ${string.toCamelCase(model.name)}Id
     app.get('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id', ${string.toCamelCase(model.name)}.findOne);

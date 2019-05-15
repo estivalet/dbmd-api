@@ -80,7 +80,7 @@ public class NodeExpressRESTMongoExample {
 		root.put("date", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 		root.put("user", System.getProperty("user.name"));
 
-		processAppTemplate(app, root, "/common/gitignore.ftlh", "/.gitignore");
+		processAppTemplate(app, root, "common/gitignore.ftlh", "/.gitignore");
 		processAppTemplate(app, root, archetype + "config/database.config.js.ftlh", "/config/database.config.js");
 		processAppTemplate(app, root, archetype + "server.js.ftlh", "/server.js");
 		processAppTemplate(app, root, archetype + "package.json.ftlh", "/package.json");
@@ -108,7 +108,7 @@ public class NodeExpressRESTMongoExample {
 
 		NodeExpressRESTMongoExample t = new NodeExpressRESTMongoExample();
 		t.setupTemplate();
-		t.generateApp("/archetypes/node-express-ejs-mongo/templates/", app);
+		t.generateApp("/archetypes/node-express-rest-mongo/templates/", app);
 
 	}
 }

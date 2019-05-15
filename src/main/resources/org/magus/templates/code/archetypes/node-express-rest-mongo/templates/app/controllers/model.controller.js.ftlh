@@ -13,7 +13,7 @@ exports.create = (req, res) => {
         ${attribute.name}: req.body.${attribute.name},
         </#list>
 		<#list model.getReferencedAttributes() as refattr>
-		${string.toCamelCase(refattr.model)}: req.body.${string.toCamelCase(refattr.model)}Id,
+		${string.toCamelCase(refattr.model)}: req.body.${string.toCamelCase(refattr.model)},
 		</#list>
         
     });
