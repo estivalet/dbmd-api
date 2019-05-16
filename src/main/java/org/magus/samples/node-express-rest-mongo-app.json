@@ -39,7 +39,15 @@
 				    "model": "System",
 		            "referenced": true
 				}
+			],
+			"models": [
+			{
+				"name" : "Game",
+				"pluralName": "games",
+				"multi": true
+			}
 			]
+			
 		}
 	]
 }

@@ -40,9 +40,13 @@ exports.findAll = (req, res) => {
     // if a number of page is passed as a parameter use it, otherwise list all.
     if(page) {
         models.${string.toCamelCase(model.name, true)}.find({})
-        <#list model.getReferencedAttributes() as refattr>
-	    .populate('${string.toCamelCase(refattr.model)}')
-		</#list>
+        <#list model.getModels() as model>
+        <#if (model.multi)>
+        .populate('${string.toCamelCase(model.pluralName)}')
+        <#else>
+        .populate('${string.toCamelCase(model.name)}')
+        </#if>
+        </#list>
         .sort({'name': 1})
         .skip((perPage * page) - perPage)
         .limit(perPage)
@@ -75,6 +79,13 @@ exports.findAll = (req, res) => {
 // Find a single country with a countryId
 exports.findOne = (req, res) => {
     models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
+    <#list model.getModels() as model>
+    <#if (model.multi)>
+    .populate('${string.toCamelCase(model.pluralName)}')
+    <#else>
+    .populate('${string.toCamelCase(model.name)}')
+    </#if>
+    </#list>
     .then(data => {
         if(!data) {
             return res.status(404).send({

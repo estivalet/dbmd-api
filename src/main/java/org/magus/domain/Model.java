@@ -51,6 +51,8 @@ public class Model implements Serializable {
 	 */
 	private Attribute display;
 
+	private Boolean multi = false;
+
 	public String getName() {
 		return name;
 	}
@@ -207,6 +209,21 @@ public class Model implements Serializable {
 	 */
 	public void setMain(Boolean main) {
 		this.main = main;
+	}
+
+	/**
+	 * @return the multi
+	 */
+	public Boolean getMulti() {
+		return multi;
+	}
+
+	/**
+	 * @param multi
+	 *            the multi to set
+	 */
+	public void setMulti(Boolean multi) {
+		this.multi = multi;
 	}
 
 }
