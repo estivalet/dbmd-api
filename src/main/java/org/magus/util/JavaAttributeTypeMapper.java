@@ -19,6 +19,10 @@ public class JavaAttributeTypeMapper {
 	public static String getJSType(String attributeType) {
 		if ("text".equals(attributeType)) {
 			return "String";
+		} else if ("boolean".equals(attributeType)) {
+			return "Boolean";
+		} else if ("[string]".equals(attributeType)) {
+			return "[String]";
 		}
 
 		return "String";

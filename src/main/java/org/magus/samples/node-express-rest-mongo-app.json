@@ -9,8 +9,64 @@
 			"pluralName": "games",
 			"attributes": [
 				{
+  				  "name": "name",
+				  "type": "string"
+				},
+				{
+  				  "name": "romFileName",
+				  "type": "string"
+				},
+				{
   				  "name": "title",
 				  "type": "string"
+				},
+				{
+  				  "name": "cloneOf",
+				  "type": "string"
+				},
+				{
+  				  "name": "year",
+				  "type": "string"
+				},
+				{
+  				  "name": "manufacturer",
+				  "type": "string"
+				},
+				{
+  				  "name": "category",
+				  "type": "string"
+				},
+				{
+  				  "name": "players",
+				  "type": "string"
+				},
+				{
+  				  "name": "description",
+				  "type": "string"
+				},
+				{
+  				  "name": "hack",
+				  "type": "boolean"
+				},
+				{
+  				  "name": "unlicensed",
+				  "type": "boolean"
+				},
+				{
+  				  "name": "proto",
+				  "type": "boolean"
+				},
+				{
+  				  "name": "translated",
+				  "type": "boolean"
+				},
+				{
+  				  "name": "homebrew",
+				  "type": "boolean"
+				},
+				{
+  				  "name": "tags",
+				  "type": "[string]"
 				}
 			],
 			"models": [

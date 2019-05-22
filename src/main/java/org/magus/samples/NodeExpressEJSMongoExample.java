@@ -152,7 +152,7 @@ public class NodeExpressEJSMongoExample {
 		root.put("date", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 		root.put("user", System.getProperty("user.name"));
 
-		processAppTemplate(app, root, "/common/.gitignore.ftlh", "/.gitignore");
+		processAppTemplate(app, root, "/common/gitignore.ftlh", "/.gitignore");
 		processAppTemplate(app, root, archetype + "config/database.config.js.ftlh", "/config/database.config.js");
 		processAppTemplate(app, root, archetype + "app.js.ftlh", "/app.js");
 		processAppTemplate(app, root, archetype + "package.json.ftlh", "/package.json");

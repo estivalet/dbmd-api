@@ -66,7 +66,7 @@ public class NodeExpressRESTMongoExample {
 
 	private void generateApp(String archetype, App app) throws Exception {
 		// Create a data-model.
-		Map root = new HashMap();
+		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("app", app);
 
 		// Add static methos to be accesible by the templates.
@@ -84,6 +84,7 @@ public class NodeExpressRESTMongoExample {
 		processAppTemplate(app, root, archetype + "config/database.config.js.ftlh", "/config/database.config.js");
 		processAppTemplate(app, root, archetype + "server.js.ftlh", "/server.js");
 		processAppTemplate(app, root, archetype + "package.json.ftlh", "/package.json");
+		processAppTemplate(app, root, archetype + "README.md.ftlh", "/README.md");
 		processAppTemplate(app, root, archetype + "app/models/schema.model.js.ftlh", "/app/models/schema.model.js");
 
 		for (Model m : app.getModels()) {
