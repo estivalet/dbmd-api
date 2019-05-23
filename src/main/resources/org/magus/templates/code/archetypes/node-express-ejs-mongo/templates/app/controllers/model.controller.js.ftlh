@@ -43,7 +43,7 @@ exports.findAll = (req, res) => {
         <#list model.getReferencedAttributes() as refattr>
 	    .populate('${string.toCamelCase(refattr.model)}')
 		</#list>
-        .sort({'name': 1})
+        .sort({'${model.getFirstOrderByAttributeName()}': 1})
         .skip((perPage * page) - perPage)
         .limit(perPage)
         .exec(function(err, data) {
@@ -61,7 +61,9 @@ exports.findAll = (req, res) => {
             })
         });
     } else {
-        models.${string.toCamelCase(model.name, true)}.find()
+        models.${string.toCamelCase(model.name, true)}
+        .find()
+        .sort({'${model.getFirstOrderByAttributeName()}': 1})
         .then(data => {
             res.send(data);
         }).catch(err => {

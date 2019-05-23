@@ -107,6 +107,11 @@ public class NodeExpressRESTMongoExample {
 		App app = gson.fromJson(json, App.class);
 		in.close();
 
+		// Set app reference to all models
+		for (Model m : app.getModels()) {
+			m.setApp(app);
+		}
+
 		NodeExpressRESTMongoExample t = new NodeExpressRESTMongoExample();
 		t.setupTemplate();
 		t.generateApp("/archetypes/node-express-rest-mongo/templates/", app);

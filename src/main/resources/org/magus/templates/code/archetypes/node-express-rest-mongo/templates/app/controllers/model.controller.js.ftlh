@@ -40,11 +40,11 @@ exports.findAll = (req, res) => {
     // if a number of page is passed as a parameter use it, otherwise list all.
     if(page) {
         models.${string.toCamelCase(model.name, true)}.find({})
-        <#list model.getModels() as model>
-        <#if (model.multi)>
-        .populate('${string.toCamelCase(model.pluralName)}')
+        <#list model.getReferencedModels() as refmodel>
+        <#if (refmodel.multi)>
+        .populate('${string.toCamelCase(refmodel.pluralName)}')
         <#else>
-        .populate('${string.toCamelCase(model.name)}')
+        .populate('${string.toCamelCase(refmodel.name)}')
         </#if>
         </#list>
         .sort({'name': 1})
@@ -79,11 +79,11 @@ exports.findAll = (req, res) => {
 // Find a single country with a countryId
 exports.findOne = (req, res) => {
     models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
-    <#list model.getModels() as model>
-    <#if (model.multi)>
-    .populate('${string.toCamelCase(model.pluralName)}')
+    <#list model.getReferencedModels() as refmodel>
+    <#if (refmodel.multi)>
+    .populate('${string.toCamelCase(refmodel.pluralName)}')
     <#else>
-    .populate('${string.toCamelCase(model.name)}')
+    .populate('${string.toCamelCase(refmodel.name)}')
     </#if>
     </#list>
     .then(data => {

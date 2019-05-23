@@ -73,4 +73,13 @@ public class App implements Serializable {
 		this.copyright = copyright;
 	}
 
+	public Model getModelByName(String name) {
+		for (Model model : models) {
+			if (model.getName().equals(name)) {
+				return model;
+			}
+		}
+		return null;
+	}
+
 }

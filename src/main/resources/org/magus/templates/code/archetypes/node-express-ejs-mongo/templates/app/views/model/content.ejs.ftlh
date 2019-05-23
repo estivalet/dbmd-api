@@ -166,9 +166,9 @@ function save_${string.toCamelCase(model.name)}() {
             if(xhr.status==201 || xhr.status==200) {
                 $("#message").addClass("alert alert-success alert-dismissible fade in text-center");
                 if(xhr.status==200) {
-                	$("#message").text("Author updated");
+                	$("#message").text("${model.name} updated");
                 } else {
-                	$("#message").text("Author added");
+                	$("#message").text("${model.name} added");
                 }
             }
 			resetForm();        
@@ -243,7 +243,7 @@ function delete_${string.toCamelCase(model.name)}(id) {
           console.log(data);
             if(xhr.status==200) {
                 $("#message").addClass("alert alert-success alert-dismissible fade in text-center"); 
-                $("#message").text("Author deleted");
+                $("#message").text("${model.name} deleted");
             }
           
           changePage("${string.toCamelCase(model.name)}", 1);

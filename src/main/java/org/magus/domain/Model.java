@@ -15,6 +15,8 @@ import org.zeeltech.util.StringUtils;
 @SuppressWarnings("serial")
 public class Model implements Serializable {
 
+	private App app;
+
 	/** Model name. */
 	private String name;
 
@@ -25,7 +27,7 @@ public class Model implements Serializable {
 	protected List<Attribute> attributes = new ArrayList<Attribute>();
 
 	/** List of models of this model. */
-	protected List<Model> models = new ArrayList<Model>();
+	protected List<String> models = new ArrayList<String>();
 
 	/** Indicates if the model is imutable or not. */
 	private Boolean imutable = false;
@@ -53,6 +55,21 @@ public class Model implements Serializable {
 
 	private Boolean multi = false;
 
+	/**
+	 * @return the app
+	 */
+	public App getApp() {
+		return app;
+	}
+
+	/**
+	 * @param app
+	 *            the app to set
+	 */
+	public void setApp(App app) {
+		this.app = app;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -73,11 +90,11 @@ public class Model implements Serializable {
 		return attributes;
 	}
 
-	public void addModel(Model model) {
+	public void addModel(String model) {
 		this.models.add(model);
 	}
 
-	public List<Model> getModels() {
+	public List<String> getModels() {
 		return models;
 	}
 
@@ -109,6 +126,18 @@ public class Model implements Serializable {
 		return str.substring(0, str.length() - 1);
 	}
 
+	public String getFirstOrderByAttributeName() {
+		String name = "";
+		for (Attribute attr : attributes) {
+			if (attr.getOrderBy()) {
+				return attr.getName();
+			}
+		}
+
+		return name;
+
+	}
+
 	public String getAttributesCommaSeparatedWithDefaultValue() {
 		String str = "";
 		for (Attribute attr : attributes) {
@@ -134,14 +163,42 @@ public class Model implements Serializable {
 
 	public List<Attribute> getReferencedAttributes() {
 		List<Attribute> attrs = new ArrayList<Attribute>();
-		for (Model m : this.models) {
-			for (Attribute a : m.attributes) {
+
+		for (String modelName : this.models) {
+			String[] modelInfo = modelName.split(",");
+			boolean multiple = false;
+			if (modelInfo.length > 1) {
+				modelName = modelInfo[0];
+				multiple = "multi".equals(modelInfo[1]);
+			}
+			Model model = app.getModelByName(modelName);
+			model.setMulti(multiple);
+			for (Attribute a : model.attributes) {
 				if (a.getReferenced()) {
 					attrs.add(a);
 				}
 			}
 		}
+
 		return attrs;
+	}
+
+	public List<Model> getReferencedModels() {
+		List<Model> models = new ArrayList<Model>();
+
+		for (String modelName : this.models) {
+			String[] modelInfo = modelName.split(",");
+			boolean multiple = false;
+			if (modelInfo.length > 1) {
+				modelName = modelInfo[0];
+				multiple = "multi".equals(modelInfo[1]);
+			}
+			Model model = app.getModelByName(modelName);
+			model.setMulti(multiple);
+			models.add(model);
+		}
+
+		return models;
 	}
 
 	public void setAttributes(List<Attribute> attributes) {
@@ -180,13 +237,13 @@ public class Model implements Serializable {
 		this.hasList = hasList;
 	}
 
-	// public Attribute getOrderBy() {
-	// return orderBy;
-	// }
-	//
-	// public void setOrderBy(Attribute orderBy) {
-	// this.orderBy = orderBy;
-	// }
+	public Attribute getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(Attribute orderBy) {
+		this.orderBy = orderBy;
+	}
 
 	public Attribute getDisplay() {
 		return display;

@@ -23,9 +23,9 @@ public class ${model.name} extends BaseMongoDO implements Serializable, Cloneabl
     private ${type.getJavaType(attribute.type)} ${attribute.name};
 	</#list>
 
-    <#list model.models as submodel>
+    <#list model.getReferencedModels() as refmodel>
     
-    private ${submodel.name} ${string.toCamelCase(submodel.name)};
+    private ${refmodel.name} ${string.toCamelCase(refmodel.name)};
 	</#list>
 		
 	<#list model.attributes as attribute>
@@ -45,13 +45,13 @@ public class ${model.name} extends BaseMongoDO implements Serializable, Cloneabl
 	}
 	
 	</#list>
-    <#list model.models as submodel>
-    public void set${submodel.name}(${submodel.name} obj) {
-        this.${string.toCamelCase(submodel.name)} = obj;
+    <#list model.getReferencedModels() as refmodel>
+    public void set${refmodel.name}(${refmodel.name} obj) {
+        this.${string.toCamelCase(refmodel.name)} = obj;
     }
     
-    public ${submodel.name} get${submodel.name}() {
-        return this.${string.toCamelCase(submodel.name)};
+    public ${refmodel.name} get${refmodel.name}() {
+        return this.${string.toCamelCase(refmodel.name)};
     }
         
 	</#list>

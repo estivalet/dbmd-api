@@ -49,8 +49,8 @@
 					    
    				        <#list model.getReferencedAttributes() as refattr>
 						<div class="form-group">
-						    <label for="${string.toCamelCase(refattr.model.name)}Id">${refattr.model.name}'s ${refattr.label}</label>
-						    <select class="form-control" id="${string.toCamelCase(refattr.model.name)}Id">
+						    <label for="${string.toCamelCase(refattr.model)}Id">${refattr.model}'s ${refattr.label}</label>
+						    <select class="form-control" id="${string.toCamelCase(refattr.model)}Id">
 						    </select>
 						</div>
 					    </#list>
@@ -123,8 +123,8 @@ function submitData() {
 	    </#list>        	
     	"id":currentObjId,
         <#list model.getReferencedAttributes() as refattr>
-        "${string.toCamelCase(refattr.model.name)}": {
-        	"id": $("#${string.toCamelCase(refattr.model.name)}Id").val(),
+        "${string.toCamelCase(refattr.model)}": {
+        	"id": $("#${string.toCamelCase(refattr.model)}Id").val(),
         },
 	    </#list>        	
     };
@@ -153,7 +153,7 @@ function list() {
            columns.push("${attribute.label}");
 		   </#list>
            <#list model.getReferencedAttributes() as refattr>
-		   columns.push("${refattr.model.name}'s ${refattr.label}");
+		   columns.push("${refattr.model}'s ${refattr.label}");
   	       </#list>
 		   
 		   // Add extra columns for editing links.
@@ -167,7 +167,7 @@ function list() {
 		       <#list model.attributes as attribute>
 		       addTableCell(tr, obj.${attribute.name});
 	           <#list model.getReferencedAttributes() as refattr>
-			   addTableCell(tr, obj.${string.toCamelCase(refattr.model.name)}.${string.toCamelCase(refattr.name)});
+			   addTableCell(tr, obj.${string.toCamelCase(refattr.model)}.${string.toCamelCase(refattr.name)});
 	  	       </#list>
 		       addTableCellHTML(tr, "<a href='#' onclick='edit(" + JSON.stringify(obj) + ")'>Edit</a>&nbsp;<a href='#' onclick='remove(" + JSON.stringify(obj) + ")'>Delete</a>");
 		       </#list>
@@ -195,17 +195,17 @@ $("#submit").click(function() {
 function loadReferencedData() {
     <#list model.getReferencedAttributes() as refattr>
 	$.ajax({
-	       url: 'http://localhost:8080/barch/rest/${string.toCamelCase(refattr.model.name)}/list',
+	       url: 'http://localhost:8080/barch/rest/${string.toCamelCase(refattr.model)}/list',
 	       type: 'GET',
 	       error: function() {
 	          console.log('<p>An error has occurred</p>');
 	       },
 	       dataType: 'json',
 	       success: function(data) {
-	    	   $("#${string.toCamelCase(refattr.model.name)}Id").empty();
+	    	   $("#${string.toCamelCase(refattr.model)}Id").empty();
 	    	   $.each(data, function (i, item) {
 	    		   console.log(item);
-	    		    $('#${string.toCamelCase(refattr.model.name)}Id').append($('<option>', { 
+	    		    $('#${string.toCamelCase(refattr.model)}Id').append($('<option>', { 
 	    		        value: item.id,
 	    		        text : item.${string.toCamelCase(refattr.name)}
 	    		    }));

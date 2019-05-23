@@ -69,21 +69,7 @@
 				  "type": "[string]"
 				}
 			],
-			"models": [
-			{
-				"name" : "System",
-				"pluralName": "systems",
-				"attributes": [
-					{
-						"name": "name",
-						"type": "string",
-						"model": "System",
-		                "referenced": true
-					}
-				]
-			}
-			]
-			
+			"models": [ "System" ]
 		},
 		{
 			"name": "System",
@@ -96,14 +82,7 @@
 		            "referenced": true
 				}
 			],
-			"models": [
-			{
-				"name" : "Game",
-				"pluralName": "games",
-				"multi": true
-			}
-			]
-			
+			"models": ["Game,multi"]
 		}
 	]
 }

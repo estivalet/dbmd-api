@@ -64,6 +64,7 @@ public class JavaRestJSPMongoExample {
 		app.setShortName("barch");
 
 		Model author = new Model();
+		author.setApp(app);
 		author.setName("Author");
 		author.setPluralName("authors");
 		author.setImutable(true);
@@ -72,13 +73,15 @@ public class JavaRestJSPMongoExample {
 		Attribute attr = new Attribute();
 		attr.setName("name");
 		attr.setType("text");
-		// attr.setModel(author);
+		attr.setOrderBy(true);
+		attr.setModel("Author");
 		attr.setReferenced(true);
 		author.addAttribute(attr);
-		// author.setOrderBy(attr);
+		author.setOrderBy(attr);
 		app.addModel(author);
 
 		Model country = new Model();
+		country.setApp(app);
 		country.setName("Country");
 		country.setPluralName("countries");
 		country.setImutable(true);
@@ -87,35 +90,36 @@ public class JavaRestJSPMongoExample {
 		attr = new Attribute();
 		attr.setName("description"); // name of the country change it after some tests
 		attr.setType("text");
-		// attr.setModel(country);
+		attr.setOrderBy(true);
+		attr.setModel("Country");
 		attr.setReferenced(true);
 		country.addAttribute(attr);
-		// country.setOrderBy(attr);
+		country.setOrderBy(attr);
 		app.addModel(country);
 
 		Model book = new Model();
+		book.setApp(app);
 		book.setName("Book");
 		book.setPluralName("books");
 		attr = new Attribute();
 		attr.setName("title");
 		attr.setLabel("Title");
 		attr.setType("text");
+		attr.setOrderBy(true);
+		attr.setModel("Book");
 		book.addAttribute(attr);
-		// attr = new Attribute();
-		// attr.setName("authorId");
-		// attr.setLabel("Author");
-		// attr.setType("text");
-		// attr.setReferenced(true);
-		// book.addAttribute(attr);
-		// book.setOrderBy(attr);
-		book.addModel(author);
-		book.addModel(country);
+		book.setOrderBy(attr);
+
+		// book.addModel(author);
+		// book.addModel(country);
+		book.addModel("Author");
+		book.addModel("Country");
 		app.addModel(book);
 	}
 
 	private void generateJava(String archetype) throws Exception {
 		// Create a data-model.
-		Map root = new HashMap();
+		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("app", app);
 
 		// Add static methos to be accesible by the templates.

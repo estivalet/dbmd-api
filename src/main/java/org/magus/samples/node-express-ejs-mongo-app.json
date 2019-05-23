@@ -14,7 +14,7 @@
           "type": "text",
           "description": "Full author\u0027s name",
           "required": true,
-          "orderBy": false,
+          "orderBy": true,
           "orderByNum": 0,
           "model": "Author",
           "referenced": true,
@@ -31,10 +31,10 @@
       "pluralName": "countries",
       "attributes": [
         {
-          "name": "description",
+          "name": "name",
           "type": "text",
-          "description": "",
-          "required": false,
+          "description": "Country name",
+          "required": true,
           "orderBy": true,
           "orderByNum": 0,
           "model": "Country",
@@ -59,53 +59,11 @@
           "required": false,
           "orderBy": false,
           "orderByNum": 0,
+          "referenced": true,
           "referencedVisible": true
         }
       ],
-      "models": [
-        {
-          "name": "Author",
-          "pluralName": "authors",
-          "attributes": [
-            {
-              "name": "name",
-              "label": "Nome do Autor",
-              "type": "text",
-              "description": "Full author\u0027s name",
-              "required": true,
-              "orderBy": false,
-              "orderByNum": 0,
-              "model": "Author",
-              "referenced": true
-            }
-          ],
-          "models": [],
-          "imutable": true,
-          "controller": true,
-          "hasList": true
-        },
-        {
-          "name": "Country",
-          "pluralName": "countries",
-          "attributes": [
-            {
-              "name": "description",
-              "type": "text",
-              "description": "",
-              "required": false,
-              "orderBy": true,
-              "orderByNum": 0,
-              "model": "Country",
-              "referenced": true,
-              "referencedVisible": false
-            }
-          ],
-          "models": [],
-          "imutable": true,
-          "controller": true,
-          "hasList": true
-        }
-      ],
+      "models": ["Author", "Country"],
       "imutable": false,
       "controller": false,
       "hasList": false
@@ -194,30 +152,7 @@
         
         
       ],
-      "models": [
-        {
-          "name": "Country",
-          "pluralName": "countries",
-          "attributes": [
-            {
-              "name": "description",
-              "type": "text",
-              "description": "",
-              "required": false,
-              "orderBy": true,
-              "orderByNum": 0,
-              "model": "Country",
-              "referenced": true,
-              "referencedVisible": false
-            }
-          ],
-          "models": [],
-          "imutable": true,
-          "controller": true,
-          "hasList": true
-        }
-      ],
-      
+      "models": ["Country"],
       "imutable": true,
       "controller": true,
       "hasList": true

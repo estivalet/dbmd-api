@@ -31,9 +31,9 @@ import ${app.shortName}.server.MongoConnection;
 
 import ${app.shortName}.domain.${model.name};
 
-<#list model.models as submodel>
-import ${app.shortName}.dao.${submodel.name}Dao;
-import ${app.shortName}.domain.${submodel.name};
+<#list model.getReferencedModels() as refmodel>
+import ${app.shortName}.dao.${refmodel.name}Dao;
+import ${app.shortName}.domain.${refmodel.name};
 </#list>
 
 /**
@@ -101,12 +101,12 @@ public class ${model.name}Service {
 		MongoConnection conn = MongoConnection.getInstance();
 		
 		for (${model.name} b : conn.getDatastore().find(${model.name}.class).order("${model.orderBy.name}")) {
-			<#list model.models as submodel>
-			if (b.get${string.toCamelCase(submodel.name, true)}().getId() != null) {
-				${submodel.name}Dao ${string.toCamelCase(submodel.name)}Dao = new ${submodel.name}Dao(conn.getDatastore());
-				DBObject obj = ${string.toCamelCase(submodel.name)}Dao.getCollection().findOne(new ObjectId(b.get${string.toCamelCase(submodel.name, true)}().getId()));
-				${submodel.name} ${string.toCamelCase(submodel.name)} = conn.getMorphia().fromDBObject(conn.getDatastore(), ${submodel.name}.class, obj);
-				b.set${submodel.name}(${string.toCamelCase(submodel.name)});
+			<#list model.getReferencedModels() as refmodel>
+			if (b.get${string.toCamelCase(refmodel.name, true)}().getId() != null) {
+				${refmodel.name}Dao ${string.toCamelCase(refmodel.name)}Dao = new ${refmodel.name}Dao(conn.getDatastore());
+				DBObject obj = ${string.toCamelCase(refmodel.name)}Dao.getCollection().findOne(new ObjectId(b.get${string.toCamelCase(refmodel.name, true)}().getId()));
+				${refmodel.name} ${string.toCamelCase(refmodel.name)} = conn.getMorphia().fromDBObject(conn.getDatastore(), ${refmodel.name}.class, obj);
+				b.set${refmodel.name}(${string.toCamelCase(refmodel.name)});
 			}
 			</#list>
 			${string.toCamelCase(model.name)}s.add(b);

@@ -123,8 +123,8 @@ public class NodeExpressEJSMongoExample {
 		// attr.setReferenced(true);
 		// book.addAttribute(attr);
 		// book.setOrderBy(attr);
-		book.addModel(author);
-		book.addModel(country);
+		// book.addModel(author);
+		// book.addModel(country);
 		app.addModel(book);
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -138,7 +138,7 @@ public class NodeExpressEJSMongoExample {
 
 	private void generateApp(String archetype, App app) throws Exception {
 		// Create a data-model.
-		Map root = new HashMap();
+		Map<String, Object> root = new HashMap<String, Object>();
 		root.put("app", app);
 
 		// Add static methos to be accesible by the templates.
@@ -199,6 +199,11 @@ public class NodeExpressEJSMongoExample {
 		Gson gson = new Gson();
 		App app = gson.fromJson(json, App.class);
 		in.close();
+
+		// Set app reference to all models
+		for (Model m : app.getModels()) {
+			m.setApp(app);
+		}
 
 		NodeExpressEJSMongoExample t = new NodeExpressEJSMongoExample();
 		t.setupTemplate();

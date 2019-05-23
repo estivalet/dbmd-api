@@ -7,11 +7,11 @@ var ${string.toCamelCase(model.name)}Schema = new Schema(
 <#list model.attributes as attribute>
     ${attribute.name}: { type: ${type.getJSType(attribute.type)} },
 </#list>
-<#list model.getModels() as model>
-    <#if (model.multi)>
-    ${string.toCamelCase(model.pluralName)}: [{ type: Schema.Types.ObjectId, ref: '${model.name}' }],
+<#list model.getReferencedModels() as refmodel>
+    <#if (refmodel.multi)>
+    ${string.toCamelCase(refmodel.pluralName)}: [{ type: Schema.Types.ObjectId, ref: '${refmodel.name}' }],
 	<#else>
-    ${string.toCamelCase(model.name)}: { type: Schema.Types.ObjectId, ref: '${model.name}' },
+    ${string.toCamelCase(refmodel.name)}: { type: Schema.Types.ObjectId, ref: '${refmodel.name}' },
 	</#if>
 </#list>
   },
@@ -23,7 +23,7 @@ var ${string.toCamelCase(model.name)}Schema = new Schema(
   }
 );
 
-<#list model.getModels() as refmodel>
+<#list model.getReferencedModels() as refmodel>
 <#if (refmodel.multi)>
 ${string.toCamelCase(refmodel.name)}Schema.post('save', function(${string.toCamelCase(refmodel.name)}) {
   console.log(${string.toCamelCase(refmodel.name)});

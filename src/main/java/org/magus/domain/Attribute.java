@@ -54,7 +54,7 @@ public class Attribute implements Serializable {
 	private String model;
 
 	/** If the attribute is referenced by other model. */
-	private Boolean referenced;
+	private Boolean referenced = false;
 
 	/** If a referenced attribute is visible. */
 	private Boolean referencedVisible = true;
