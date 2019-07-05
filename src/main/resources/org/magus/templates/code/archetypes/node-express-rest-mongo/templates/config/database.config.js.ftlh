@@ -1,3 +1,3 @@
 module.exports = {
-    url: 'mongodb://localhost:27017/${app.shortName}'
+    url: 'mongodb://localhost:27017/${app.databaseName}'
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public class App implements Serializable {
 	private String name;
 	private String shortName;
+	private String databaseName;
 	private String path;
 	private String copyright;
 	private List<Model> models = new ArrayList<Model>();
@@ -80,6 +81,21 @@ public class App implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @return the databaseName
+	 */
+	public String getDatabaseName() {
+		return databaseName;
+	}
+
+	/**
+	 * @param databaseName
+	 *            the databaseName to set
+	 */
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
 	}
 
 }

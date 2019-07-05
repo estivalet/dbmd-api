@@ -1,6 +1,7 @@
 {
 	"name": "OctupusGDB Node Express REST Mongo Template",
 	"shortName": "octupusgdb-api",
+	"databaseName": "octupusgdb",
 	"path": "C:/temp/appsjs",
 	"copyright": "(c) Luiz Fernando Estivalet 2019",
 	"models": [
