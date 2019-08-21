@@ -13,7 +13,7 @@ exports.create = (req, res) => {
         ${attribute.name}: req.body.${attribute.name},
         </#list>
 		<#list model.getReferencedAttributes() as refattr>
-		${string.toCamelCase(refattr.model)}: req.body.${string.toCamelCase(refattr.model)}Id,
+		${string.toCamelCase(refattr.model)}: req.body.${string.toCamelCase(refattr.model)},
 		</#list>
         
     });
@@ -40,10 +40,14 @@ exports.findAll = (req, res) => {
     // if a number of page is passed as a parameter use it, otherwise list all.
     if(page) {
         models.${string.toCamelCase(model.name, true)}.find({})
-        <#list model.getReferencedAttributes() as refattr>
-	    .populate('${string.toCamelCase(refattr.model)}')
-		</#list>
-        .sort({'${model.getFirstOrderByAttributeName()}': 1})
+        <#list model.getReferencedModels() as refmodel>
+        <#if (refmodel.multi)>
+        .populate('${string.toCamelCase(refmodel.pluralName)}')
+        <#else>
+        .populate('${string.toCamelCase(refmodel.name)}')
+        </#if>
+        </#list>
+        .sort({'name': 1})
         .skip((perPage * page) - perPage)
         .limit(perPage)
         .exec(function(err, data) {
@@ -61,9 +65,7 @@ exports.findAll = (req, res) => {
             })
         });
     } else {
-        models.${string.toCamelCase(model.name, true)}
-        .find()
-        .sort({'${model.getFirstOrderByAttributeName()}': 1})
+        models.${string.toCamelCase(model.name, true)}.find()
         .then(data => {
             res.send(data);
         }).catch(err => {
@@ -77,6 +79,13 @@ exports.findAll = (req, res) => {
 // Find a single country with a countryId
 exports.findOne = (req, res) => {
     models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
+    <#list model.getReferencedModels() as refmodel>
+    <#if (refmodel.multi)>
+    .populate('${string.toCamelCase(refmodel.pluralName)}')
+    <#else>
+    .populate('${string.toCamelCase(refmodel.name)}')
+    </#if>
+    </#list>
     .then(data => {
         if(!data) {
             return res.status(404).send({

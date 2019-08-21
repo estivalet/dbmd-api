@@ -1,6 +1,7 @@
 {
   "name": "Book Archive Node Express EJS Mongo Template",
   "shortName": "barch",
+  "databaseName": "barch",
   "path": "C:/temp/js",
   "copyright": "(c) Luiz Fernando Estivalet 2018",
   "models": [

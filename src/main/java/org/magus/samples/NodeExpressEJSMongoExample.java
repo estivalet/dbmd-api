@@ -55,7 +55,7 @@ public class NodeExpressEJSMongoExample {
 		System.out.println(app.getFullPath() + destFile);
 
 		// Create destination folder.
-		new File(app.getFullPath());
+		new File(app.getFullPath()).mkdirs();
 		if (destFile.lastIndexOf("/") > 0) {
 			new File(app.getFullPath() + destFile.substring(0, destFile.lastIndexOf("/"))).mkdirs();
 		}
@@ -156,6 +156,7 @@ public class NodeExpressEJSMongoExample {
 		processAppTemplate(app, root, archetype + "config/database.config.js.ftlh", "/config/database.config.js");
 		processAppTemplate(app, root, archetype + "app.js.ftlh", "/app.js");
 		processAppTemplate(app, root, archetype + "package.json.ftlh", "/package.json");
+		processAppTemplate(app, root, archetype + "README.md.ftlh", "/README.md");
 		processAppTemplate(app, root, archetype + "app/models/schema.model.js.ftlh", "/app/models/schema.model.js");
 		processAppTemplate(app, root, archetype + "app/controllers/app.controller.js.ftlh",
 				"/app/controllers/" + app.getShortName() + ".controller.js");
@@ -183,10 +184,9 @@ public class NodeExpressEJSMongoExample {
 
 		// Copy java framework common code (commented because it takes time to copy,
 		// uncomment it again when fisnihed)
-		// String src = System.getProperty("user.dir") +
-		// "/src/main/resources/org/magus/templates/web/AdminLTE/";
-		// String dest = "C:/temp/appsjs/barch/public/";
-		// IOUtil.copyFiles(new File(src), new File(dest), false);
+		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE/";
+		String dest = app.getPath() + "/" + app.getShortName() + "/public/";
+		IOUtil.copyFiles(new File(src), new File(dest), false);
 
 		System.out.println("Finished copying files");
 
