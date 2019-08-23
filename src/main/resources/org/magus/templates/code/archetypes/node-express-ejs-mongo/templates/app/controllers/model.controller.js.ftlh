@@ -76,7 +76,7 @@ exports.findAll = (req, res) => {
     }
 };
 
-// Find a single country with a countryId
+// Find a single country with a id
 exports.findOne = (req, res) => {
     models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
     <#list model.getReferencedModels() as refmodel>
@@ -93,6 +93,38 @@ exports.findOne = (req, res) => {
             });            
         }
         res.send(data);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving ${model.name} with id " + req.params.${string.toCamelCase(model.name)}Id
+        });
+    });
+};
+
+// detail a single country with a id
+exports.detail = (req, res) => {
+    models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
+    <#list model.getReferencedModels() as refmodel>
+    <#if (refmodel.multi)>
+    .populate('${string.toCamelCase(refmodel.pluralName)}')
+    <#else>
+    .populate('${string.toCamelCase(refmodel.name)}')
+    </#if>
+    </#list>
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
+            });            
+        }
+        res.render('${string.toCamelCase(model.name)}/detail', {
+            data
+        });
+
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({

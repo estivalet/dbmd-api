@@ -178,6 +178,8 @@ public class NodeExpressEJSMongoExample {
 					"/app/controllers/" + StringUtils.toCamelCase(m.getName()) + ".controller.js");
 			processAppTemplate(app, root, archetype + "app/views/model/content.ejs.ftlh",
 					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/content.ejs");
+			// processAppTemplate(app, root, archetype + "app/views/model/detail.ejs.ftlh",
+			// "/app/views/" + StringUtils.toCamelCase(m.getName()) + "/detail.ejs");
 			processAppTemplate(app, root, archetype + "app/views/model/index.ejs.ftlh",
 					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/index.ejs");
 		}

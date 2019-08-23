@@ -1,164 +1,328 @@
 {
-  "name": "Book Archive Node Express EJS Mongo Template",
-  "shortName": "barch",
-  "databaseName": "barch",
-  "path": "C:/temp/js",
-  "copyright": "(c) Luiz Fernando Estivalet 2018",
-  "models": [
-    {
-      "name": "Author",
-      "pluralName": "authors",
-      "attributes": [
-        {
-          "name": "name",
-          "label": "Nome do Autor",
-          "type": "text",
-          "description": "Full author\u0027s name",
-          "required": true,
-          "orderBy": true,
-          "orderByNum": 0,
-          "model": "Author",
-          "referenced": true,
-          "referencedVisible": true
-        }
-      ],
-      "models": [],
-      "imutable": true,
-      "controller": true,
-      "hasList": true
-    },
-    {
-      "name": "Country",
-      "pluralName": "countries",
-      "attributes": [
-        {
-          "name": "name",
-          "type": "text",
-          "description": "Country name",
-          "required": true,
-          "orderBy": true,
-          "orderByNum": 0,
-          "model": "Country",
-          "referenced": true,
-          "referencedVisible": false
-        }
-      ],
-      "models": [],
-      "imutable": true,
-      "controller": true,
-      "hasList": true
-    },
-    {
-      "name": "Book",
-      "pluralName": "books",
-      "attributes": [
-        {
-          "name": "title",
-          "label": "Title",
-          "type": "text",
-          "description": "",
-          "required": false,
-          "orderBy": false,
-          "orderByNum": 0,
-          "referenced": true,
-          "referencedVisible": true
-        }
-      ],
-      "models": ["Author", "Country"],
-      "imutable": false,
-      "controller": false,
-      "hasList": false
-    },
-    {
-      "name": "Employee",
-      "pluralName": "employees",
-      "attributes": [
-        {
-          "name": "first_name",
-          "label": "First Name",
-          "type": "text",
-          "description": "",
-          "required": true,
-          "orderBy": false,
-          "orderByNum": 0,
-          "model": "Employee",
-          "referenced": true,
-          "referencedVisible": true
-        },
-        {
-          "name": "sex",
-          "label": "Sex",
-          "type": "radio",
-          "description": "",
-          "required": true,
-          "orderBy": false,
-          "orderByNum": 0,
-          "model": "Employee",
-          "referenced": false,
-          "referencedVisible": false,
-          "options": [
-            {
-              "label": "Masculino",
-              "value": "M",
-              "isDefault": true
-            },
-            {
-              "label": "Feminino",
-              "value": "F",
-              "isDefault": false
-            }
-          ]          
-        },
-        {
-          "name": "bio",
-          "label": "Biography",
-          "type": "textarea",
-          "description": "",
-          "required": false,
-          "orderBy": false,
-          "orderByNum": 0,
-          "model": "Employee",
-          "referenced": false,
-          "referencedVisible": false
-        },
-        {
-          "name": "abilities",
-          "label": "Abilities",
-          "type": "checkbox",
-          "description": "",
-          "required": true,
-          "orderBy": false,
-          "orderByNum": 0,
-          "model": "Employee",
-          "referenced": false,
-          "referencedVisible": false,
-          "options": [
-            {
-              "label": "Java",
-              "value": "0",
-              "isDefault": true
-            },
-            {
-              "label": "Angular",
-              "value": "1",
-              "isDefault": false
-            },
-            {
-              "label": "CSS",
-              "value": "2",
-              "isDefault": false
-            }
-          ]          
-        }
-        
-        
-      ],
-      "models": ["Country"],
-      "imutable": true,
-      "controller": true,
-      "hasList": true
-    }
-    
-  ],
-  "services": []
+	"name": "Book Archive Node Express EJS Mongo Template",
+	"shortName": "barch",
+	"databaseName": "barch",
+	"path": "C:/temp/js",
+	"copyright": "(c) Luiz Fernando Estivalet 2018",
+	"models": [
+		{
+			"name": "Author",
+			"pluralName": "authors",
+			"attributes": [
+				{
+					"name": "name",
+					"label": "Nome do Autor",
+					"type": "text",
+					"description": "Full author\u0027s name",
+					"required": true,
+					"orderBy": true,
+					"orderByNum": 0,
+					"model": "Author",
+					"referenced": true,
+					"referencedVisible": true
+				}
+			],
+			"models": [],
+			"imutable": true,
+			"controller": true,
+			"hasList": true
+		},
+		{
+			"name": "Country",
+			"pluralName": "countries",
+			"attributes": [
+				{
+					"name": "name",
+					"type": "text",
+					"description": "Country name",
+					"required": true,
+					"orderBy": true,
+					"orderByNum": 0,
+					"model": "Country",
+					"referenced": true,
+					"referencedVisible": false
+				}
+			],
+			"models": [],
+			"imutable": true,
+			"controller": true,
+			"hasList": true
+		},
+		{
+			"name": "Book",
+			"pluralName": "books",
+			"attributes": [
+				{
+					"name": "title",
+					"label": "Title",
+					"type": "text",
+					"description": "",
+					"required": false,
+					"orderBy": false,
+					"orderByNum": 0,
+					"referenced": true,
+					"referencedVisible": true
+				}
+			],
+			"models": [
+				"Author",
+				"Country"
+			],
+			"imutable": false,
+			"controller": false,
+			"hasList": false
+		},
+		{
+			"name": "Employee",
+			"pluralName": "employees",
+			"attributes": [
+				{
+					"name": "first_name",
+					"label": "First Name",
+					"type": "text",
+					"description": "",
+					"required": true,
+					"orderBy": false,
+					"orderByNum": 0,
+					"model": "Employee",
+					"referenced": true,
+					"referencedVisible": true
+				},
+				{
+					"name": "sex",
+					"label": "Sex",
+					"type": "radio",
+					"description": "",
+					"required": true,
+					"orderBy": false,
+					"orderByNum": 0,
+					"model": "Employee",
+					"referenced": false,
+					"referencedVisible": false,
+					"options": [
+						{
+							"label": "Masculino",
+							"value": "M",
+							"isDefault": true
+						},
+						{
+							"label": "Feminino",
+							"value": "F",
+							"isDefault": false
+						}
+					]
+				},
+				{
+					"name": "bio",
+					"label": "Biography",
+					"type": "textarea",
+					"description": "",
+					"required": false,
+					"orderBy": false,
+					"orderByNum": 0,
+					"model": "Employee",
+					"referenced": false,
+					"referencedVisible": false
+				},
+				{
+					"name": "abilities",
+					"label": "Abilities",
+					"type": "checkbox",
+					"description": "",
+					"required": true,
+					"orderBy": false,
+					"orderByNum": 0,
+					"model": "Employee",
+					"referenced": false,
+					"referencedVisible": false,
+					"options": [
+						{
+							"label": "Java",
+							"value": "0",
+							"isDefault": true
+						},
+						{
+							"label": "Angular",
+							"value": "1",
+							"isDefault": false
+						},
+						{
+							"label": "CSS",
+							"value": "2",
+							"isDefault": false
+						}
+					]
+				}
+			],
+			"models": [
+				"Country"
+			],
+			"imutable": true,
+			"controller": true,
+			"hasList": true
+		},
+		{
+			"name": "System",
+			"pluralName": "systems",
+			"attributes": [
+				{
+					"name": "name",
+					"label": "System",
+					"type": "text"
+				},
+				{
+					"name": "manufacturer",
+					"label": "Manufacturer",
+					"type": "text"
+				},
+				{
+					"name": "type",
+					"label": "Type",
+					"type": "text"
+				},
+				{
+					"name": "country",
+					"label": "Country",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
+					"name": "year",
+					"label": "Year",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
+					"name": "price",
+					"label": "price",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
+					"name": "technicalInformation",
+					"type": "subattributes",
+					"visibleInList": false,
+					"attributes": [
+						{
+							"name": "batteries",
+							"type": "text"
+						},
+						{
+							"name": "buttons",
+							"type": "text"
+						},
+						{
+							"name": "builtInGames",
+							"type": "text"
+						},
+						{
+							"name": "colors",
+							"type": "text"
+						},
+						{
+							"name": "controllers",
+							"type": "text"
+						},
+						{
+							"name": "coprocessor",
+							"type": "text"
+						},
+						{
+							"name": "cpu",
+							"type": "text"
+						},
+						{
+							"name": "graphics",
+							"type": "text"
+						},
+						{
+							"name": "gun",
+							"type": "text"
+						},
+						{
+							"name": "keyboard",
+							"type": "text"
+						},
+						{
+							"name": "language",
+							"type": "text"
+						},
+						{
+							"name": "media",
+							"type": "text"
+						},
+						{
+							"name": "numGames",
+							"type": "text"
+						},
+						{
+							"name": "peripherals",
+							"type": "text"
+						},
+						{
+							"name": "ports",
+							"type": "text"
+						},
+						{
+							"name": "power",
+							"type": "text"
+						},
+						{
+							"name": "ram",
+							"type": "text"
+						},
+						{
+							"name": "rom",
+							"type": "text"
+						},
+						{
+							"name": "size",
+							"type": "text"
+						},
+						{
+							"name": "sound",
+							"type": "text"
+						},
+						{
+							"name": "speed",
+							"type": "text"
+						},
+						{
+							"name": "switches",
+							"type": "text"
+						},
+						{
+							"name": "text",
+							"type": "text"
+						},
+						{
+							"name": "VRAM",
+							"type": "text"
+						}
+					]
+				},
+				{
+					"name": "adverts",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
+					"name": "emulators",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
+					"name": "links",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
+					"name": "shots",
+					"type": "array",
+					"visibleInList": false
+				}
+			]
+		}
+	],
+	"services": []
 }

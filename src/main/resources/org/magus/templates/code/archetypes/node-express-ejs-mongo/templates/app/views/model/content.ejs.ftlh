@@ -83,7 +83,9 @@
                                     <thead class="thead-light">
                                         <tr>
                                     <#list model.attributes as attribute>
+                                    <#if attribute.visibleInList>
                                             <th>${attribute.name}</th>
+                                    </#if>        
 									</#list>   
 									<#list model.getReferencedAttributes() as refattr>
 						            <#if (refattr.referencedVisible)>
@@ -234,6 +236,7 @@ function edit_${string.toCamelCase(model.name)}(id) {
         }
     });
 }
+
 function delete_${string.toCamelCase(model.name)}(id) {
     console.log(id);
     $.ajax({
@@ -267,11 +270,13 @@ function changePage(target, page) {
             tableBody.appendChild(tr);
             // Create columns for model attributes.
             <#list model.attributes as attribute>
+            <#if attribute.visibleInList>
             var td = document.createElement('TD');
             var span = document.createElement('SPAN');
             span.innerHTML = element.${attribute.name};
             td.appendChild(span);
             tr.appendChild(td);
+            </#if>
             </#list>
             
 			<#list model.getReferencedAttributes() as refattr>
@@ -287,7 +292,7 @@ function changePage(target, page) {
             // Actions column.
             var td = document.createElement('TD');
             var span = document.createElement('SPAN');
-            span.innerHTML = '<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
+            span.innerHTML = '<a href="/system/' + element.id + '/detail">detail</a>&nbsp;<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
             td.appendChild(span);
             tr.appendChild(td);
           });

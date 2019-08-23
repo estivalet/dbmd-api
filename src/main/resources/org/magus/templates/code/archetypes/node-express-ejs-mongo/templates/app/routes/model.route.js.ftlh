@@ -13,6 +13,9 @@ module.exports = (app) => {
     // Retrieve a single ${string.toCamelCase(model.name)} with ${string.toCamelCase(model.name)}Id
     app.get('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id', ${string.toCamelCase(model.name)}.findOne);
 
+    // View detail of a single ${string.toCamelCase(model.name)} with ${string.toCamelCase(model.name)}Id
+    app.get('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id/detail', ${string.toCamelCase(model.name)}.detail);
+
     // Update a ${string.toCamelCase(model.name)} with ${string.toCamelCase(model.name)}Id
     app.put('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id', ${string.toCamelCase(model.name)}.update);
 

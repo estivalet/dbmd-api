@@ -40,6 +40,9 @@ public class Attribute implements Serializable {
 	/** If the attribute is visible in a table for example. */
 	private Boolean visible = true;
 
+	/** If the attribute is visible in a table for example. */
+	private Boolean visibleInList = true;
+
 	/** Indicates if the attribute can be editable or it is read-only. */
 	private Boolean readOnly = true;
 
@@ -61,6 +64,9 @@ public class Attribute implements Serializable {
 
 	/** List of possible values used for checkbox, radio and select. */
 	private List<AttributeOption> options = new ArrayList<AttributeOption>();
+
+	/** Attributes of attributes. */
+	private List<Attribute> attributes = new ArrayList<Attribute>();
 
 	public String getName() {
 		return name;
@@ -239,4 +245,35 @@ public class Attribute implements Serializable {
 	public void addOption(AttributeOption option) {
 		this.options.add(option);
 	}
+
+	/**
+	 * @return the visibleInList
+	 */
+	public Boolean getVisibleInList() {
+		return visibleInList;
+	}
+
+	/**
+	 * @param visibleInList
+	 *            the visibleInList to set
+	 */
+	public void setVisibleInList(Boolean visibleInList) {
+		this.visibleInList = visibleInList;
+	}
+
+	/**
+	 * @return the attributes
+	 */
+	public List<Attribute> getAttributes() {
+		return attributes;
+	}
+
+	/**
+	 * @param attributes
+	 *            the attributes to set
+	 */
+	public void setAttributes(List<Attribute> attributes) {
+		this.attributes = attributes;
+	}
+
 }

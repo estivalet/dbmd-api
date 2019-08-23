@@ -5,7 +5,19 @@ var Schema = mongoose.Schema;
 var ${string.toCamelCase(model.name)}Schema = new Schema(
   {
 <#list model.attributes as attribute>
+<#if attribute.type != "subattributes" && attribute.type != "array">
     ${attribute.name}: { type: ${type.getJSType(attribute.type)} },
+</#if>    
+<#if attribute.type == "subattributes">
+    ${attribute.name} : {
+<#list attribute.attributes as subattribute>
+        ${subattribute.name}: { type: ${type.getJSType(subattribute.type)} },
+</#list>
+    },
+</#if>
+<#if attribute.type == "array">
+    ${attribute.name}: [],
+</#if>
 </#list>
 <#list model.getReferencedModels() as refmodel>
     <#if (refmodel.multi)>
