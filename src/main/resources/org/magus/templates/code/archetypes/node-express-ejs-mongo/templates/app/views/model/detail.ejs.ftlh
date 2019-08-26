@@ -152,13 +152,13 @@ Licensed under MIT
             <div class="fb-profile-text">
                 <h1><%=data.name%></h1>
                 <p>
-                    <%=data.type%>
-                </p>
-                <p>
-                    <%=data.year%>
+                    <%=data.manufacturer%>
                 </p>
                 <p>
                     <%=data.country%>
+                </p>
+                <p>
+                    <%=data.year%>
                 </p>
             </div>
         </div>
@@ -191,101 +191,17 @@ Licensed under MIT
                         </p>
                     </div>
                     <div class="tab-pane" id="tab_default_2">
+
+                    </div>
+                    <div class="tab-pane" id="tab_default_3">
+
+                    </div>
+                    <div class="tab-pane" id="tab_default_4">
                         <div class="row">
                             <div class="col-sm-12">
                             <% for(var i=0; i < data.links.length; i++) { %>
                                 <li><a href="<%= data.links[i]%>"><%= data.links[i]%></a></li>
                             <% } %>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="tab-pane" id="tab_default_3">
-                        <p>
-                            Family Details
-                        </p>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">Highest Education:</label>
-                                    <p> MBA/PGDM</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tab_default_4">
-                        <p>
-                            Lifestyle
-
-                        </p>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">Highest Education:</label>
-                                    <p> MBA/PGDM</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Place of Birth:</label>
-                                    <p> pune, maharashtra</p>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -302,6 +218,12 @@ Licensed under MIT
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
+                        <% if (data.type) { %>
+                        <div class="form-group">
+                            <label for="email">Type:</label>
+                            <p><%=data.type%></p>
+                        </div>
+                        <% } %>
                         <% if (data.technicalInformation.cpu) { %>
                         <div class="form-group">
                             <label for="email">CPU:</label>
@@ -383,7 +305,7 @@ Licensed under MIT
                         <% if (data.technicalInformation.sound) { %>
                         <div class="form-group">
                             <label for="email">Sound:</label>
-                            <p><%=data.technicalInformation.sound%></p>
+                            <p id="sound" contenteditable="true"><%=data.technicalInformation.sound%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.speed) { %>
@@ -449,3 +371,33 @@ Licensed under MIT
         </div>
     </div>
 </div>
+<script>
+var editable = document.getElementById('sound');
+editable.addEventListener('focusout', function() {
+console.log(editable.innerHTML);
+
+    $.ajax({
+        url: '/system/<%=data.id%>',
+        dataType: 'json',
+        type: 'put',
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+            "id": "<%=data.id%>",
+            "technicalInformation.sound": editable.innerHTML,
+        },
+        success: function( data, textStatus, xhr ) {
+            if(xhr.status==201 || xhr.status==200) {
+                if(xhr.status==200) {
+                	console.log("System updated");
+                } else {
+                	console.log("System added");
+                }
+            }
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+  
+});
+</script>
