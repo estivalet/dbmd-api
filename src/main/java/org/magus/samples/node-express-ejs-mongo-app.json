@@ -193,6 +193,12 @@
 					"visibleInList": false
 				},
 				{
+					"name": "description",
+					"label": "Description",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
 					"name": "price",
 					"label": "price",
 					"type": "text",

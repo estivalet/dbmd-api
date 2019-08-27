@@ -20,7 +20,7 @@ module.exports = (app) => {
     app.put('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id', ${string.toCamelCase(model.name)}.update);
 
     // Update a single field of a ${string.toCamelCase(model.name)} with ${string.toCamelCase(model.name)}Id
-	app.put('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id'/field', ${string.toCamelCase(model.name)}.field);
+	app.put('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id/field', ${string.toCamelCase(model.name)}.field);
 
     // Delete a ${string.toCamelCase(model.name)} with ${string.toCamelCase(model.name)}Id
     app.delete('/${string.toCamelCase(model.name)}/:${string.toCamelCase(model.name)}Id', ${string.toCamelCase(model.name)}.delete);
