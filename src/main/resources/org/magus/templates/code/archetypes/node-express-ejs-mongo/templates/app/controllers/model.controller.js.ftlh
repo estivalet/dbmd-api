@@ -167,6 +167,35 @@ exports.update = (req, res) => {
     });
 };
 
+// Update a single field
+exports.field =  (req, res) => {
+    var update = {};
+    update[req.body.field] = req.body.value ;
+
+    models.${string.toCamelCase(model.name, true)}.findByIdAndUpdate(req.params.${string.toCamelCase(model.name)}Id, {
+         $set: update ,
+    }, {new: true})
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
+            });
+        }
+        res.status(200).send(data);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating ${model.name} with id " + req.params.${string.toCamelCase(model.name)}Id
+        });
+    });
+        
+};
+
+
 // Delete a country with the specified countryId in the request
 exports.delete = (req, res) => {
     models.${string.toCamelCase(model.name, true)}.findByIdAndRemove(req.params.${string.toCamelCase(model.name)}Id)

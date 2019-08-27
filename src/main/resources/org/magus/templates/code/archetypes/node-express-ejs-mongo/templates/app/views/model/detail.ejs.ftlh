@@ -139,6 +139,7 @@ Licensed under MIT
             z-index: 9;
             width: 20%;
         }
+    }
 </style>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -150,16 +151,10 @@ Licensed under MIT
             <img align="left" class="fb-image-lg" src="https://dummyimage.com/850x200/f0f0f0/f0f0f0.png" alt="Profile image example" />
             <img align="left" class="fb-image-profile thumbnail" src="http://www.old-computers.com/museum/photos/gradiente_expert-plus_1.jpg" alt="Profile image example" />
             <div class="fb-profile-text">
-                <h1><%=data.name%></h1>
-                <p>
-                    <%=data.manufacturer%>
-                </p>
-                <p>
-                    <%=data.country%>
-                </p>
-                <p>
-                    <%=data.year%>
-                </p>
+                <h1 class="databox" id="name" contenteditable="true"><%=data.name%></h1>
+                <p class="databox" id="manufacturer" contenteditable="true"><%=data.manufacturer%></p>
+                <p class="databox" id="country" contenteditable="true"><%=data.country%></p>
+                <p class="databox" id="year" contenteditable="true"><%=data.year%></p>
             </div>
         </div>
     </div>
@@ -221,147 +216,147 @@ Licensed under MIT
                         <% if (data.type) { %>
                         <div class="form-group">
                             <label for="email">Type:</label>
-                            <p><%=data.type%></p>
+                            <p class="databox" id="type" contenteditable="true"><%=data.type%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.cpu) { %>
                         <div class="form-group">
                             <label for="email">CPU:</label>
-                            <p><%=data.technicalInformation.cpu%></p>
+                            <p class="databox" id="technicalInformation.cpu" contenteditable="true"><%=data.technicalInformation.cpu%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.coprocessor) { %>
                         <div class="form-group">
                             <label for="email">Coprocessor:</label>
-                            <p><%=data.technicalInformation.coprocessor%></p>
+                            <p class="databox" id="technicalInformation.coprocessor" contenteditable="true"><%=data.technicalInformation.coprocessor%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.ram) { %>
                         <div class="form-group">
                             <label for="email">RAM:</label>
-                            <p><%=data.technicalInformation.ram%></p>
+                            <p class="databox" id="technicalInformation.ram" contenteditable="true"><%=data.technicalInformation.ram%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.rom) { %>
                         <div class="form-group">
                             <label for="email">ROM:</label>
-                            <p><%=data.technicalInformation.rom%></p>
+                            <p class="databox" id="technicalInformation.rom" contenteditable="true"><%=data.technicalInformation.rom%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.keyboard) { %>
                         <div class="form-group">
                             <label for="email">Keyboard:</label>
-                            <p><%=data.technicalInformation.keyboard%></p>
+                            <p class="databox" id="technicalInformation.keyboard" contenteditable="true"><%=data.technicalInformation.keyboard%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.language) { %>
                         <div class="form-group">
                             <label for="email">Language:</label>
-                            <p><%=data.technicalInformation.language%></p>
+                            <p class="databox" id="technicalInformation.language" contenteditable="true"><%=data.technicalInformation.language%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.buttons) { %>
                         <div class="form-group">
                             <label for="email">Buttons:</label>
-                            <p><%=data.technicalInformation.buttons%></p>
+                            <p class="databox" id="technicalInformation.buttons" contenteditable="true"><%=data.technicalInformation.buttons%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.controllers) { %>
                         <div class="form-group">
                             <label for="email">Controllers:</label>
-                            <p><%=data.technicalInformation.controllers%></p>
+                            <p class="databox" id="technicalInformation.controllers" contenteditable="true"><%=data.technicalInformation.controllers%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.builtInGames) { %>
                         <div class="form-group">
                             <label for="email">Built In Games:</label>
-                            <p><%=data.technicalInformation.builtInGames%></p>
+                            <p class="databox" id="technicalInformation.builtInGames" contenteditable="true"><%=data.technicalInformation.builtInGames%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.media) { %>
                         <div class="form-group">
                             <label for="email">Media:</label>
-                            <p><%=data.technicalInformation.media%></p>
+                            <p class="databox" id="technicalInformation.media" contenteditable="true"><%=data.technicalInformation.media%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.ports) { %>
                         <div class="form-group">
                             <label for="email">Ports:</label>
-                            <p><%=data.technicalInformation.ports%></p>
+                            <p class="databox" id="technicalInformation.ports" contenteditable="true"><%=data.technicalInformation.ports%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.size) { %>
                         <div class="form-group">
                             <label for="email">Size:</label>
-                            <p><%=data.technicalInformation.size%></p>
+                            <p class="databox" id="technicalInformation.size" contenteditable="true"><%=data.technicalInformation.size%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.colors) { %>
                         <div class="form-group">
                             <label for="email">Colors:</label>
-                            <p><%=data.technicalInformation.colors%></p>
+                            <p class="databox" id="technicalInformation.colors" contenteditable="true"><%=data.technicalInformation.colors%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.sound) { %>
                         <div class="form-group">
                             <label for="email">Sound:</label>
-                            <p id="sound" contenteditable="true"><%=data.technicalInformation.sound%></p>
+                            <p class="databox" id="technicalInformation.sound" contenteditable="true"><%=data.technicalInformation.sound%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.speed) { %>
                         <div class="form-group">
                             <label for="email">Speed:</label>
-                            <p><%=data.technicalInformation.speed%></p>
+                            <p class="databox" id="technicalInformation.speed" contenteditable="true"><%=data.technicalInformation.speed%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.graphics) { %>
                         <div class="form-group">
                             <label for="email">Graphics:</label>
-                            <p><%=data.technicalInformation.graphics%></p>
+                            <p class="databox" id="technicalInformation.graphics" contenteditable="true"><%=data.technicalInformation.graphics%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.vram) { %>
                         <div class="form-group">
                             <label for="email">VRAM:</label>
-                            <p><%=data.technicalInformation.vram%></p>
+                            <p class="databox" id="technicalInformation.vram" contenteditable="true"><%=data.technicalInformation.vram%></p>
                         </div>
                         <% } %>
                         
                         <% if (data.technicalInformation.text) { %>
                         <div class="form-group">
                             <label for="email">Text:</label>
-                            <p><%=data.technicalInformation.text%></p>
+                            <p class="databox" id="technicalInformation.text" contenteditable="true"><%=data.technicalInformation.text%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.switches) { %>
                         <div class="form-group">
                             <label for="email">Switches:</label>
-                            <p><%=data.technicalInformation.switches%></p>
+                            <p class="databox" id="technicalInformation.switches" contenteditable="true"><%=data.technicalInformation.switches%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.power) { %>
                         <div class="form-group">
                             <label for="email">Power:</label>
-                            <p><%=data.technicalInformation.power%></p>
+                            <p class="databox" id="technicalInformation.power" contenteditable="true"><%=data.technicalInformation.power%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.peripherals) { %>
                         <div class="form-group">
                             <label for="email">Peripherals:</label>
-                            <p><%=data.technicalInformation.peripherals%></p>
+                            <p class="databox" id="technicalInformation.peripherals" contenteditable="true"><%=data.technicalInformation.peripherals%></p>
                         </div>
                         <% } %>
                         
                         <% if (data.technicalInformation.batteries) { %>
                         <div class="form-group">
                             <label for="email">Batteries:</label>
-                            <p><%=data.technicalInformation.batteries%></p>
+                            <p class="databox" id="technicalInformation.batteries" contenteditable="true"><%=data.technicalInformation.batteries%></p>
                         </div>
                         <% } %>
                         <% if (data.technicalInformation.gun) { %>
                         <div class="form-group">
                             <label for="email">Gun:</label>
-                            <p><%=data.technicalInformation.gun%></p>
+                            <p class="databox" id="technicalInformation.gun" contenteditable="true"><%=data.technicalInformation.gun%></p>
                         </div>
                         <% } %>
                         
@@ -372,32 +367,31 @@ Licensed under MIT
     </div>
 </div>
 <script>
-var editable = document.getElementById('sound');
-editable.addEventListener('focusout', function() {
-console.log(editable.innerHTML);
-
-    $.ajax({
-        url: '/system/<%=data.id%>',
-        dataType: 'json',
-        type: 'put',
-        contentType: 'application/x-www-form-urlencoded',
-        data: {
-            "id": "<%=data.id%>",
-            "technicalInformation.sound": editable.innerHTML,
-        },
-        success: function( data, textStatus, xhr ) {
-            if(xhr.status==201 || xhr.status==200) {
-                if(xhr.status==200) {
-                	console.log("System updated");
-                } else {
-                	console.log("System added");
+document.body.addEventListener('focusout', function (evt) {
+    if (evt.target.className === 'databox') {
+        $.ajax({
+            url: '/system/<%=data.id%>/field',
+            dataType: 'json',
+            type: 'put',
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                "id": "<%=data.id%>",
+                "field": evt.target.id,
+                "value": evt.target.innerHTML
+            },
+            success: function( data, textStatus, xhr ) {
+                if(xhr.status==201 || xhr.status==200) {
+                    if(xhr.status==200) {
+                        console.log("System updated");
+                    } else {
+                        console.log("System added");
+                    }
                 }
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+                console.log( errorThrown );
             }
-        },
-        error: function( jqXhr, textStatus, errorThrown ){
-            console.log( errorThrown );
-        }
-    });
-  
-});
+        });
+    }
+}, false);
 </script>
