@@ -359,7 +359,13 @@ Licensed under MIT
                             <p class="databox" id="technicalInformation.gun" contenteditable="true"><%=data.technicalInformation.gun%></p>
                         </div>
                         <% } %>
-                        
+                        <% if (data.price) { %>
+                            <div class="form-group">
+                                <label for="email">Price:</label>
+                                <p class="databox" id="price" contenteditable="true"><%=data.price%></p>
+                            </div>
+                        <% } %>
+                            
                     </div>
                 </div>
             </div>
