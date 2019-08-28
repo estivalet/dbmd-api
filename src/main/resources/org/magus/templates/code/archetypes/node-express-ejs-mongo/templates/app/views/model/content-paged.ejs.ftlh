@@ -77,9 +77,32 @@
                         </div>
       
                         <div class="box-footer">
-                            <div id="table">
-                                
-                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <caption></caption>
+                                    <thead class="thead-light">
+                                        <tr>
+                                    <#list model.attributes as attribute>
+                                    <#if attribute.visibleInList>
+                                            <th>${attribute.name}</th>
+                                    </#if>        
+									</#list>   
+									<#list model.getReferencedAttributes() as refattr>
+						            <#if (refattr.referencedVisible)>
+											<th>${refattr.model}</th>
+									</#if>
+									</#list>
+                                            <th></th>
+                                        </tr>
+									                                     
+                                    </thead>
+                                    
+                                    <tbody id="${string.toCamelCase(model.name)}List">
+                                    </tbody>
+                                </table>
+                            </div> 
+                            <ul class="pagination text-center" id="pagination">
+                            </ul>
                         </div>
                 
                     </form>
@@ -232,69 +255,103 @@ function delete_${string.toCamelCase(model.name)}(id) {
     });
 }
 
-function createTable(target, data) {
-    var tableDiv = document.getElementById("table");
-    tableDiv.innerHTML = "";
 
-    var table = document.createElement('TABLE');
-    table.id = 'table${string.toCamelCase(model.name, true)}';
-    table.border = '1';
-    table.className = 'table table-striped table-bordered';
-
-    var header = table.createTHead();
-    var row = header.insertRow(0);
-    <#list model.attributes as attribute>
-    <#if attribute.visibleInList>
-    row.insertCell(${attribute?index}).outerHTML = "<th>${attribute.name}</th>";
-    </#if>
-    </#list>
-    row.insertCell(-1).outerHTML = "<th>Actions</th>";
-
-    var footer = table.createTFoot();
-    var row = footer.insertRow(0);
-    <#list model.attributes as attribute>
-    <#if attribute.visibleInList>
-    row.insertCell(${attribute?index}).outerHTML = "<th>${attribute.name}</th>";
-    </#if>
-    </#list>
-    row.insertCell(-1).outerHTML = "<th>Actions</th>";
-
-    var tableBody = document.createElement('TBODY');
-    table.appendChild(tableBody);
-
-    $.each(data, function(index, element) {
-        var tr = document.createElement('TR');
-        tableBody.appendChild(tr);        
-        
-	    <#list model.attributes as attribute>
-	    <#if attribute.visibleInList>
-        var td = document.createElement('TD');
-        td.appendChild(document.createTextNode(element.${attribute.name}));
-        tr.appendChild(td);        
-	    </#if>
-	    </#list>
-	    
-        // Actions column.
-        var td = document.createElement('TD');
-        var span = document.createElement('SPAN');
-        span.innerHTML = '<a href="/system/' + element.id + '/detail">detail</a>&nbsp;<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
-        td.appendChild(span);
-        tr.appendChild(td);
-	    
-    });
-
-    tableDiv.appendChild(table);
-    var dataTable = $("#table${string.toCamelCase(model.name, true)}").DataTable();    
-}
-
-function loadData(target) {
+function changePage(target, page) {
     $.ajax({
-        url : "/" + target,
-        type : "get",
-        success : function(result) {
-            createTable(target, result);
-        }
-    });    
+      url : "/" + target + "?page=" + page,
+      type : "get",
+      success : function(result) {
+          $("#id").val("");
+          var tableBody = document.getElementById(target + "List");
+          tableBody.innerHTML = "";
+          $.each(result.data, function(index, element) {
+			            
+            var tr = document.createElement('TR');
+            tableBody.appendChild(tr);
+            // Create columns for model attributes.
+            <#list model.attributes as attribute>
+            <#if attribute.visibleInList>
+            var td = document.createElement('TD');
+            var span = document.createElement('SPAN');
+            span.innerHTML = element.${attribute.name};
+            td.appendChild(span);
+            tr.appendChild(td);
+            </#if>
+            </#list>
+            
+			<#list model.getReferencedAttributes() as refattr>
+			<#if (refattr.referencedVisible)>
+            var td = document.createElement('TD');
+            var span = document.createElement('SPAN');
+            span.innerHTML = element.${string.toCamelCase(refattr.model)}.${string.toCamelCase(refattr.name)};
+            td.appendChild(span);
+            tr.appendChild(td);
+            </#if>
+			</#list>
+            
+            // Actions column.
+            var td = document.createElement('TD');
+            var span = document.createElement('SPAN');
+            span.innerHTML = '<a href="/system/' + element.id + '/detail">detail</a>&nbsp;<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
+            td.appendChild(span);
+            tr.appendChild(td);
+          });
+          var pagination = document.getElementById("pagination");
+          pagination.innerHTML = "";
+          var li = document.createElement('LI');
+          var a = document.createElement('A');
+          a.innerText = "First";
+          li.appendChild(a);
+          if (result.current == 1) {
+            li.className = "disabled";
+          } else {
+            a.onclick = function() {
+                changePage("${string.toCamelCase(model.name)}", 1);
+            }
+          }
+          pagination.appendChild(li);
+        
+          var i = (Number(result.current) > 5 ? Number(result.current) - 4 : 1);
+          if (i !== 1) {
+            var li = document.createElement('LI');
+            li.className = "disabled";
+            var a = document.createElement('A');
+            a.innerText = "...";
+            li.appendChild(a);
+            pagination.appendChild(li);
+          }
+          for (; i <= (Number(result.current) + 4) && i <= result.pages; i++) {
+              var li = document.createElement('LI');
+              var a = document.createElement('A');
+              a.innerHTML = i;
+              if (i == result.current) {
+                li.className = "active";
+              } else {
+                a.onclick = function() {
+                    changePage("${string.toCamelCase(model.name)}", this.innerText);
+                }
+              }
+              if (i == Number(result.current) + 4 && i < result.pages) {
+                li.className = "disabled";
+                a.innerHTML = "...";
+              } 
+              li.appendChild(a);
+              pagination.appendChild(li);
+          }
+          var li = document.createElement('LI');
+          var a = document.createElement('A');
+          a.innerHTML = "Last";
+          if (result.current == result.pages) {
+            li.className = "disabled";
+          } else {
+            a.onclick = function() {
+                changePage("${string.toCamelCase(model.name)}", result.pages);
+            }
+          }
+          li.appendChild(a);
+          pagination.appendChild(li);
+      }
+    });
 }
 
 function loadReferencedData() {
@@ -321,7 +378,7 @@ function loadReferencedData() {
 }
 
 $( document ).ready(function() {
-    loadData("${string.toCamelCase(model.name)}");
+    changePage("${string.toCamelCase(model.name)}", 1);
     loadReferencedData();
 });
 
