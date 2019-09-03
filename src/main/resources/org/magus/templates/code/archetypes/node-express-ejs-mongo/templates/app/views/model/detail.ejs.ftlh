@@ -170,13 +170,16 @@ Licensed under MIT
                         <a href="#tab_default_1" data-toggle="tab">About</a>
                     </li>
                     <li>
-                        <a href="#tab_default_2" data-toggle="tab">Emulation</a>
+                        <a href="#tab_default_2" data-toggle="tab">Hardware</a>
                     </li>
                     <li>
-                        <a href="#tab_default_3" data-toggle="tab">Documentation</a>
+                        <a href="#tab_default_3" data-toggle="tab">Emulation</a>
                     </li>
                     <li>
-                        <a href="#tab_default_4" data-toggle="tab">Links</a>
+                        <a href="#tab_default_4" data-toggle="tab">Documentation</a>
+                    </li>
+                    <li>
+                        <a href="#tab_default_5" data-toggle="tab">Links</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -186,12 +189,19 @@ Licensed under MIT
                         </p>
                     </div>
                     <div class="tab-pane" id="tab_default_2">
-
+                        <% for(var i=0; i < data.hardware.length; i++) { %>
+                            <h3><%= data.hardware[i].type%></h3>
+                            <% for(var j=0; j < data.hardware[i].item.length; j++) { %>
+                                <li><%= data.hardware[i].item[j].description%></li>
+                            <% } %>
+                        <% } %>
                     </div>
                     <div class="tab-pane" id="tab_default_3">
 
                     </div>
                     <div class="tab-pane" id="tab_default_4">
+                    </div>
+                    <div class="tab-pane" id="tab_default_5">
                         <div class="row">
                             <div class="col-sm-12">
                             <% for(var i=0; i < data.links.length; i++) { %>

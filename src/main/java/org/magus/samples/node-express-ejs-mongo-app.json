@@ -323,6 +323,11 @@
 					"visibleInList": false
 				},
 				{
+					"name": "hardware",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
 					"name": "shots",
 					"type": "array",
 					"visibleInList": false
