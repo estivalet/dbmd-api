@@ -184,9 +184,7 @@ Licensed under MIT
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_default_1">
-                        <p>
-                            <%=data.description%>
-                        </p>
+                        <span id="description"></span>
                     </div>
                     <div class="tab-pane" id="tab_default_2">
                         <% for(var i=0; i < data.hardware.length; i++) { %>
@@ -410,4 +408,11 @@ document.body.addEventListener('focusout', function (evt) {
         });
     }
 }, false);
+
+const load = () => {
+    description = "<%=data.description.toString()%>".replace(/\&lt;/g,'<').replace(/\&gt;/g,'>');
+    document.getElementById("description").innerHTML = description;
+} 
+window.onload = load; 
+
 </script>
