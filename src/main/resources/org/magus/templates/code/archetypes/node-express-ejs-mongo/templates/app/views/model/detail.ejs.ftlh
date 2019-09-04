@@ -410,7 +410,11 @@ document.body.addEventListener('focusout', function (evt) {
 }, false);
 
 const load = () => {
-    description = "<%=data.description.toString()%>".replace(/\&lt;/g,'<').replace(/\&gt;/g,'>');
+    description = "<%=data.description.toString()%>"
+                        .replace(/\&lt;/g,'<')
+                        .replace(/\&gt;/g,'>')
+                        .replace(/&amp;quot;/g,'"')
+                        .replace(/&amp;/g,'&')
     document.getElementById("description").innerHTML = description;
 } 
 window.onload = load; 
