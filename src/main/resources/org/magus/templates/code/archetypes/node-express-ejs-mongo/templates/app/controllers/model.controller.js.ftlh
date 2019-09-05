@@ -38,11 +38,13 @@ exports.detail = (req, res) => {
 };
 
 // Retrieve and return all ${model.name} from the database.
+// TODO Very specific need to generalize
 exports.list = (req, res) => {
     models.System.aggregate([
         {
             $group: {
                 _id: '$type',
+                count: {$sum: 1},
                 entry: {
                     $push: {
                       name: "$name",
