@@ -5,6 +5,67 @@ exports.index = (req, res) => {
     res.render('${string.toCamelCase(model.name)}/index', { title: "${model.name} page" });
 }
 
+// detail a single ${model.name} with a id
+exports.detail = (req, res) => {
+    models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
+    <#list model.getReferencedModels() as refmodel>
+    <#if (refmodel.multi)>
+    .populate('${string.toCamelCase(refmodel.pluralName)}')
+    <#else>
+    .populate('${string.toCamelCase(refmodel.name)}')
+    </#if>
+    </#list>
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
+            });            
+        }
+        res.render('${string.toCamelCase(model.name)}/detail', {
+            data
+        });
+
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving ${model.name} with id " + req.params.${string.toCamelCase(model.name)}Id
+        });
+    });
+};
+
+// Retrieve and return all ${model.name} from the database.
+exports.list = (req, res) => {
+    models.System.aggregate([
+        {
+            $group: {
+                _id: '$type',
+                entry: {
+                    $push: {
+                      name: "$name",
+                    }
+                }
+            }
+        }
+    ], function (err, result) {
+        if (err) {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving System."
+            });
+        } else {
+            console.log(result);
+            res.render('system/list', {
+                result
+            });
+        }
+    });
+};
+
+
+
 exports.create = (req, res) => {
     try {
 
@@ -76,7 +137,7 @@ exports.findAll = (req, res) => {
     }
 };
 
-// Find a single country with a id
+// Find a single ${model.name} with a id
 exports.findOne = (req, res) => {
     models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
     <#list model.getReferencedModels() as refmodel>
@@ -105,39 +166,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// detail a single country with a id
-exports.detail = (req, res) => {
-    models.${string.toCamelCase(model.name, true)}.findById(req.params.${string.toCamelCase(model.name)}Id)
-    <#list model.getReferencedModels() as refmodel>
-    <#if (refmodel.multi)>
-    .populate('${string.toCamelCase(refmodel.pluralName)}')
-    <#else>
-    .populate('${string.toCamelCase(refmodel.name)}')
-    </#if>
-    </#list>
-    .then(data => {
-        if(!data) {
-            return res.status(404).send({
-                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
-            });            
-        }
-        res.render('${string.toCamelCase(model.name)}/detail', {
-            data
-        });
-
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "${model.name} not found with id " + req.params.${string.toCamelCase(model.name)}Id
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving ${model.name} with id " + req.params.${string.toCamelCase(model.name)}Id
-        });
-    });
-};
-
-// Update a country identified by the countryId in the request
+// Update a ${model.name} identified by the ${model.name}Id in the request
 exports.update = (req, res) => {
     // Find note and update it with the request body
     models.${string.toCamelCase(model.name, true)}.findByIdAndUpdate(req.params.${string.toCamelCase(model.name)}Id, {
@@ -196,7 +225,7 @@ exports.field =  (req, res) => {
 };
 
 
-// Delete a country with the specified countryId in the request
+// Delete a ${model.name} with the specified ${model.name}Id in the request
 exports.delete = (req, res) => {
     models.${string.toCamelCase(model.name, true)}.findByIdAndRemove(req.params.${string.toCamelCase(model.name)}Id)
         .then(data => {
