@@ -42,16 +42,24 @@ exports.detail = (req, res) => {
 exports.list = (req, res) => {
     models.System.aggregate([
         {
+            $sort: {name:1}
+        },
+        {
             $group: {
                 _id: '$type',
                 count: {$sum: 1},
                 entry: {
                     $push: {
                       name: "$name",
-                    }
-                }
-            }
+                    },
+                },
+            },
+        },
+        {
+            $sort: {_id: 1}
+            
         }
+        
     ], function (err, result) {
         if (err) {
             res.status(500).send({
@@ -65,8 +73,6 @@ exports.list = (req, res) => {
         }
     });
 };
-
-
 
 exports.create = (req, res) => {
     try {
