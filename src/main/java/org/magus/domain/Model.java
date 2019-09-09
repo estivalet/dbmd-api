@@ -29,6 +29,9 @@ public class Model implements Serializable {
 	/** List of models of this model. */
 	protected List<String> models = new ArrayList<String>();
 
+	/** TODO use this instead of the above... */
+	protected List<RefModel> refModels = new ArrayList<RefModel>();
+
 	/** Indicates if the model is imutable or not. */
 	private Boolean imutable = false;
 
@@ -199,6 +202,22 @@ public class Model implements Serializable {
 		}
 
 		return models;
+	}
+
+	/**
+	 * TODO Method to be used in replacement of the above...
+	 * 
+	 * @return
+	 */
+	public List<RefModel> getRefModels() {
+		List<RefModel> refModels = new ArrayList<RefModel>();
+		for (RefModel refModel : this.refModels) {
+			Model model = app.getModelByName(refModel.getName());
+			refModel.setModel(model);
+			refModels.add(refModel);
+		}
+
+		return refModels;
 	}
 
 	public void setAttributes(List<Attribute> attributes) {

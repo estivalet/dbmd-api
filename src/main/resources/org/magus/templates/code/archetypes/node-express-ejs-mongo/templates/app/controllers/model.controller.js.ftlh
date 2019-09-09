@@ -135,6 +135,16 @@ exports.findAll = (req, res) => {
         });
     } else {
         models.${string.toCamelCase(model.name, true)}.find()
+        <#list model.getRefModels() as refmodel>
+	    <#if (refmodel.visibleInList)>
+	    <#list refmodel.getModel().getAttributes() as refmodelattr>
+	    <#if (refmodelattr.referencedVisible)>
+    		.populate({ path: '${string.toCamelCase(refmodel.name)}', select: '${string.toCamelCase(refmodelattr.name)}'})
+	    </#if>
+		</#list>
+	    </#if>
+    	</#list>
+
         .then(data => {
             res.send(data);
         }).catch(err => {

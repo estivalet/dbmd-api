@@ -19,7 +19,8 @@
 					"orderByNum": 0,
 					"model": "Author",
 					"referenced": true,
-					"referencedVisible": true
+					"referencedVisible": true,
+					"referencedLabel": "Author's Name"
 				}
 			],
 			"models": [],
@@ -67,6 +68,16 @@
 			"models": [
 				"Author",
 				"Country"
+			],
+			"refModels": [
+				{
+					"name": "Author",
+					"visibleInList": true
+				},
+				{
+					"name": "Country",
+					"visibleInList": false
+				}
 			],
 			"imutable": false,
 			"controller": false,

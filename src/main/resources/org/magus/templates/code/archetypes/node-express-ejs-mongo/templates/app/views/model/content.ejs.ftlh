@@ -255,9 +255,13 @@ function createTable(target, data) {
     row.insertCell(${attribute?index}).outerHTML = "<th>${attribute.name}</th>";
     </#if>
     </#list>
-	<#list model.getReferencedAttributes() as refattr>
-	<#if (refattr.referencedVisible)>
-	row.insertCell(-1).outerHTML = "<th>${refattr.name}</th>";
+    <#list model.getRefModels() as refmodel>
+    <#if (refmodel.visibleInList)>
+    <#list refmodel.getModel().getAttributes() as refmodelattr>
+    <#if (refmodelattr.referencedVisible)>
+	row.insertCell(-1).outerHTML = "<th>${refmodelattr.referencedLabel}</th>";
+    </#if>
+	</#list>
     </#if>
 	</#list>
     
@@ -270,9 +274,13 @@ function createTable(target, data) {
     row.insertCell(${attribute?index}).outerHTML = "<th>${attribute.name}</th>";
     </#if>
     </#list>
-	<#list model.getReferencedAttributes() as refattr>
-	<#if (refattr.referencedVisible)>
-	row.insertCell(-1).outerHTML = "<th>${refattr.name}</th>";
+    <#list model.getRefModels() as refmodel>
+    <#if (refmodel.visibleInList)>
+    <#list refmodel.getModel().getAttributes() as refmodelattr>
+    <#if (refmodelattr.referencedVisible)>
+	row.insertCell(-1).outerHTML = "<th>${refmodelattr.referencedLabel}</th>";
+    </#if>
+	</#list>
     </#if>
 	</#list>
     row.insertCell(-1).outerHTML = "<th>Actions</th>";
@@ -292,11 +300,15 @@ function createTable(target, data) {
 	    </#if>
 	    </#list>
 	    
-		<#list model.getReferencedAttributes() as refattr>
-		<#if (refattr.referencedVisible)>
+	    <#list model.getRefModels() as refmodel>
+	    <#if (refmodel.visibleInList)>
+	    <#list refmodel.getModel().getAttributes() as refmodelattr>
+	    <#if (refmodelattr.referencedVisible)>
         var td = document.createElement('TD');
-        td.appendChild(document.createTextNode(element.${refattr.name}));
+        td.appendChild(document.createTextNode(element.${string.toCamelCase(refmodel.name)}.${refmodelattr.name}));
         tr.appendChild(td);        
+	    </#if>
+		</#list>
 	    </#if>
 		</#list>
 	    

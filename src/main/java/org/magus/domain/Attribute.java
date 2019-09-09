@@ -62,6 +62,9 @@ public class Attribute implements Serializable {
 	/** If a referenced attribute is visible. */
 	private Boolean referencedVisible = true;
 
+	/** If the referenced attribute use referencedLabel to display the label. */
+	private String referencedLabel;
+
 	/** List of possible values used for checkbox, radio and select. */
 	private List<AttributeOption> options = new ArrayList<AttributeOption>();
 
@@ -274,6 +277,21 @@ public class Attribute implements Serializable {
 	 */
 	public void setAttributes(List<Attribute> attributes) {
 		this.attributes = attributes;
+	}
+
+	/**
+	 * @return the referencedLabel
+	 */
+	public String getReferencedLabel() {
+		return referencedLabel;
+	}
+
+	/**
+	 * @param referencedLabel
+	 *            the referencedLabel to set
+	 */
+	public void setReferencedLabel(String referencedLabel) {
+		this.referencedLabel = referencedLabel;
 	}
 
 }
