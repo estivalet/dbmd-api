@@ -40,7 +40,7 @@
 					"orderByNum": 0,
 					"model": "Country",
 					"referenced": true,
-					"referencedVisible": false
+					"referencedVisible": true
 				}
 			],
 			"models": [],
@@ -76,6 +76,26 @@
 			"name": "Employee",
 			"pluralName": "employees",
 			"attributes": [
+				{
+					"name": "title",
+					"label": "Title",
+					"type": "listbox",
+					"description": "",
+					"required": true,
+					"model": "Employee",
+					"options": [
+						{
+							"label": "Mr.",
+							"value": "Mr.",
+							"isDefault": true
+						},
+						{
+							"label": "Mrs.",
+							"value": "Mrs.",
+							"isDefault": false
+						}
+					]
+				},
 				{
 					"name": "first_name",
 					"label": "First Name",
@@ -121,6 +141,7 @@
 					"orderBy": false,
 					"orderByNum": 0,
 					"model": "Employee",
+					"visibleInList": false,
 					"referenced": false,
 					"referencedVisible": false
 				},
@@ -133,6 +154,7 @@
 					"orderBy": false,
 					"orderByNum": 0,
 					"model": "Employee",
+					"visibleInList": false,
 					"referenced": false,
 					"referencedVisible": false,
 					"options": [

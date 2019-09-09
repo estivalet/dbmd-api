@@ -36,7 +36,14 @@
                                 
                                 <#if (attribute.type=="text")>
 								<input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}>
-								
+
+								<#elseif (attribute.type=="listbox")>
+							    <select class="form-control" id="${attribute.name}">
+								<#list attribute.options as option>
+								<option value="${option.value}"> ${option.label}</option>
+								</#list>	
+							    </select>
+																
 								<#elseif (attribute.type=="radio")>
 								<#list attribute.options as option>
 								<div class="radio">
@@ -151,7 +158,7 @@ function save_${string.toCamelCase(model.name)}() {
                 }
             }
 			resetForm();        
-            changePage("${string.toCamelCase(model.name)}", 1);
+            loadData("${string.toCamelCase(model.name)}");
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
@@ -204,7 +211,7 @@ function edit_${string.toCamelCase(model.name)}(id) {
             $('#${attribute.name}').val(data.${attribute.name});
             </#list>
             <#list model.getReferencedAttributes() as refattr>
-            $('#${string.toCamelCase(refattr.model)}Id').val(data.${string.toCamelCase(refattr.model)});
+            $('#${string.toCamelCase(refattr.model)}Id').val(data.${string.toCamelCase(refattr.model)}.id);
             </#list>
             //$('#name').focus();
         },
@@ -226,7 +233,7 @@ function delete_${string.toCamelCase(model.name)}(id) {
                 $("#message").text("${model.name} deleted");
             }
           
-          changePage("${string.toCamelCase(model.name)}", 1);
+          loadData("${string.toCamelCase(model.name)}");
           $("#message").text(data.message);
       }
     });
@@ -248,6 +255,12 @@ function createTable(target, data) {
     row.insertCell(${attribute?index}).outerHTML = "<th>${attribute.name}</th>";
     </#if>
     </#list>
+	<#list model.getReferencedAttributes() as refattr>
+	<#if (refattr.referencedVisible)>
+	row.insertCell(-1).outerHTML = "<th>${refattr.name}</th>";
+    </#if>
+	</#list>
+    
     row.insertCell(-1).outerHTML = "<th>Actions</th>";
 
     var footer = table.createTFoot();
@@ -257,6 +270,11 @@ function createTable(target, data) {
     row.insertCell(${attribute?index}).outerHTML = "<th>${attribute.name}</th>";
     </#if>
     </#list>
+	<#list model.getReferencedAttributes() as refattr>
+	<#if (refattr.referencedVisible)>
+	row.insertCell(-1).outerHTML = "<th>${refattr.name}</th>";
+    </#if>
+	</#list>
     row.insertCell(-1).outerHTML = "<th>Actions</th>";
 
     var tableBody = document.createElement('TBODY');
@@ -273,6 +291,15 @@ function createTable(target, data) {
         tr.appendChild(td);        
 	    </#if>
 	    </#list>
+	    
+		<#list model.getReferencedAttributes() as refattr>
+		<#if (refattr.referencedVisible)>
+        var td = document.createElement('TD');
+        td.appendChild(document.createTextNode(element.${refattr.name}));
+        tr.appendChild(td);        
+	    </#if>
+		</#list>
+	    
 	    
         // Actions column.
         var td = document.createElement('TD');
