@@ -31,9 +31,7 @@ A model is specified using the following JSON format:
 		"pluralName": "",
 		"attributes": [],
 		"models": [],
-		"imutable": true|false,
 		"controller": true|false,
-		"hasList": true|false
     }
 
 An attribute has the following JSON format:
@@ -46,9 +44,9 @@ An attribute has the following JSON format:
 		"required": true|false,
 		"orderBy": true|false,
 		"orderByNum": 0,
-		"model": "",
 		"referenced": true|false,
 		"referencedVisible": true|false,
+		"referencedLabel": ""
 		"options": []
     }
     

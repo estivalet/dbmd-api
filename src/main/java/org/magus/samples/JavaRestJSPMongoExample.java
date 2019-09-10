@@ -67,9 +67,9 @@ public class JavaRestJSPMongoExample {
 		author.setApp(app);
 		author.setName("Author");
 		author.setPluralName("authors");
-		author.setImutable(true);
-		author.setController(true);
-		author.setHasList(true);
+		// author.setImutable(true);
+		// author.setController(true);
+		// author.setHasList(true);
 		Attribute attr = new Attribute();
 		attr.setName("name");
 		attr.setType("text");
@@ -84,9 +84,9 @@ public class JavaRestJSPMongoExample {
 		country.setApp(app);
 		country.setName("Country");
 		country.setPluralName("countries");
-		country.setImutable(true);
-		country.setController(true);
-		country.setHasList(true);
+		// country.setImutable(true);
+		// country.setController(true);
+		// country.setHasList(true);
 		attr = new Attribute();
 		attr.setName("description"); // name of the country change it after some tests
 		attr.setType("text");

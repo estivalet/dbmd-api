@@ -77,9 +77,9 @@ public class NodeExpressEJSMongoExample {
 		Model author = new Model();
 		author.setName("Author");
 		author.setPluralName("authors");
-		author.setImutable(true);
-		author.setController(true);
-		author.setHasList(true);
+		// author.setImutable(true);
+		// author.setController(true);
+		// author.setHasList(true);
 		Attribute attr = new Attribute();
 		attr.setName("name");
 		attr.setType("text");
@@ -95,9 +95,9 @@ public class NodeExpressEJSMongoExample {
 		Model country = new Model();
 		country.setName("Country");
 		country.setPluralName("countries");
-		country.setImutable(true);
-		country.setController(true);
-		country.setHasList(true);
+		// country.setImutable(true);
+		// country.setController(true);
+		// country.setHasList(true);
 		attr = new Attribute();
 		attr.setName("description"); // name of the country change it after some tests
 		attr.setType("text");
@@ -207,6 +207,9 @@ public class NodeExpressEJSMongoExample {
 		// Set app reference to all models
 		for (Model m : app.getModels()) {
 			m.setApp(app);
+			for (Attribute a : m.getAttributes()) {
+				a.setModel(m.getName());
+			}
 		}
 
 		NodeExpressEJSMongoExample t = new NodeExpressEJSMongoExample();

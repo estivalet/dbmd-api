@@ -32,15 +32,6 @@ public class Model implements Serializable {
 	/** TODO use this instead of the above... */
 	protected List<RefModel> refModels = new ArrayList<RefModel>();
 
-	/** Indicates if the model is imutable or not. */
-	private Boolean imutable = false;
-
-	/** Indicates if the model is a controller or not. */
-	private Boolean controller = false;
-
-	/** Indicates if the model will have a list of models. */
-	private Boolean hasList = false;
-
 	/** Single attribute to order by the list. */
 	private Attribute orderBy;
 
@@ -224,36 +215,12 @@ public class Model implements Serializable {
 		this.attributes = attributes;
 	}
 
-	public Boolean getImutable() {
-		return imutable;
-	}
-
-	public void setImutable(Boolean imutable) {
-		this.imutable = imutable;
-	}
-
-	public Boolean getController() {
-		return controller;
-	}
-
-	public void setController(Boolean controller) {
-		this.controller = controller;
-	}
-
 	public String getPluralName() {
 		return pluralName;
 	}
 
 	public void setPluralName(String pluralName) {
 		this.pluralName = pluralName;
-	}
-
-	public Boolean getHasList() {
-		return hasList;
-	}
-
-	public void setHasList(Boolean hasList) {
-		this.hasList = hasList;
 	}
 
 	public Attribute getOrderBy() {

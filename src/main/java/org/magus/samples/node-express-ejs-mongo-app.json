@@ -17,16 +17,12 @@
 					"required": true,
 					"orderBy": true,
 					"orderByNum": 0,
-					"model": "Author",
 					"referenced": true,
 					"referencedVisible": true,
 					"referencedLabel": "Author's Name"
 				}
 			],
-			"models": [],
-			"imutable": true,
-			"controller": true,
-			"hasList": true
+			"models": []
 		},
 		{
 			"name": "Country",
@@ -39,15 +35,11 @@
 					"required": true,
 					"orderBy": true,
 					"orderByNum": 0,
-					"model": "Country",
 					"referenced": true,
 					"referencedVisible": true
 				}
 			],
-			"models": [],
-			"imutable": true,
-			"controller": true,
-			"hasList": true
+			"models": []
 		},
 		{
 			"name": "Book",
@@ -78,10 +70,7 @@
 					"name": "Country",
 					"visibleInList": false
 				}
-			],
-			"imutable": false,
-			"controller": false,
-			"hasList": false
+			]
 		},
 		{
 			"name": "Employee",
@@ -93,7 +82,6 @@
 					"type": "listbox",
 					"description": "",
 					"required": true,
-					"model": "Employee",
 					"options": [
 						{
 							"label": "Mr.",
@@ -115,7 +103,6 @@
 					"required": true,
 					"orderBy": false,
 					"orderByNum": 0,
-					"model": "Employee",
 					"referenced": true,
 					"referencedVisible": true
 				},
@@ -127,7 +114,6 @@
 					"required": true,
 					"orderBy": false,
 					"orderByNum": 0,
-					"model": "Employee",
 					"referenced": false,
 					"referencedVisible": false,
 					"options": [
@@ -151,7 +137,6 @@
 					"required": false,
 					"orderBy": false,
 					"orderByNum": 0,
-					"model": "Employee",
 					"visibleInList": false,
 					"referenced": false,
 					"referencedVisible": false
@@ -164,7 +149,6 @@
 					"required": true,
 					"orderBy": false,
 					"orderByNum": 0,
-					"model": "Employee",
 					"visibleInList": false,
 					"referenced": false,
 					"referencedVisible": false,
@@ -189,10 +173,7 @@
 			],
 			"models": [
 				"Country"
-			],
-			"imutable": true,
-			"controller": true,
-			"hasList": true
+			]
 		},
 		{
 			"name": "System",
