@@ -1,0 +1,184 @@
+{
+	"name": "Octupus Game Database",
+	"shortName": "octupus",
+	"databaseName": "octupus",
+	"path": "C:/temp/js",
+	"copyright": "(c) Luiz Fernando Estivalet 2019",
+	"models": [
+		{
+			"name": "System",
+			"pluralName": "systems",
+			"attributes": [
+				{
+					"name": "name",
+					"label": "System",
+					"type": "text",
+					"required": true
+				},
+				{
+					"name": "manufacturer",
+					"label": "Manufacturer",
+					"type": "text"
+				},
+				{
+					"name": "type",
+					"label": "Type",
+					"type": "text"
+				},
+				{
+					"name": "country",
+					"label": "Country",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
+					"name": "year",
+					"label": "Year",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
+					"name": "description",
+					"label": "Description",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
+					"name": "price",
+					"label": "price",
+					"type": "text",
+					"visibleInList": false
+				},
+				{
+					"name": "technicalInformation",
+					"type": "subattributes",
+					"visibleInList": false,
+					"attributes": [
+						{
+							"name": "batteries",
+							"type": "text"
+						},
+						{
+							"name": "buttons",
+							"type": "text"
+						},
+						{
+							"name": "builtInGames",
+							"type": "text"
+						},
+						{
+							"name": "colors",
+							"type": "text"
+						},
+						{
+							"name": "controllers",
+							"type": "text"
+						},
+						{
+							"name": "coprocessor",
+							"type": "text"
+						},
+						{
+							"name": "cpu",
+							"type": "text"
+						},
+						{
+							"name": "graphics",
+							"type": "text"
+						},
+						{
+							"name": "gun",
+							"type": "text"
+						},
+						{
+							"name": "keyboard",
+							"type": "text"
+						},
+						{
+							"name": "language",
+							"type": "text"
+						},
+						{
+							"name": "media",
+							"type": "text"
+						},
+						{
+							"name": "numGames",
+							"type": "text"
+						},
+						{
+							"name": "peripherals",
+							"type": "text"
+						},
+						{
+							"name": "ports",
+							"type": "text"
+						},
+						{
+							"name": "power",
+							"type": "text"
+						},
+						{
+							"name": "ram",
+							"type": "text"
+						},
+						{
+							"name": "rom",
+							"type": "text"
+						},
+						{
+							"name": "size",
+							"type": "text"
+						},
+						{
+							"name": "sound",
+							"type": "text"
+						},
+						{
+							"name": "speed",
+							"type": "text"
+						},
+						{
+							"name": "switches",
+							"type": "text"
+						},
+						{
+							"name": "text",
+							"type": "text"
+						},
+						{
+							"name": "VRAM",
+							"type": "text"
+						}
+					]
+				},
+				{
+					"name": "adverts",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
+					"name": "emulators",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
+					"name": "links",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
+					"name": "hardware",
+					"type": "array",
+					"visibleInList": false
+				},
+				{
+					"name": "shots",
+					"type": "array",
+					"visibleInList": false
+				}
+			]
+		}
+	],
+	"services": []
+}

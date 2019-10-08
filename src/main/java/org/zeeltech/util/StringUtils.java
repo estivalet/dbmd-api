@@ -1,5 +1,8 @@
 package org.zeeltech.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /*
  * General Tools - Digital Howler Entertainment
  * Copyright (C) 2008 L.F.Estivalet <luizfernando_estivalet@yahoo.com>
@@ -165,4 +168,22 @@ public abstract class StringUtils {
 		return new StringBuffer(strLen).append(Character.toLowerCase(str.charAt(0))).append(str.substring(1))
 				.toString();
 	}
+
+	public static String toUnderline(String string) {
+		final String regex = "(?=[A-Z][a-z])";
+		final String subst = "_";
+
+		final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(string);
+
+		// The substituted value will be contained in the result variable
+		final String result = matcher.replaceAll(subst);
+
+		return result.toLowerCase();
+	}
+
+	public static void main(String[] args) {
+		System.out.println(StringUtils.toUnderline("technicalInformation"));
+	}
+
 }
