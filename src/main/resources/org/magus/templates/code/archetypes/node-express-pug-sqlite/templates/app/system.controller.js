@@ -32,6 +32,26 @@ exports.detail = (req, res) => {
     });
 };
 
+exports.detailSQLite = (req, res) => {
+    console.log('*******************');
+    var sql = 'select s.name, m.name as manufacturer, s.country, s.year, s.type, ti.cpu, ti.coprocessor, ti.ram, ti.rom,ti.keyboard,ti.language,ti.buttons,ti.controllers,ti.built_in_games,ti.media,ti.ports,ti.size,ti.colors,ti.sound,ti.speed,ti.graphics,ti.vram,ti.text,ti.switches,ti.power,ti.peripherals,ti.batteries,ti.gun,s.price \
+    from system s LEFT OUTER JOIN technical_information ti ON ti.system_id = s.id \
+    JOIN manufacturer m ON m.id = s.manufacturer_id  \
+    where s.id = ?';
+    var params = [req.params.systemId]
+    sqlite.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        console.log(rows);
+        res.render('system/detail', {
+            rows
+        });
+    });    
+  
+};
+
 // Retrieve and return all System from the database.
 // TODO Very specific need to generalize
 exports.list = (req, res) => {
