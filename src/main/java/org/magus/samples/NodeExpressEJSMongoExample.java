@@ -29,6 +29,25 @@ import freemarker.template.TemplateHashModel;
 /**
  * https://zellwk.com/blog/crud-express-mongodb/
  * 
+ * 1. Open node-express-ejs-mongo-app.json and make sure the path to the folder
+ * to generate the app is correct
+ * 
+ * 2. Run this class to generate the code
+ * 
+ * 3. Open the folder the path configured in step 1 in Visual Studio Code or any
+ * other editor
+ * 
+ * 4. Open a terminal in the folder and run "npm install" to install all
+ * dependencies
+ * 
+ * 5. This project used a MongoDB database in localhost so you have to install
+ * and start it using "mongod -dbpath data" where `data` is the folder
+ * containing the database.
+ * 
+ * 6. Start the app using "npm run devstart"
+ * 
+ * 7. Open http://localhost:4000
+ * 
  * @author lestivalet
  *
  */
@@ -178,10 +197,10 @@ public class NodeExpressEJSMongoExample {
 					"/app/controllers/" + StringUtils.toCamelCase(m.getName()) + ".controller.js");
 			processAppTemplate(app, root, archetype + "app/views/model/content.ejs.ftlh",
 					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/content.ejs");
-			// processAppTemplate(app, root, archetype + "app/views/model/detail.ejs.ftlh",
-			// "/app/views/" + StringUtils.toCamelCase(m.getName()) + "/detail.ejs");
-			// processAppTemplate(app, root, archetype + "app/views/model/list.ejs.ftlh",
-			// "/app/views/" + StringUtils.toCamelCase(m.getName()) + "/list.ejs");
+			processAppTemplate(app, root, archetype + "app/views/model/detail.ejs.ftlh",
+					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/detail.ejs");
+			processAppTemplate(app, root, archetype + "app/views/model/list.ejs.ftlh",
+					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/list.ejs");
 			processAppTemplate(app, root, archetype + "app/views/model/index.ejs.ftlh",
 					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/index.ejs");
 		}
