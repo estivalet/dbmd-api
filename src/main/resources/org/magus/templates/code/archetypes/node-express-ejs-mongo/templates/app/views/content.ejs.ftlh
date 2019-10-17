@@ -1,39 +1,56 @@
-<!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Dashboard
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-      </ol>
-    </section>
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Dashboard v2</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard v2</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
     <!-- Main content -->
+    <!-- Main content -->
     <section class="content">
+      <div class="container-fluid">
         <div class="row">
-            <!-- left column -->
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                    <h3 class="box-title">MSXDB</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <!-- form start -->
-                    <div class="box-body">
-                      
-                    </div>
-                    <!-- /.box-body -->
+          <div class="col-12">
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Title</h3>
 
-                    <div class="box-footer">
-                        
-                    </div>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
                 </div>
+              </div>
+              <div class="card-body">
+                Start creating your amazing application!
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                Footer
+              </div>
+              <!-- /.card-footer-->
             </div>
+            <!-- /.card -->
+          </div>
         </div>
+      </div>
     </section>
-</div>
+    <!-- /.content -->
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->

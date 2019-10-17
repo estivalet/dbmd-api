@@ -207,7 +207,7 @@ public class NodeExpressEJSMongoExample {
 
 		// Copy java framework common code (commented because it takes time to copy,
 		// uncomment it again when fisnihed)
-		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE/";
+		String src = System.getProperty("user.dir") + "/src/main/resources/org/magus/templates/web/AdminLTE-3.0.0-rc3/";
 		String dest = app.getPath() + "/" + app.getShortName() + "/public/";
 		IOUtil.copyFiles(new File(src), new File(dest), false);
 

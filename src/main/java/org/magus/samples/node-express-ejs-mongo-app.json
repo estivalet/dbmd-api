@@ -107,6 +107,17 @@
 					"referencedVisible": true
 				},
 				{
+					"name": "birth",
+					"label": "Birth Date",
+					"type": "date",
+					"description": "",
+					"required": false,
+					"orderBy": false,
+					"orderByNum": 0,
+					"referenced": true,
+					"referencedVisible": true
+				},
+				{
 					"name": "sex",
 					"label": "Sex",
 					"type": "radio",
