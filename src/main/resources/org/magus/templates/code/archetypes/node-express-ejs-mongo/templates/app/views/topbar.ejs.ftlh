@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
   
 <!-- jQuery-dataTables -->
 <link href="/plugins/jquery-dataTables/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -29,6 +30,11 @@
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- InputMask -->
+<script src="/plugins/moment/moment.min.js"></script>
+<script src="/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<!-- date-range-picker -->
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.js"></script>
 

@@ -71,6 +71,8 @@ public class Attribute implements Serializable {
 	/** Attributes of attributes. */
 	private List<Attribute> attributes = new ArrayList<Attribute>();
 
+	private String mask;
+
 	public String getName() {
 		return name;
 	}
@@ -292,6 +294,21 @@ public class Attribute implements Serializable {
 	 */
 	public void setReferencedLabel(String referencedLabel) {
 		this.referencedLabel = referencedLabel;
+	}
+
+	/**
+	 * @return the mask
+	 */
+	public String getMask() {
+		return mask;
+	}
+
+	/**
+	 * @param mask
+	 *            the mask to set
+	 */
+	public void setMask(String mask) {
+		this.mask = mask;
 	}
 
 }

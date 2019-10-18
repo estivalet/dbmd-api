@@ -64,8 +64,13 @@
 							    </select>
 
 								<#elseif (attribute.type=="date")>
-								<input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}>
-																																
+								<div class="input-group">
+                    				<div class="input-group-prepend">
+                      					<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    				</div>
+                    				<input type="text" id="${attribute.name}" name="${attribute.name}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="${attribute.mask}" data-mask>
+                  				</div>
+                  																																																																																
 								<#elseif (attribute.type=="radio")>
 								<#list attribute.options as option>
 								<div class="radio">
@@ -394,6 +399,11 @@ function loadReferencedData() {
 $( document ).ready(function() {
     loadData("${string.toCamelCase(model.name)}");
     loadReferencedData();
+	<#list model.attributes as attribute>
+	<#if (attribute.type=="date")>
+ 	$('#${attribute.name}').inputmask('${attribute.mask}', { 'placeholder': '${attribute.mask}' });
+    </#if>
+    </#list>
 });
 
 </script>    

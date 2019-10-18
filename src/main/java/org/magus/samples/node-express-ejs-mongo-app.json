@@ -110,6 +110,7 @@
 					"name": "birth",
 					"label": "Birth Date",
 					"type": "date",
+					"mask": "mm/dd/yyyy",
 					"description": "",
 					"required": false,
 					"orderBy": false,
