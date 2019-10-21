@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
   
 <!-- jQuery-dataTables -->
-<link href="/plugins/jquery-dataTables/css/jquery.dataTables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   
   
   
@@ -44,7 +44,8 @@
 <!-- PAGE PLUGINS -->
 
 <!-- jQuery-dataTables -->
-<script src="/plugins/jquery-dataTables/js/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
   
     
         
