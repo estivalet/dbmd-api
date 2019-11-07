@@ -177,7 +177,10 @@ public abstract class StringUtils {
 		final Matcher matcher = pattern.matcher(string);
 
 		// The substituted value will be contained in the result variable
-		final String result = matcher.replaceAll(subst);
+		String result = matcher.replaceAll(subst);
+		if (result.startsWith("_")) {
+			result = result.substring(1);
+		}
 
 		return result.toLowerCase();
 	}
