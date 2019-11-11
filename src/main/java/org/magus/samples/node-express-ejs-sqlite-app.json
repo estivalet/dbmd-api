@@ -1,10 +1,39 @@
 {
-	"name": "Users CRUD Node Express EJS SQLite Template",
-	"shortName": "usersapp",
-	"databaseName": "usersapp",
+	"name": "Contacts CRUD Node Express EJS SQLite Template",
+	"shortName": "contactsapp",
+	"databaseName": "contactsapp",
 	"path": "C:/temp/js",
 	"copyright": "(c) Luiz Fernando Estivalet 2019",
 	"models": [
+		{
+			"name": "User",
+			"pluralName": "users",
+			"attributes": [
+				{
+					"name": "name",
+					"label": "User Name",
+					"type": "text",
+					"description": "",
+					"required": true,
+					"orderBy": true,
+					"orderByNum": 0,
+					"referenced": true,
+					"referencedVisible": true
+				},
+				{
+					"name": "password",
+					"label": "Password",
+					"type": "text",
+					"description": "",
+					"required": true,
+					"orderBy": true,
+					"orderByNum": 0,
+					"referenced": true,
+					"referencedVisible": true
+				}
+			],
+			"models": []
+		},
 		{
 			"name": "Country",
 			"pluralName": "countries",
@@ -22,14 +51,24 @@
 			],
 			"models": []
 		},
-	
 		{
-			"name": "User",
-			"pluralName": "users",
+			"name": "Contact",
+			"pluralName": "contacts",
 			"attributes": [
 				{
 					"name": "first_name",
 					"label": "First Name",
+					"type": "text",
+					"description": "",
+					"required": true,
+					"orderBy": false,
+					"orderByNum": 0,
+					"referenced": true,
+					"referencedVisible": true
+				},
+				{
+					"name": "email",
+					"label": "E-Mail",
 					"type": "text",
 					"description": "",
 					"required": true,
@@ -115,13 +154,18 @@
 					]
 				}
 			],
+			"refAttributes": [
+				{
+					"model": "User",
+					"attribute": "id"
+				}
+			],
 			"refModels": [
 				{
 					"name": "Country",
 					"visibleInList": false
 				}
 			]
-			
 		}
 	]
 }

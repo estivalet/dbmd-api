@@ -32,6 +32,8 @@ public class Model implements Serializable {
 	/** TODO use this instead of the above... */
 	protected List<RefModel> refModels = new ArrayList<RefModel>();
 
+	protected List<RefAttribute> refAttributes = new ArrayList<RefAttribute>();
+
 	/** Single attribute to order by the list. */
 	private Attribute orderBy;
 

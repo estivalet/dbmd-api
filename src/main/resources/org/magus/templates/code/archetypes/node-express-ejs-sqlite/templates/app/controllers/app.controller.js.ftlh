@@ -11,3 +11,15 @@ exports.index = function(req, res) {
 	    title: "${app.shortName}"
     });
 };
+
+exports.register = function(req, res) {
+	res.render('register', {
+	    title: "${app.shortName}"
+    });
+};
+
+exports.login = function(req, res) {
+	res.render('login', {
+	    title: "${app.shortName}"
+    });
+};

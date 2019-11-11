@@ -6,6 +6,18 @@ CREATE TABLE IF NOT EXISTS ${string.toUnderline(model.name)} (
 <#if attribute.type == "text">
     ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
 </#if>
+<#if attribute.type == "date">
+    ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
+</#if>
+<#if attribute.type == "radio">
+    ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
+</#if>
+<#if attribute.type == "textarea">
+    ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
+</#if>
+<#if attribute.type == "checkbox">
+    ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
+</#if>
 </#list>
 );
 

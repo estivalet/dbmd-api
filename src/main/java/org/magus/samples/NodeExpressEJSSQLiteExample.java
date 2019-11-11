@@ -13,6 +13,7 @@ import org.magus.domain.App;
 import org.magus.domain.Attribute;
 import org.magus.domain.Model;
 import org.zeeltech.util.IOUtil;
+import org.zeeltech.util.StringUtils;
 
 import com.google.gson.Gson;
 
@@ -111,24 +112,20 @@ public class NodeExpressEJSSQLiteExample {
 		processAppTemplate(app, root, archetype + "app/views/index.ejs.ftlh", "/app/views/index.ejs");
 		processAppTemplate(app, root, archetype + "app/views/leftbar.ejs.ftlh", "/app/views/leftbar.ejs");
 		processAppTemplate(app, root, archetype + "app/views/topbar.ejs.ftlh", "/app/views/topbar.ejs");
+		processAppTemplate(app, root, archetype + "app/views/register.ejs.ftlh", "/app/views/register.ejs");
+		processAppTemplate(app, root, archetype + "app/views/login.ejs.ftlh", "/app/views/login.ejs");
 
-		// for (Model m : app.getModels()) {
-		// root.put("model", m);
-		// processAppTemplate(app, root, archetype + "app/routes/model.route.js.ftlh",
-		// "/app/routes/" + StringUtils.toCamelCase(m.getName()) + ".routes.js");
-		// processAppTemplate(app, root, archetype +
-		// "app/controllers/model.controller.js.ftlh",
-		// "/app/controllers/" + StringUtils.toCamelCase(m.getName()) +
-		// ".controller.js");
-		// processAppTemplate(app, root, archetype + "app/views/model/content.ejs.ftlh",
-		// "/app/views/" + StringUtils.toCamelCase(m.getName()) + "/content.ejs");
-		// processAppTemplate(app, root, archetype + "app/views/model/detail.ejs.ftlh",
-		// "/app/views/" + StringUtils.toCamelCase(m.getName()) + "/detail.ejs");
-		// processAppTemplate(app, root, archetype + "app/views/model/list.ejs.ftlh",
-		// "/app/views/" + StringUtils.toCamelCase(m.getName()) + "/list.ejs");
-		// processAppTemplate(app, root, archetype + "app/views/model/index.ejs.ftlh",
-		// "/app/views/" + StringUtils.toCamelCase(m.getName()) + "/index.ejs");
-		// }
+		for (Model m : app.getModels()) {
+			root.put("model", m);
+			processAppTemplate(app, root, archetype + "app/routes/model.route.js.ftlh",
+					"/app/routes/" + StringUtils.toCamelCase(m.getName()) + ".routes.js");
+			processAppTemplate(app, root, archetype + "app/controllers/model.controller.js.ftlh",
+					"/app/controllers/" + StringUtils.toCamelCase(m.getName()) + ".controller.js");
+			processAppTemplate(app, root, archetype + "app/views/model/content.ejs.ftlh",
+					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/content.ejs");
+			processAppTemplate(app, root, archetype + "app/views/model/index.ejs.ftlh",
+					"/app/views/" + StringUtils.toCamelCase(m.getName()) + "/index.ejs");
+		}
 
 		// Copy java framework common code (commented because it takes time to copy,
 		// uncomment it again when fisnihed)
