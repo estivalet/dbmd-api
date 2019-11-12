@@ -110,6 +110,7 @@ public class NodeExpressEJSSQLiteExample {
 		processAppTemplate(app, root, archetype + "app/views/controlbar.ejs.ftlh", "/app/views/controlbar.ejs");
 		processAppTemplate(app, root, archetype + "app/views/footer.ejs.ftlh", "/app/views/footer.ejs");
 		processAppTemplate(app, root, archetype + "app/views/index.ejs.ftlh", "/app/views/index.ejs");
+		processAppTemplate(app, root, archetype + "app/views/error.ejs.ftlh", "/app/views/error.ejs");
 		processAppTemplate(app, root, archetype + "app/views/leftbar.ejs.ftlh", "/app/views/leftbar.ejs");
 		processAppTemplate(app, root, archetype + "app/views/topbar.ejs.ftlh", "/app/views/topbar.ejs");
 		processAppTemplate(app, root, archetype + "app/views/register.ejs.ftlh", "/app/views/register.ejs");

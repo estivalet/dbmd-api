@@ -14,6 +14,7 @@
     "debug": "~2.6.9",
     "ejs": "^2.5.8",
     "express": "~4.16.0",
+    "express-session": "^1.17.0",
     "http-errors": "~1.6.2",
     "jsonwebtoken": "^7.3.0",
     "md5": "^2.2.1",
