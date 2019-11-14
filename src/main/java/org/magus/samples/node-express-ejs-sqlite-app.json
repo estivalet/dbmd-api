@@ -25,14 +25,11 @@
 					"label": "Password",
 					"type": "text",
 					"description": "",
-					"required": true,
-					"orderBy": true,
-					"orderByNum": 0,
-					"referenced": true,
-					"referencedVisible": true
+					"required": true
 				}
 			],
-			"models": []
+			"models": [],
+			"refModels": []
 		},
 		{
 			"name": "Country",
@@ -49,7 +46,8 @@
 					"referencedVisible": true
 				}
 			],
-			"models": []
+			"models": [],
+			"refModels": []
 		},
 		{
 			"name": "Contact",
@@ -153,6 +151,10 @@
 						}
 					]
 				}
+			],
+			"models": [
+				"Country",
+				"User"
 			],
 			"refModels": [
 				{

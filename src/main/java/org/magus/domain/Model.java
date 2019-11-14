@@ -211,6 +211,18 @@ public class Model implements Serializable {
 		return refModels;
 	}
 
+	public List<Attribute> getRefAttributes() {
+		List<Attribute> attrs = new ArrayList<Attribute>();
+
+		for (Attribute a : this.attributes) {
+			if (a.getReferenced()) {
+				attrs.add(a);
+			}
+		}
+
+		return attrs;
+	}
+
 	public void setAttributes(List<Attribute> attributes) {
 		this.attributes = attributes;
 	}
