@@ -27,9 +27,7 @@
 					"description": "",
 					"required": true
 				}
-			],
-			"models": [],
-			"refModels": []
+			]
 		},
 		{
 			"name": "Country",
@@ -45,9 +43,7 @@
 					"referenced": true,
 					"referencedVisible": true
 				}
-			],
-			"models": [],
-			"refModels": []
+			]
 		},
 		{
 			"name": "Contact",
@@ -151,10 +147,6 @@
 						}
 					]
 				}
-			],
-			"models": [
-				"Country",
-				"User"
 			],
 			"refModels": [
 				{
