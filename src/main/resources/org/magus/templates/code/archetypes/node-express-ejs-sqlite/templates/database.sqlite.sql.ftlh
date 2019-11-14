@@ -19,6 +19,12 @@ CREATE TABLE IF NOT EXISTS ${string.toUnderline(model.name)} (
     ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
 </#if>
 </#list>
+<#list model.refModels as refModel>
+	${string.toUnderline(refModel.name)}_id INTEGER,
+</#list>
+<#list model.refModels as refModel>
+	FOREIGN KEY (${string.toUnderline(refModel.name)}_id) REFERENCES ${string.toUnderline(refModel.name)} (id), 
+</#list>
 );
 
 <#-- 

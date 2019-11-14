@@ -154,15 +154,13 @@
 					]
 				}
 			],
-			"refAttributes": [
-				{
-					"model": "User",
-					"attribute": "id"
-				}
-			],
 			"refModels": [
 				{
 					"name": "Country",
+					"visibleInList": false
+				},
+				{
+					"name": "User",
 					"visibleInList": false
 				}
 			]
