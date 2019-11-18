@@ -209,9 +209,9 @@ function validateForm() {
 	<#list model.attributes as attribute>
 	<#if (attribute.required)>
     if($('#${attribute.name}').val() == ''){
-        $("#div-${attribute.name}").addClass("has-error");
+    	$("#${attribute.name}").addClass("form-control is-invalid");
         $("#p-${attribute.name}").text("This field is required");
-        $("#i-${attribute.name}").addClass("fa fa-times-circle-o");
+        $("#p-${attribute.name}").addClass("text-danger");
         $('#${attribute.name}').focus();
 	    return false;
     }
@@ -278,7 +278,7 @@ function delete_${string.toCamelCase(model.name)}(id) {
     });
 }
 
-function createTable(target, data) {
+function createTable(target, result) {
     var tableDiv = document.getElementById("table");
     tableDiv.innerHTML = "";
 
@@ -327,7 +327,7 @@ function createTable(target, data) {
     var tableBody = document.createElement('TBODY');
     table.appendChild(tableBody);
 
-    $.each(data, function(index, element) {
+    $.each(result.data, function(index, element) {
         var tr = document.createElement('TR');
         tableBody.appendChild(tr);        
         

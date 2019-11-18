@@ -26,4 +26,29 @@ exports.list = (req, res) => {
 	});    
 }
 
+exports.create = (req, res) => {
+    var sql = 'INSERT INTO ${string.toUnderline(model.name)} (${model.getAttributesCommaSeparated()}) VALUES (${model.getAttributesReplacedBy("?")})';
+ 	var params = [];
+ 	
+    <#list model.attributes as attribute>
+    params.push(req.body.${attribute.name});
+    </#list>
+    <#list model.getRefModels() as refmodel>
+    params.push(req.body.${string.toUnderline(refmodel.name)}_id);
+    </#list>
+    
+ 	
+ 	sqlite.run(sql, params, function(err) {
+    	if (err) {
+		    res.json({
+				"message":"ERROR:" + err.message,
+		    });
+    	}
+	   
+	    res.json({
+			"message":"success",
+	    });
+    	
+	}); 
+};
 

@@ -93,7 +93,14 @@ public class Model implements Serializable {
 	}
 
 	public String getAttributesCommaSeparated() {
-		return attributes.stream().map(c -> String.valueOf(c)).collect(Collectors.joining(","));
+		String attributesCommaSeparated = "";
+		attributesCommaSeparated = attributes.stream().map(c -> String.valueOf(c)).collect(Collectors.joining(","));
+
+		for (RefModel refModel : this.getRefModels()) {
+			attributesCommaSeparated += "," + StringUtils.toUnderline(refModel.getName()) + "_id";
+		}
+
+		return attributesCommaSeparated;
 	}
 
 	public String getAttributesReplacedBy(String character) {
@@ -101,6 +108,10 @@ public class Model implements Serializable {
 		for (Attribute attr : attributes) {
 			str += character + ",";
 		}
+		for (RefModel refModel : this.getRefModels()) {
+			str += character + ",";
+		}
+
 		return str.substring(0, str.length() - 1);
 	}
 
