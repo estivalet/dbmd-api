@@ -189,7 +189,7 @@ function save_${string.toCamelCase(model.name)}() {
         },
         success: function( data, textStatus, xhr ) {
             if(xhr.status==201 || xhr.status==200) {
-                $("#message").addClass("alert alert-success alert-dismissible fade in text-center");
+                $("#message").addClass("alert alert-success alert-dismissible text-center");
                 if(xhr.status==200) {
                 	$("#message").text("${model.name} updated");
                 } else {
@@ -268,7 +268,7 @@ function delete_${string.toCamelCase(model.name)}(id) {
       success : function(data, textStatus, xhr) {
           console.log(data);
             if(xhr.status==200) {
-                $("#message").addClass("alert alert-success alert-dismissible fade in text-center"); 
+                $("#message").addClass("alert alert-success alert-dismissible text-center"); 
                 $("#message").text("${model.name} deleted");
             }
           
