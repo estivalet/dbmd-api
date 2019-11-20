@@ -11,7 +11,7 @@ exports.index = (req, res) => {
 
 
 exports.list = (req, res) => {
-    var sql = 'select id, ${model.getAttributesPrecededByModelName()} from ${string.toUnderline(model.name)} ${string.toUnderline(model.name)}';
+    var sql = 'select id, ${model.getAttributesPrecededByModelName()} from ${string.toUnderline(model.name)} ${string.toUnderline(model.name)} ORDER BY ${model.getFirstOrderByAttributeName()}';
     var params = [];
     sqlite.all(sql, params, (err, rows) => {
         if (err) {
@@ -55,7 +55,7 @@ exports.delete = (req, res) => {
     var sql = 'DELETE FROM ${string.toUnderline(model.name)} WHERE id = ?';
  	var params = [];
  	
- 	params.push(req.params.${string.toCamelCase(model.name)}Id);
+ 	params.push(req.params.${string.toCamelCase(model.name)}_id);
  	
  	sqlite.run(sql, params, function(err) {
     	if (err) {
@@ -81,7 +81,7 @@ exports.update = (req, res) => {
     <#list model.getRefModels() as refmodel>
     params.push(req.body.${string.toUnderline(refmodel.name)}_id);
     </#list>
- 	params.push(req.params.${string.toCamelCase(model.name)}Id);
+ 	params.push(req.params.${string.toCamelCase(model.name)}_id);
  	
  	sqlite.run(sql, params, function(err) {
     	if (err) {
@@ -95,4 +95,24 @@ exports.update = (req, res) => {
 	    });
     	
 	}); 
+};
+
+exports.findOne = (req, res) => {
+    var sql = 'select id, ${model.getAttributesCommaSeparated()} from ${string.toUnderline(model.name)} ${string.toUnderline(model.name)} WHERE id = ?';
+    var params = [];
+    
+ 	var params = [];
+ 	params.push(req.params.${string.toCamelCase(model.name)}_id);
+    
+    sqlite.all(sql, params, (err, rows) => {
+        if (err) {
+			res.status(400).json({"error":err.message});
+            return;
+        }
+        console.log(rows);
+        res.status(200).json({
+            "message":"success",
+            "data":rows
+        })
+	});    
 };

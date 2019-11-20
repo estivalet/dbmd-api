@@ -100,8 +100,8 @@
 	   				        <#list model.getRefModels() as refmodel>
 	   				        <#list refmodel.model.getRefAttributes() as refattr>
 							<div class="form-group">
-							    <label for="${string.toCamelCase(refattr.model)}Id">${refattr.model}'s ${refattr.label}</label>
-							    <select class="form-control" id="${string.toCamelCase(refattr.model)}Id">
+							    <label for="${string.toCamelCase(refattr.model)}_id">${refattr.model}'s ${refattr.label}</label>
+							    <select class="form-control" id="${string.toCamelCase(refattr.model)}_id">
 							    </select>
 							</div>
 						    </#list>
@@ -183,8 +183,8 @@ function save_${string.toCamelCase(model.name)}() {
             "${attribute.name}": $("#${attribute.name}").val(),
             </#if>
             </#list>
-			<#list model.getReferencedAttributes() as refattr>
-			"${string.toCamelCase(refattr.model)}Id": $("#${string.toCamelCase(refattr.model)}Id").val(),
+			<#list model.getRefAttributesOfRefModels() as refattr>
+			"${string.toCamelCase(refattr.model)}_id": $("#${string.toCamelCase(refattr.model)}_id").val(),
 			</#list>
         },
         success: function( data, textStatus, xhr ) {
@@ -241,18 +241,17 @@ function edit_${string.toCamelCase(model.name)}(id) {
         url: '/${string.toCamelCase(model.name)}/' + id,
         dataType: 'json',
         type: 'get',
-        success: function( data, textStatus, xhr ) {
-        
-            console.log('-->update ');
-            console.log(data);
-            $('#id').val(data.id);
+        success: function(result, textStatus, xhr ) {
+            $('#id').val(result.data[0].id);
             <#list model.attributes as attribute>
-            $('#${attribute.name}').val(data.${attribute.name});
+            $('#${attribute.name}').val(result.data[0].${attribute.name});
+            <#if (attribute?index == 0)>
+            $('#${attribute.name}').focus();
+            </#if>
             </#list>
-            <#list model.getReferencedAttributes() as refattr>
-            $('#${string.toCamelCase(refattr.model)}Id').val(data.${string.toCamelCase(refattr.model)}.id);
+            <#list model.getRefAttributesOfRefModels() as refattr>
+            $('#${string.toCamelCase(refattr.model)}_id').val(result.data[0].${string.toCamelCase(refattr.model)}_id);
             </#list>
-            //$('#name').focus();
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
@@ -270,6 +269,7 @@ function delete_${string.toCamelCase(model.name)}(id) {
             if(xhr.status==200) {
                 $("#message").addClass("alert alert-success alert-dismissible text-center"); 
                 $("#message").text("${model.name} deleted");
+                $('#id').val('');
             }
           
           loadData("${string.toCamelCase(model.name)}");
@@ -376,7 +376,7 @@ function loadData(target) {
 }
 
 function loadReferencedData() {
-    <#list model.getReferencedAttributes() as refattr>
+    <#list model.getRefAttributesOfRefModels() as refattr>
 	$.ajax({
 	       url: '/${string.toCamelCase(refattr.model)}',
 	       type: 'GET',
@@ -384,11 +384,11 @@ function loadReferencedData() {
 	          console.log('<p>An error has occurred</p>');
 	       },
 	       dataType: 'json',
-	       success: function(data) {
-	    	   $("#${string.toCamelCase(refattr.model)}Id").empty();
-	    	   $.each(data, function (i, item) {
+	       success: function(result) {
+	    	   $("#${string.toCamelCase(refattr.model)}_id").empty();
+	    	   $.each(result.data, function (i, item) {
 	    		   console.log(item);
-	    		    $('#${string.toCamelCase(refattr.model)}Id').append($('<option>', { 
+	    		    $('#${string.toCamelCase(refattr.model)}_id').append($('<option>', { 
 	    		        value: item.id,
 	    		        text : item.${string.toCamelCase(refattr.name)}
 	    		    }));

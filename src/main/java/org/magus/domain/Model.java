@@ -120,6 +120,10 @@ public class Model implements Serializable {
 		for (Attribute attr : attributes) {
 			str += attr.getName() + " = " + character + ",";
 		}
+		for (RefModel refModel : this.getRefModels()) {
+			str += StringUtils.toUnderline(refModel.getName()) + "_id" + " = " + character + ",";
+		}
+
 		return str.substring(0, str.length() - 1);
 	}
 
@@ -220,6 +224,21 @@ public class Model implements Serializable {
 		}
 
 		return refModels;
+	}
+
+	public List<Attribute> getRefAttributesOfRefModels() {
+		List<Attribute> attrs = new ArrayList<Attribute>();
+
+		for (RefModel refModel : this.refModels) {
+			Model model = app.getModelByName(refModel.getName());
+			for (Attribute a : model.attributes) {
+				if (a.getReferenced()) {
+					attrs.add(a);
+				}
+			}
+		}
+
+		return attrs;
 	}
 
 	public List<Attribute> getRefAttributes() {
