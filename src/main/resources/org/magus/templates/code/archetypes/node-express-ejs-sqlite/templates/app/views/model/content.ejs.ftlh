@@ -132,6 +132,32 @@
           </div>
         </div>
       </div>
+      
+      <!-- /.modal -->
+      <div class="modal fade" id="delete-modal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete this record?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="delete_${string.toCamelCase(model.name)}()">Delete Record</button>
+            </div>
+            <input type="hidden" id="delete-id"/>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      
     </section>
     <!-- /.content -->
     <!-- /.content -->
@@ -140,6 +166,13 @@
 
 
 <script>
+$('#delete-modal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget);
+  var id = button.data('id');
+  var modal = $(this);
+  modal.find('#delete-id').val(id);
+});
+
 function resetForm() {
 	$("#${string.toCamelCase(model.name)}")[0].reset();
 	<#list model.attributes as attribute>
@@ -259,10 +292,10 @@ function edit_${string.toCamelCase(model.name)}(id) {
     });
 }
 
-function delete_${string.toCamelCase(model.name)}(id) {
-    console.log(id);
+function delete_${string.toCamelCase(model.name)}() {
+console.log('--->'+$("#delete-id").val());
     $.ajax({
-      url : "/${string.toCamelCase(model.name)}/" + id,
+      url : "/${string.toCamelCase(model.name)}/" + $("#delete-id").val(),
       type : "delete",
       success : function(data, textStatus, xhr) {
           console.log(data);
@@ -270,6 +303,7 @@ function delete_${string.toCamelCase(model.name)}(id) {
                 $("#message").addClass("alert alert-success alert-dismissible text-center"); 
                 $("#message").text("${model.name} deleted");
                 $('#id').val('');
+                $('#delete-id').val('');
             }
           
           loadData("${string.toCamelCase(model.name)}");
@@ -355,7 +389,12 @@ function createTable(target, result) {
         // Actions column.
         var td = document.createElement('TD');
         var span = document.createElement('SPAN');
-        span.innerHTML = '<a href="/system/' + element.id + '/detail">detail</a>&nbsp;<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
+        //span.innerHTML = '<a href="/system/' + element.id + '/detail">detail</a>&nbsp;<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
+        var html = '<div class="btn-group"><button type="button" class="btn btn-default ">Detail</button>';
+        html += '<button type="button" class="btn btn-default" onclick=edit_'+ target + '("'+ element.id + '")>Edit</button>';
+        html += '<button type="button" data-id="' + element.id + '" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger">Delete</button></div>';
+        span.innerHTML = html;
+        
         td.appendChild(span);
         tr.appendChild(td);
 	    
