@@ -6,6 +6,9 @@ CREATE TABLE IF NOT EXISTS ${string.toUnderline(model.name)} (
 <#if attribute.type == "text">
     ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
 </#if>
+<#if attribute.type == "email">
+    ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
+</#if>
 <#if attribute.type == "date">
     ${string.toUnderline(attribute.name)} TEXT<#if attribute.required> NOT NULL</#if>,
 </#if>
@@ -57,3 +60,15 @@ CREATE TABLE IF NOT EXISTS ${string.toUnderline(attribute.name)} (
 </#if>
 </#list>
 </#list>
+
+<#-- Create unique indexes -->
+<#list app.models as model>
+<#-- For each model create a correspoding database table -->
+<#list model.attributes as attribute>
+<#if attribute.unique>
+CREATE UNIQUE INDEX idx_${string.toUnderline(model.name)}_${string.toUnderline(attribute.name)}
+ON ${string.toUnderline(model.name)} (${string.toUnderline(attribute.name)});
+</#if>
+</#list>
+</#list>
+

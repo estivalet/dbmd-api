@@ -21,6 +21,18 @@
 					"referencedVisible": true
 				},
 				{
+					"name": "email",
+					"label": "E-mail",
+					"type": "email",
+					"description": "",
+					"required": true,
+					"orderBy": false,
+					"orderByNum": 0,
+					"referenced": false,
+					"referencedVisible": false,
+					"unique": true
+				},
+				{
 					"name": "password",
 					"label": "Password",
 					"type": "text",

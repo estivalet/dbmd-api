@@ -71,6 +71,9 @@ public class Attribute implements Serializable {
 	/** Attributes of attributes. */
 	private List<Attribute> attributes = new ArrayList<Attribute>();
 
+	/** If the attribute is unique or not. */
+	private Boolean unique = false;
+
 	private String mask;
 
 	public String getName() {
@@ -309,6 +312,21 @@ public class Attribute implements Serializable {
 	 */
 	public void setMask(String mask) {
 		this.mask = mask;
+	}
+
+	/**
+	 * @return the unique
+	 */
+	public Boolean getUnique() {
+		return unique;
+	}
+
+	/**
+	 * @param unique
+	 *            the unique to set
+	 */
+	public void setUnique(Boolean unique) {
+		this.unique = unique;
 	}
 
 }

@@ -3,5 +3,8 @@ module.exports = (app) => {
     
     app.get('/', controller.index);    
     app.get('/login', controller.login);    
-    app.get('/register', controller.register);    
+    app.get('/register', controller.register);
+    
+    app.post('/register', controller.registerNewUser);    
+    
 }

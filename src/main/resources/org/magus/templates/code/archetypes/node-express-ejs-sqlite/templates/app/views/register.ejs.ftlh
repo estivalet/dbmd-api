@@ -28,9 +28,9 @@
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form id="register" action="/" method="post" onsubmit="event.preventDefault(); validateRegisterForm();">
+      <form id="register" action="/register" method="post" onsubmit="event.preventDefault(); validateRegisterForm();">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" id="email" placeholder="Email">
+          <input type="email" class="form-control" id="email" placeholder="Email" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" id="password" placeholder="Password">
+          <input type="password" class="form-control" id="password" placeholder="Password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -76,7 +76,16 @@
 <script src="/dist/js/adminlte.min.js"></script>
 
 <script type="text/javascript">
+
 function validateRegisterForm(){
+    if($('#email').val() == ''){
+        $("#email").addClass("form-control is-invalid");
+        $("#p-email").text("This field is required");
+        $("#p-email").addClass("text-danger");
+        $('#email').focus();
+        return false;
+    }
+
     var password = document.getElementById('password')
     var repassword = document.getElementById('repassword')
     var form = document.getElementById('register')
@@ -86,6 +95,8 @@ function validateRegisterForm(){
     } else {
         form.submit()
     }
+    return true;
+
 }
 </script>	
 </body>
