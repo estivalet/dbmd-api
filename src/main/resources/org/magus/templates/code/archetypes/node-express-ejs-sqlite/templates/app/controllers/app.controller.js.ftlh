@@ -16,7 +16,8 @@ exports.index = function(req, res) {
 
 exports.register = function(req, res) {
 	res.render('register', {
-	    title: "${app.shortName}"
+	    title: "${app.shortName}",
+		message: 'welcome'
     });
 };
 
@@ -29,23 +30,24 @@ exports.login = function(req, res) {
 exports.registerNewUser = function(req, res) {
     var sql = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
  	var params = [];
- 	
+	 
     params.push(req.body.email);
     params.push(req.body.email);
     params.push(req.body.password);
  	
  	sqlite.run(sql, params, function(err) {
     	if (err) {
-		    res.status(400).json({
-				"message":"ERROR:" + err.message,
-		    });
-    	}
-	   
-		res.render('index', {
-		    title: "${app.shortName}",
-		    message: "Welcome to ${app.shortName}"
-	    });
-    	
+			if(err.code == 'SQLITE_CONSTRAINT') {
+				res.status(400).render('register', {
+					message: "Usuário já existente!"
+				});
+			}
+    	} else {
+			res.render('index', {
+				title: "contactsapp",
+				message: "Welcome to contactsapp"
+			});
+		}
 	}); 
 
 };

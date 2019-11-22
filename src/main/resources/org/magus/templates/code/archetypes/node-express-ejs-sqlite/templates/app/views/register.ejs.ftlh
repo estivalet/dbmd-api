@@ -27,10 +27,10 @@
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
-
+    <%=message%>
       <form id="register" action="/register" method="post" onsubmit="event.preventDefault(); validateRegisterForm();">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" id="email" placeholder="Email" required>
+          <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" id="password" placeholder="Password" required>
+          <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
