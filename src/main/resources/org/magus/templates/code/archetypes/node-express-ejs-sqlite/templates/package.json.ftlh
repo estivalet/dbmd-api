@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "async": "^2.6.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "1.7.0",
     "cookie-parser": "~1.4.3",
     "csv": "^3.1.0",

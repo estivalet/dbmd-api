@@ -83,7 +83,7 @@
                   
                   <p class='border-top'>&nbsp;</p>
   
-                  <p><a href="#" class="btn btn-dark btn-sm btn-block"><b>Log Out</b></a></p>
+                  <p><a href="/logout" class="btn btn-dark btn-sm btn-block"><b>Log Out</b></a></p>
                 </div>
                 <!-- /.card-body -->
               </div>

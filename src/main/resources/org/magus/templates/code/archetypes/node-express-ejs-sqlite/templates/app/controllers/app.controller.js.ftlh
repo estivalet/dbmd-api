@@ -1,6 +1,7 @@
 var request = require('request');
 var async = require('async');
 
+const bcryptjs = require('bcryptjs');
 const sqlite = require('../../config/database.config.js');
 
 /**
@@ -9,15 +10,22 @@ const sqlite = require('../../config/database.config.js');
  * @param {*} res 
  */
 exports.index = function(req, res) {
-	res.render('index', {
-	    title: "${app.shortName}"
-    });
+	if(req.session.user_id) {
+		res.render('index', {
+			title: "${app.shortName}"
+		});
+	} else {
+		res.render('login', {
+			title: "${app.shortName}"
+		});
+			
+	}
 };
 
 exports.register = function(req, res) {
 	res.render('register', {
 	    title: "${app.shortName}",
-		message: 'welcome'
+		message: ''
     });
 };
 
@@ -27,13 +35,46 @@ exports.login = function(req, res) {
     });
 };
 
+exports.executeLogin = function(req, res) {
+    var sql = 'select id, name, password from user where email = ?';
+	var params = [];
+
+	params.push(req.body.email);
+
+    sqlite.all(sql, params, (err, rows) => {
+        if (err) {
+			res.status(400).json({"error":err.message});
+            return;
+		}
+		if(rows[0]) {
+			bcryptjs.compare(req.body.password, rows[0].password, (err, isValid) => {
+				console.log(rows);
+				if (isValid) {
+					req.session.user_id = rows[0].id;
+					res.render('index', {
+						title: "contactsapp"
+					});
+				} else {
+					res.redirect('/');		
+				}
+			});
+		} else {
+			res.redirect('/');		
+		}
+		
+	});    
+	
+}
+
 exports.registerNewUser = function(req, res) {
     var sql = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
  	var params = [];
 	 
+	const cryptPwd = bcryptjs.hashSync(req.body.password, 10)	 
+
     params.push(req.body.email);
     params.push(req.body.email);
-    params.push(req.body.password);
+    params.push(cryptPwd);
  	
  	sqlite.run(sql, params, function(err) {
     	if (err) {
@@ -51,3 +92,8 @@ exports.registerNewUser = function(req, res) {
 	}); 
 
 };
+
+exports.logout = function(req, res) {
+	req.session.destroy();
+	res.redirect('/');	
+}

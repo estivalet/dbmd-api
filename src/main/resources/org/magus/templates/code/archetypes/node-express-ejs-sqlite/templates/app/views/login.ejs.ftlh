@@ -28,9 +28,9 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="/" method="post">
+      <form action="/" method="post" id="login" onsubmit="event.preventDefault(); validateLoginForm();">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+          <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -67,5 +67,20 @@
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
 
+<script type="text/javascript">
+
+  function validateLoginForm(){
+      if($('#email').val() == ''){
+          $("#email").addClass("form-control is-invalid");
+          $("#p-email").text("This field is required");
+          $("#p-email").addClass("text-danger");
+          $('#email').focus();
+          return false;
+      }
+      document.getElementById('login').submit();
+
+  }
+  </script>	
+  
 </body>
 </html>

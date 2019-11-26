@@ -27,7 +27,9 @@
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
-    <%=message%>
+      <% if (message) { %>
+      <div id="message" role="alert" class="alert alert-error alert-dismissible text-center"><%=message%></div>
+      <% } %>
       <form id="register" action="/register" method="post" onsubmit="event.preventDefault(); validateRegisterForm();">
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>

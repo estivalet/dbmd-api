@@ -21,9 +21,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 
+function authenticationMiddleware () {  
+  return function (req, res, next) {
+    if(req.session.user_id) {
+      return next()
+    }
+    res.redirect('/login')
+  }
+}
+
+
 require('./app/routes/${app.shortName}.routes.js')(app);
 <#list app.models as model>
-require('./app/routes/${string.toCamelCase(model.name)}.routes.js')(app);
+require('./app/routes/${string.toCamelCase(model.name)}.routes.js')(app, authenticationMiddleware);
 </#list>
 
 // catch 404 and forward to error handler
