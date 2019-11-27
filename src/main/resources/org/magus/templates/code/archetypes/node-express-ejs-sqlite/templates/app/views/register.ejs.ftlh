@@ -21,7 +21,7 @@
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <b>${app.shortName}</b>
   </div>
 
   <div class="card">
@@ -39,6 +39,14 @@
             </div>
           </div>
         </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="username" id="ussername" placeholder="Username" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
         <div class="input-group mb-3">
           <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
           <div class="input-group-append">
@@ -85,6 +93,13 @@ function validateRegisterForm(){
         $("#p-email").text("This field is required");
         $("#p-email").addClass("text-danger");
         $('#email').focus();
+        return false;
+    }
+    if($('#username').val() == ''){
+        $("#username").addClass("form-control is-invalid");
+        $("#p-username").text("This field is required");
+        $("#p-username").addClass("text-danger");
+        $('#username').focus();
         return false;
     }
 

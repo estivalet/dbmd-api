@@ -24,7 +24,8 @@ app.use(express.static(path.join(__dirname, '/public')));
 function authenticationMiddleware () {  
   return function (req, res, next) {
     if(req.session.user_id) {
-      return next()
+      res.locals.user = req.session.user_name;
+      return next();
     }
     res.redirect('/login')
   }

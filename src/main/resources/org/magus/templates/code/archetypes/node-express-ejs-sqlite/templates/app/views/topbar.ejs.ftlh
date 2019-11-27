@@ -79,7 +79,7 @@
                          alt="User profile picture">
                   </div>
   
-                  <h3 class="profile-username text-center">User Name</h3>
+                  <h3 class="profile-username text-center"><%=user%></h3>
                   
                   <p class='border-top'>&nbsp;</p>
   

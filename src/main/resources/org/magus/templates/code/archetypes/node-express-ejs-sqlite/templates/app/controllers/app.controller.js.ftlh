@@ -51,6 +51,8 @@ exports.executeLogin = function(req, res) {
 				console.log(rows);
 				if (isValid) {
 					req.session.user_id = rows[0].id;
+					req.session.user_name = rows[0].name;
+					res.locals.user = req.session.user_name;
 					res.render('index', {
 						title: "contactsapp"
 					});
@@ -72,7 +74,7 @@ exports.registerNewUser = function(req, res) {
 	 
 	const cryptPwd = bcryptjs.hashSync(req.body.password, 10)	 
 
-    params.push(req.body.email);
+    params.push(req.body.username);
     params.push(req.body.email);
     params.push(cryptPwd);
  	
@@ -84,7 +86,7 @@ exports.registerNewUser = function(req, res) {
 				});
 			}
     	} else {
-			res.render('index', {
+			res.status(201).render('login', {
 				title: "contactsapp",
 				message: "Welcome to contactsapp"
 			});
