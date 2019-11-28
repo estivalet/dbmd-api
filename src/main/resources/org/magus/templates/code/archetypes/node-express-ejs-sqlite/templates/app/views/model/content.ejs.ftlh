@@ -37,69 +37,37 @@
                 </div>
               </div>
               <div class="card-body">
+              
+              
                 
+                <div class="box-body">
                 
-                    <form role="form" id="${string.toCamelCase(model.name)}">
-                
-                        <div class="box-body">
-		                    <div class="row">
-			                    <div class="col-md-10 col-md-offset-1">
-			                        <div id="message" role="alert"></div>
-			                    </div>
+	                <div id="search-form">
+	                    <div class="row">
+		                    <div class="col-md-12">
+		                        <div id="message" role="alert"></div>
 		                    </div>
-                        
+	                    </div>
+	                	<#list model.attributes as attribute>
+	                	<#assign append_id=""/>
+						<#assign index=attribute?index/>
+						<#if (attribute.searchBy == true)>						                        	
+						<#assign append_id="_search"/>
+	                	<#include "../attributes.ejs.ftlh"/>
+	                	</#if>
+	                    </#list>
+	                    
+	                	<button type="button" id="search" class="btn btn-primary">Search</button>
+	                </div>
+                
+	                <div id="add-form" class="d-none" autocomplete="off">
+    	                <form role="form" id="${string.toCamelCase(model.name)}">
                             <input type="hidden" id="id">
                         	<#list model.attributes as attribute>
-                            <div id="div-${attribute.name}" class="form-group">
-                                <label for="name"><i id="i-${attribute.name}"></i> ${attribute.label}</label>
-                                
-                                <#if (attribute.type=="text")>
-								<input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}>
-
-								<#elseif (attribute.type=="listbox")>
-							    <select class="form-control" id="${attribute.name}">
-								<#list attribute.options as option>
-								<option value="${option.value}"> ${option.label}</option>
-								</#list>	
-							    </select>
-
-								<#elseif (attribute.type=="date")>
-								<div class="input-group">
-                    				<div class="input-group-prepend">
-                      					<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    				</div>
-                    				<input type="text" id="${attribute.name}" name="${attribute.name}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="${attribute.mask}" data-mask>
-                  				</div>
-                  																																																																																
-								<#elseif (attribute.type=="radio")>
-								<#list attribute.options as option>
-								<div class="radio">
-								<label><input type="radio" name="${attribute.name}[]" value="${option.value}"> ${option.label}</label>
-								</div>
-								</#list>	
-
-								<#elseif (attribute.type=="checkbox")>
-								<#list attribute.options as option>
-								<div class="form-check">
-								<input type="checkbox" class="form-check-input" name="${attribute.name}[]" value="${option.value}"> 
-								<label class="form-check-label">${option.label}</label>
-								</div>
-								</#list>	
-																
-								<#elseif (attribute.type=="textarea")>
-								<textarea class="form-control" id="${attribute.name}" name="${attribute.name}" rows="3" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}></textarea>								
-
-								<#elseif (attribute.type=="email")>
-								<input type="text" class="form-control" id="${attribute.name}" name="${attribute.name}" placeholder="Enter ${attribute.name}" ${(attribute?index == 0)?then('autofocus','')}>
-																																																
-								</#if>
-                                
-								<#if (attribute.description?has_content)>
-								<p id="p-${attribute.name}" class="help-block">${attribute.description}.</p>
-								</#if>
-                            </div>
+							<#assign index=attribute?index/>
+							                        	
+                        	<#include "../attributes.ejs.ftlh"/>
                             </#list>
-                            
 	   				        <#list model.getRefModels() as refmodel>
 	   				        <#list refmodel.model.getRefAttributes() as refattr>
 							<div class="form-group">
@@ -108,25 +76,28 @@
 							    </select>
 							</div>
 						    </#list>
-                            </#list>
-                            
+						    </#list>
+						    
                             <button type="button" id="submit" class="btn btn-primary">Submit</button>
-    
-                        </div>
-      
-                        <div class="box-footer">
-                            <div id="table">
-                                
-                            </div>
-                        </div>
-                
-                    </form>                
+	                    </form>                
+					</div>
+					
+					<p>&nbsp;</p>
+	                <div id="search-result">
+	                    <div class="box-footer">
+	                        <div id="table">
+	                            
+	                        </div>
+	                    </div>
+					</div>                    
+					            
+                </div>
                 
                 
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                Footer
+                  <button type="button" id="add" class="btn btn-primary">Add new</button>
               </div>
               <!-- /.card-footer-->
             </div>
@@ -179,16 +150,20 @@ function resetForm() {
 	$("#${string.toCamelCase(model.name)}")[0].reset();
 	<#list model.attributes as attribute>
 	<#if attribute.required>
-    if($('#${attribute.name}').val() == ''){
-        $("#div-${attribute.name}").removeClass("has-error");
-        $("#p-${attribute.name}").text("");
-        <#if (attribute.description?has_content)>
-        $("#p-${attribute.name}").html("${attribute.description}.");
-        </#if>
-        $("#i-${attribute.name}").removeClass("fa fa-times-circle-o");
-    }
+    $("#div-${attribute.name}").removeClass("has-error");
+    $("#${attribute.name}").removeClass("is-invalid");
     </#if>
 	</#list>
+	
+	$("#search-result").removeClass();
+	$("#search-form").removeClass();
+	$("#add-form").removeClass();   
+	$("#message").removeClass();
+    $("#message").addClass("d-none");
+	
+	$("#search-result").addClass("d-block");
+	$("#search-form").addClass("d-block");
+	$("#add-form").addClass("d-none");
 }
 
 
@@ -224,14 +199,15 @@ function save_${string.toCamelCase(model.name)}() {
         },
         success: function( data, textStatus, xhr ) {
             if(xhr.status==201 || xhr.status==200) {
-                $("#message").addClass("alert alert-success alert-dismissible text-center");
+            	$("#message").removeClass();
+                $("#message").addClass("d-block alert alert-success alert-dismissible text-center");
                 if(xhr.status==200) {
                 	$("#message").text("${model.name} updated");
                 } else {
                 	$("#message").text("${model.name} added");
                 }
             }
-			resetForm();        
+			resetForm();
             loadData("${string.toCamelCase(model.name)}");
         },
         error: function( jqXhr, textStatus, errorThrown ){
@@ -261,6 +237,37 @@ $("#submit").click(function() {
     if(validateForm()) {
         save_${string.toCamelCase(model.name)}();
     }
+});
+
+$("#add").click(function() {
+	$("#search-result").removeClass();
+	$("#search-form").removeClass();
+	$("#add-form").removeClass();   
+	
+	$("#search-result").addClass("d-none");
+	$("#search-form").addClass("d-none");
+	$("#add-form").addClass("d-block");
+});
+
+$("#search").click(function() {
+    $.ajax({
+        url : "/${string.toCamelCase(model.name)}",
+        type : "get",
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+            "search": true,
+            <#list model.attributes as attribute>
+			<#if (attribute.searchBy == true)>	
+			"${attribute.name}": $("#${attribute.name}_search").val(),					                        	
+	    	</#if>
+            </#list>
+		},        
+        success : function(result) {
+            createTable("${string.toCamelCase(model.name)}", result);
+        }
+    });    
+
 });
 
 document.onkeydown=function(){
@@ -295,21 +302,20 @@ function edit_${string.toCamelCase(model.name)}(id) {
 }
 
 function delete_${string.toCamelCase(model.name)}() {
-console.log('--->'+$("#delete-id").val());
     $.ajax({
       url : "/${string.toCamelCase(model.name)}/" + $("#delete-id").val(),
       type : "delete",
       success : function(data, textStatus, xhr) {
           console.log(data);
             if(xhr.status==200) {
-                $("#message").addClass("alert alert-success alert-dismissible text-center"); 
+            	$("#message").removeClass();
+                $("#message").addClass("d-block alert alert-success alert-dismissible text-center"); 
                 $("#message").text("${model.name} deleted");
                 $('#id').val('');
                 $('#delete-id').val('');
             }
           
           loadData("${string.toCamelCase(model.name)}");
-          $("#message").text(data.message);
       }
     });
 }
@@ -392,7 +398,7 @@ function createTable(target, result) {
         var td = document.createElement('TD');
         var span = document.createElement('SPAN');
         //span.innerHTML = '<a href="/system/' + element.id + '/detail">detail</a>&nbsp;<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
-        var html = '<div class="btn-group"><button type="button" class="btn btn-default ">Detail</button>';
+        var html = '<div class="btn-group">';
         html += '<button type="button" class="btn btn-default" onclick=edit_'+ target + '("'+ element.id + '")>Edit</button>';
         html += '<button type="button" data-id="' + element.id + '" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger">Delete</button></div>';
         span.innerHTML = html;
@@ -403,7 +409,11 @@ function createTable(target, result) {
     });
 
     tableDiv.appendChild(table);
-    var dataTable = $("#table${string.toCamelCase(model.name, true)}").DataTable();    
+    var dataTable = $("#table${string.toCamelCase(model.name, true)}").DataTable({
+        "language": {
+             "search": "Filter records:"
+        }        
+    });    
 }
 
 function loadData(target) {

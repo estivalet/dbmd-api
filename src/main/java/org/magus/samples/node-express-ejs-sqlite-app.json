@@ -18,7 +18,8 @@
 					"orderBy": true,
 					"orderByNum": 0,
 					"referenced": true,
-					"referencedVisible": true
+					"referencedVisible": true,
+					"searchBy": true
 				},
 				{
 					"name": "email",
@@ -53,7 +54,8 @@
 					"orderBy": true,
 					"orderByNum": 0,
 					"referenced": true,
-					"referencedVisible": true
+					"referencedVisible": true,
+					"searchBy": true
 				}
 			]
 		},
@@ -70,7 +72,8 @@
 					"orderBy": true,
 					"orderByNum": 0,
 					"referenced": true,
-					"referencedVisible": true
+					"referencedVisible": true,
+					"searchBy": true
 				},
 				{
 					"name": "email",
@@ -81,7 +84,8 @@
 					"orderBy": false,
 					"orderByNum": 0,
 					"referenced": true,
-					"referencedVisible": true
+					"referencedVisible": true,
+					"searchBy": true
 				},
 				{
 					"name": "birth",

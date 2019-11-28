@@ -5,20 +5,39 @@ const sqlite = require('../../config/database.config.js');
 
 
 exports.index = (req, res) => {
-    console.log("INDEX");
     res.render('${string.toCamelCase(model.name)}/index', { title: "${string.toCamelCase(model.name)} page" });
 }
 
 
 exports.list = (req, res) => {
-    var sql = 'select id, ${model.getAttributesPrecededByModelName()} from ${string.toUnderline(model.name)} ${string.toUnderline(model.name)} ORDER BY ${model.getFirstOrderByAttributeName()}';
     var params = [];
+
+    var sql = 'SELECT id, ${model.getAttributesPrecededByModelName()} FROM ${string.toUnderline(model.name)} ${string.toUnderline(model.name)} ';
+    if (req.query.search == 'true') {
+    <#list model.attributes as attribute>
+	<#if (attribute.searchBy == true)>	
+	    if(req.query.${attribute.name}) {
+	<#if (attribute?index == 0)>
+			sql += 'WHERE ';
+	</#if>
+	<#if (attribute?index == 0)>
+			sql += '${string.toUnderline(attribute.name)} LIKE ? ';
+			params.push(req.query.${attribute.name} + '%');
+	<#else>
+			sql += 'AND ${string.toUnderline(attribute.name)} LIKE ? ';
+			params.push(req.query.${attribute.name} + '%');
+	</#if>
+    	}
+	</#if>
+    </#list>
+    }
+    sql += 'ORDER BY ${model.getFirstOrderByAttributeName()}';
+    
     sqlite.all(sql, params, (err, rows) => {
         if (err) {
 			res.status(400).json({"error":err.message});
             return;
         }
-        console.log(rows);
         res.status(200).json({
             "message":"success",
             "data":rows
@@ -65,7 +84,7 @@ exports.delete = (req, res) => {
     	}
 	   
 	    res.status(200).json({
-			"message":"success",
+			"message":"Record deleted",
 	    });
     	
 	}); 
@@ -98,7 +117,7 @@ exports.update = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    var sql = 'select id, ${model.getAttributesCommaSeparated()} from ${string.toUnderline(model.name)} ${string.toUnderline(model.name)} WHERE id = ?';
+    var sql = 'SELECT id, ${model.getAttributesCommaSeparated()} FROM ${string.toUnderline(model.name)} ${string.toUnderline(model.name)} WHERE id = ?';
     var params = [];
     
  	var params = [];
@@ -109,7 +128,6 @@ exports.findOne = (req, res) => {
 			res.status(400).json({"error":err.message});
             return;
         }
-        console.log(rows);
         res.status(200).json({
             "message":"success",
             "data":rows

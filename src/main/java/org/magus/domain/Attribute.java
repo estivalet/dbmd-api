@@ -74,6 +74,9 @@ public class Attribute implements Serializable {
 	/** If the attribute is unique or not. */
 	private Boolean unique = false;
 
+	/** If the attribute is displayed in the search form. */
+	private Boolean searchBy = false;
+
 	private String mask;
 
 	public String getName() {
@@ -327,6 +330,21 @@ public class Attribute implements Serializable {
 	 */
 	public void setUnique(Boolean unique) {
 		this.unique = unique;
+	}
+
+	/**
+	 * @return the searchBy
+	 */
+	public Boolean getSearchBy() {
+		return searchBy;
+	}
+
+	/**
+	 * @param searchBy
+	 *            the searchBy to set
+	 */
+	public void setSearchBy(Boolean searchBy) {
+		this.searchBy = searchBy;
 	}
 
 }
