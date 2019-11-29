@@ -146,6 +146,19 @@ $('#delete-modal').on('show.bs.modal', function (event) {
   modal.find('#delete-id').val(id);
 });
 
+function switchToSearchForm() {
+	$("#add").removeClass("d-none");
+	
+	$("#search-result").removeClass();
+	$("#search-form").removeClass();
+	$("#add-form").removeClass();   
+	
+	$("#search-result").addClass("d-block");
+	$("#search-form").addClass("d-block");
+	$("#add-form").addClass("d-none");
+
+}
+
 function resetForm() {
 	$("#${string.toCamelCase(model.name)}")[0].reset();
 	<#list model.attributes as attribute>
@@ -155,15 +168,7 @@ function resetForm() {
     </#if>
 	</#list>
 	
-	$("#search-result").removeClass();
-	$("#search-form").removeClass();
-	$("#add-form").removeClass();   
-	$("#message").removeClass();
-    $("#message").addClass("d-none");
-	
-	$("#search-result").addClass("d-block");
-	$("#search-form").addClass("d-block");
-	$("#add-form").addClass("d-none");
+	switchToSearchForm();
 }
 
 
@@ -239,14 +244,19 @@ $("#submit").click(function() {
     }
 });
 
-$("#add").click(function() {
+function switchToAddEditForm() {
 	$("#search-result").removeClass();
 	$("#search-form").removeClass();
 	$("#add-form").removeClass();   
 	
+	$("#add").addClass("d-none");
 	$("#search-result").addClass("d-none");
 	$("#search-form").addClass("d-none");
 	$("#add-form").addClass("d-block");
+}
+
+$("#add").click(function() {
+	switchToAddEditForm();
 });
 
 $("#search").click(function() {
@@ -264,6 +274,8 @@ $("#search").click(function() {
             </#list>
 		},        
         success : function(result) {
+        	$("#message").removeClass();
+		    $("#message").addClass("d-none");
             createTable("${string.toCamelCase(model.name)}", result);
         }
     });    
@@ -278,7 +290,6 @@ document.onkeydown=function(){
 }
 
 function edit_${string.toCamelCase(model.name)}(id) {
-    console.log(id);
     $.ajax({
         url: '/${string.toCamelCase(model.name)}/' + id,
         dataType: 'json',
@@ -294,6 +305,7 @@ function edit_${string.toCamelCase(model.name)}(id) {
             <#list model.getRefAttributesOfRefModels() as refattr>
             $('#${string.toCamelCase(refattr.model)}_id').val(result.data[0].${string.toCamelCase(refattr.model)}_id);
             </#list>
+            switchToAddEditForm();
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );

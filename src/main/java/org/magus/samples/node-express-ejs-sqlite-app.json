@@ -84,8 +84,7 @@
 					"orderBy": false,
 					"orderByNum": 0,
 					"referenced": true,
-					"referencedVisible": true,
-					"searchBy": true
+					"referencedVisible": true
 				},
 				{
 					"name": "birth",
