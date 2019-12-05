@@ -1,0 +1,11 @@
+{
+	"name": "Auth Using Passport",
+	"shortName": "auth",
+	"databaseName": "contactsapp",
+	"path": "C:/temp/js",
+	"copyright": "(c) Luiz Fernando Estivalet 2019",
+	"models": [
+		{
+		}
+	]
+}

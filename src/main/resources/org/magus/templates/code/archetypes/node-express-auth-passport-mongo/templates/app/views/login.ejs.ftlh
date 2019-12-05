@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+      <input name="username" type="text" /><br />
+      <input name="password" type="password" /><br />
+      <input type="submit" value="Login" />
+    </form>
+    <% if(message) { %>
+      <p>
+          <% if(error) { %>
+            <label style="color:Red"><%= message %></label>
+          <%} else {%>
+            <label style="color:Green"><%= message %></label>
+          <%}%>
+      </p>
+    <%}%>
+    <p>
+      <a href="/users/forgot">Esqueceu sua senha?</a> | <a href="/users/signup">Não possui cadastro?</a>
+    </p>
+  </body>
+</html>
