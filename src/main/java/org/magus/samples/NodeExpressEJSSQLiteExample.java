@@ -37,9 +37,11 @@ import freemarker.template.TemplateHashModel;
  * 4. Open a terminal in the folder and run "npm install" to install all
  * dependencies
  * 
- * 5. Start the app using "npm run devstart"
+ * 5. Run database.sql to create tables in the app database
  * 
- * 6. Open http://localhost:4000
+ * 6. Start the app using "npm run devstart"
+ * 
+ * 7. Open http://localhost:4000
  * 
  * @author lestivalet
  *

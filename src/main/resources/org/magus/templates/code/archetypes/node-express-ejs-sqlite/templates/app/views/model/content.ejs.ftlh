@@ -63,9 +63,9 @@
 	                <div id="add-form" class="d-none" autocomplete="off">
     	                <form role="form" id="${string.toCamelCase(model.name)}">
                             <input type="hidden" id="id">
+							<#assign append_id=""/>                       	
                         	<#list model.attributes as attribute>
 							<#assign index=attribute?index/>
-							                        	
                         	<#include "../attributes.ejs.ftlh"/>
                             </#list>
 	   				        <#list model.getRefModels() as refmodel>
