@@ -176,7 +176,7 @@ function save_${string.toCamelCase(model.name)}() {
     <#list model.attributes as attribute>
 	<#if (attribute.type=="checkbox" || attribute.type=="radio")>
     var ${attribute.name}Selected = "";
-    var ${attribute.name}Chk = $('input[name="${attribute.name}[]"]:checked');
+    var ${attribute.name}Chk = $('input[name="${attribute.name}"]:checked');
     ${attribute.name}Chk.each(function(){
         ${attribute.name}Selected += this.value + ",";
     });
@@ -297,7 +297,15 @@ function edit_${string.toCamelCase(model.name)}(id) {
         success: function(result, textStatus, xhr ) {
             $('#id').val(result.data[0].id);
             <#list model.attributes as attribute>
+            <#if (attribute.type=="radio")>
+            $("input[name=${attribute.name}][value='" + result.data[0].${attribute.name} + "']").prop("checked",true);
+            <#elseif (attribute.type=="checkbox")>
+            result.data[0].${attribute.name}.split(/\s*,\s*/).forEach(function(value) {
+                $("input[name=${attribute.name}][value='" + value + "']").prop("checked",true);
+            });
+			<#else>
             $('#${attribute.name}').val(result.data[0].${attribute.name});
+            </#if>
             <#if (attribute?index == 0)>
             $('#${attribute.name}').focus();
             </#if>

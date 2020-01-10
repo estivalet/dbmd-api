@@ -18,13 +18,13 @@
 								<#elseif (attribute.type=="radio")>
 								<#list attribute.options as option>
 								<div class="radio">
-								<label><input type="radio" name="${attribute.name}${append_id}[]" value="${option.value}"> ${option.label}</label>
+								<label><input type="radio" name="${attribute.name}${append_id}" value="${option.value}"> ${option.label}</label>
 								</div>
 								</#list>	
 								<#elseif (attribute.type=="checkbox")>
 								<#list attribute.options as option>
 								<div class="form-check">
-								<input type="checkbox" class="form-check-input" name="${attribute.name}${append_id}[]" value="${option.value}"> 
+								<input type="checkbox" class="form-check-input" name="${attribute.name}${append_id}" value="${option.value}"> 
 								<label class="form-check-label">${option.label}</label>
 								</div>
 								</#list>	
