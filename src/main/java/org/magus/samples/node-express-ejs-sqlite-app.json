@@ -38,6 +38,7 @@
 					"label": "Password",
 					"type": "text",
 					"description": "",
+					"visibleInList": false,
 					"required": true
 				}
 			]

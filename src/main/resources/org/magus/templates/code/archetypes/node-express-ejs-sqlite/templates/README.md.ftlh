@@ -1,3 +1,16 @@
+## Creating and Deploying the app in Heroku.com
+
+1. git init
+2. git add .
+3. git commit -m "first commit"
+4. Install Heroku CLI (https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+5. Execute 'heroku login' in the app base folder
+6. Enter your credentials in the login page
+7. Execute 'heroku create' 
+8. git push heroku master
+
+-----------
+
 # ${app.name}
 
 One Paragraph of project description goes here

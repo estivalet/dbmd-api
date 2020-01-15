@@ -419,8 +419,8 @@ function createTable(target, result) {
         var span = document.createElement('SPAN');
         //span.innerHTML = '<a href="/system/' + element.id + '/detail">detail</a>&nbsp;<a href="#" onclick=edit_'+ target + '("'+ element.id + '")>edit</a>&nbsp;<a href="#" onclick=delete_' + target + '("'+ element.id + '")>delete</a>';
         var html = '<div class="btn-group">';
-        html += '<button type="button" class="btn btn-default" onclick=edit_'+ target + '("'+ element.id + '")>Edit</button>';
-        html += '<button type="button" data-id="' + element.id + '" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger">Delete</button></div>';
+        html += '<button type="button" class="btn btn-xs btn-default" onclick=edit_'+ target + '("'+ element.id + '")>Edit</button>';
+        html += '<button type="button" data-id="' + element.id + '" data-toggle="modal" data-target="#delete-modal" class="btn btn-xs btn-danger">Delete</button></div>';
         span.innerHTML = html;
         
         td.appendChild(span);
