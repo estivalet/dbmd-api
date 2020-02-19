@@ -1,7 +1,7 @@
                             <div id="div-${attribute.name}" class="form-group">
                                 <label for="name"><i id="i-${attribute.name}${append_id}"></i> ${attribute.label}</label>
                                 <#if (attribute.type=="text")>
-								<input type="text" class="form-control" id="${attribute.name}${append_id}" name="${attribute.name}${append_id}" placeholder="Enter ${attribute.name}" ${(index == 0)?then('autofocus','')} autocomplete="off">
+								<input type="text" class="form-control" id="${attribute.name}${append_id}" name="${attribute.name}${append_id}" maxlength="${attribute.maxLength}" placeholder="Enter ${attribute.name}" ${(index == 0)?then('autofocus','')} autocomplete="off">
 								<#elseif (attribute.type=="listbox")>
 							    <select class="form-control" id="${attribute.name}${append_id}">
 								<#list attribute.options as option>
@@ -29,9 +29,9 @@
 								</div>
 								</#list>	
 								<#elseif (attribute.type=="textarea")>
-								<textarea class="form-control" id="${attribute.name}${append_id}" name="${attribute.name}${append_id}" rows="3" placeholder="Enter ${attribute.name}" ${(index == 0)?then('autofocus','')}></textarea>								
+								<textarea class="form-control" id="${attribute.name}${append_id}" name="${attribute.name}${append_id}" rows="3" maxlength="${attribute.maxLength}" placeholder="Enter ${attribute.name}" ${(index == 0)?then('autofocus','')}></textarea>								
 								<#elseif (attribute.type=="email")>
-								<input type="text" class="form-control" id="${attribute.name}${append_id}" name="${attribute.name}${append_id}" placeholder="Enter ${attribute.name}" ${(index == 0)?then('autofocus','')} autocomplete="off">
+								<input type="text" class="form-control" id="${attribute.name}${append_id}" name="${attribute.name}${append_id}" maxlength="${attribute.maxLength}" placeholder="Enter ${attribute.name}" ${(index == 0)?then('autofocus','')} autocomplete="off">
 								</#if>
 								<#if (attribute.description?has_content)>
 								<p id="p-${attribute.name}${append_id}" class="help-block">${attribute.description}.</p>
